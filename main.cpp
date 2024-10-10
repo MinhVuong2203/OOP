@@ -172,7 +172,6 @@ int authenticateUser(string username, string password, string FilePass) {
     return 0; // Username not found
 }
 
-
 int main() {
     QLAD AD;
     QLUS U;
