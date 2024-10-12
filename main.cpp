@@ -236,6 +236,26 @@ int authenticateUser(string username, string password, string FilePass) {
     return 0;
 }
 
+void hidePassword(std::string &password) {
+    char ch;
+    int i = 0;
+    while (true) {
+        ch = _getch(); // getch() function hides the user input
+        if (ch == 13 || ch == 10) { // ASCII value of Enter key
+            break;
+        } else if (ch == 8 && i > 0) { // ASCII value of Backspace key
+            printf("\b \b"); // Erase previous character
+            password.pop_back(); // Xóa ký tự cuối cùng trong chuỗi
+            i--;
+        } else if (isprint(ch)) {
+            printf("*");
+            password.push_back(ch); // Thêm ký tự vào chuỗi
+            i++;
+        }
+    }
+}
+
+
 
 int main() 
 {
@@ -246,6 +266,7 @@ int main()
     Time GioVao, GioRa;
     string username, password;
     time_t presentTime;
+    char delay;
 
     // Lấy ngày hien tai
     struct tm *tm_info;
@@ -281,25 +302,35 @@ int main()
         case 1:    
             read_loopA2:	system("cls");
             cout << "---------MENU---------\n";
-			cout << "1. Ban muon dang ky tai khoan\n2. Dang nhap\n3. Quay lai\n4. Thoat\nMoi nhap lua chon cua ban:";
+			cout << "1. Ban muon dang ky tai khoan\n2. Dang nhap\n3. Quay lai\n4. Thoat\nMoi nhap lua chon cua ban: ";
         	char Achoice2;
 			Achoice2=getche();	system("cls");	
 			switch (Achoice2-'0')
 			{
                 case 1: AD.add(FAdmin); break;
-                case 2: read_loop_autA: system("cls");
-                    cout << "Ten dang nhap (viet lien, khong dau): "; cin >> username; 
-                    cout << "Mat khau (viet lien, khong dau): "; cin >> password;
-                    if (authenticateUser(username,password, FAdmin)) 
+                case 2: 
                     {
-                        cout << "Dang nhap thanh cong"; 
-                        // Thực hiện công việc
-                    }
-                    else 
-                    {
-                        cout << "\n<<< Dang nhap that bai. Enter de dang nhap lai! >>>" << endl;
-                        char delay = getche();
-                        goto read_loop_autA;
+                        read_loop_autA: system("cls");
+                        cout << "Ten dang nhap (viet lien, khong dau): "; cin >> username; 
+                        cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynA1 = getche();
+                        if (ynA1 == 'y' ) { cout << "\nMat khau (viet lien, khong dau): ";  hidePassword(password);}
+                        else if (ynA1 == 'n') { cout << "\nMat khau (viet lien, khong dau): ";  cin >> password;}
+                        else {
+                            cout << "\nLua chon khong hop le. Enter de quay lai!";
+                            delay = getch(); goto read_loop_autA;
+                        }
+                       
+                        if (authenticateUser(username,password, FAdmin)) 
+                        {
+                            cout << "\n<<< Dang nhap thanh cong>>>" << endl; 
+                            // Thực hiện công việc
+                        }
+                        else 
+                        {
+                            cout << "\n<<< Dang nhap that bai. Enter de dang nhap lai! >>>" << endl;
+                            delay = getche();
+                            goto read_loop_autA;
+                        }
                     }
                 break;
                 case 3: goto read_loopA2;
@@ -319,19 +350,29 @@ int main()
                     U.add(FUser); 
 
                     break;
-                case 2: read_loop_autU: system("cls");
-                    cout << "Ten dang nhap (viet lien, khong dau): "; cin >> username; 
-                    cout << "Mat khau (viet lien, khong dau): "; cin >> password;
-                    if (authenticateUser(username,password, FUser)) 
+                case 2: 
                     {
-                        cout << "Dang nhap thanh cong"; 
-                        // Thực hiện công việc
-                    }
-                    else 
-                    {
-                        cout << "\n<<< Dang nhap that bai! Sai ten dang nhap hoac mat khau. Enter de dang nhap lai! >>>" << endl;
-                        char delay = getche();
-                        goto read_loop_autU;
+                        read_loop_autU: system("cls");
+                        cout << "Ten dang nhap (viet lien, khong dau): "; cin >> username; 
+                        cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynU1 = getche();
+                        if (ynU1 == 'y' ) { cout << "\nMat khau (viet lien, khong dau): ";  hidePassword(password);}
+                        else if (ynU1 == 'n') { cout << "\nMat khau (viet lien, khong dau): ";  cin >> password;}
+                        else {
+                            cout << "\nLua chon khong hop le. Enter de quay lai!";
+                            delay = getch(); goto read_loop_autU;
+                        }
+                       
+                        if (authenticateUser(username,password, FUser))
+                        {
+                            cout << "\n<<< Dang nhap thanh cong >>>" << endl;
+                            // Thực hiện công việc
+                        }
+                        else 
+                        {
+                            cout << "\n<<< Dang nhap that bai. Enter de dang nhap lai! >>>" << endl;
+                            delay = getche();
+                            goto read_loop_autU;
+                        }
                     }
                 break;
                 case 3: goto read_loopU2;
@@ -340,7 +381,6 @@ int main()
         break; //case 2:
         case 3: break;
     }
-
     system("pause");
     return 0;
 }
