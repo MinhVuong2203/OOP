@@ -341,55 +341,6 @@ int main()
         case 3: break;
     }
 
-
-
-
-
-    // cout << "---------MENU---------\n";
-    // cout << "1. Them nguoi quan li\n";
-    // cout << "2. Xuat danh sach admin\n";
-    // cout << "3. Them nguoi choi\n";
-    // cout << "4. Xuat danh sach nguoi dung\n";
-    // int chose;
-    // while (true) 
-    // {
-    //     cout << "Moi nhap lua chon: "; cin >> chose;
-    //     switch (chose) 
-	// 	{
-    //         case 1: {
-    //             cout << "Nhap ho ten: "; cin.ignore(); getline(cin, HoTen);
-    //             cout << "Nhap ngay sinh: "; NhapDay(NgaySinh);
-    //             cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
-    //             cout << "Nhap id: ";  getline(cin, id);
-
-    //             Person *p = new Admin(HoTen, NgaySinh, SDT, id);
-    //             AD.add(p);
-    //             break;
-    //         }
-    //         case 2:
-    //             TitleAdmin();
-    //             AD.hienDS();
-    //             break;
-    //         case 3: 
-    //         {
-	// 			cout << "Nhap ho ten: "; cin.ignore(); getline(cin, HoTen);
-    //             cout << "Nhap ngay sinh: "; NhapDay(NgaySinh);
-    //             cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
-    //             cout << "Nhap ngay vao: "; NhapDay(NgayVao);      
-	// 			cout << "Nhap gio vao: "; NhapTime(GioVao);
-	// 			cout << "Nhap gio ra: "; NhapTime(GioRa);  
-				
-	// 			Person *p = new User(HoTen, NgaySinh, SDT, NgayVao, GioVao, GioRa);
-	// 			U.add(p);
-	// 			break;
-	// 		}
-	// 		case 4:
-	// 			TitleUser();
-    //             U.hienDS();
-    //             break;
-	// 	}
-    // }
-
     system("pause");
     return 0;
 }
