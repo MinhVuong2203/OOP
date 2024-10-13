@@ -318,17 +318,19 @@ QLAC::QLAC(string filename)
 }
 void QLAC::add(string nameFile) 
 {
+    AC(nameFile);
     fstream file(nameFile, ios::app);
     string HoTen, SDT;
     Day NgaySinh, NgayDen;
     Time GioVao, GioRa;
-
+    int id;
     cout << "Nhap ho ten: ";  getline(cin, HoTen);
     cout << "Nhap ngay sinh: "; NhapDay(NgaySinh);
     cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
     cout << "Nhap ngay vao: "; NhapDay(NgayDen);
     cout << "Nhap gio vao: "; NhapTime(GioVao);
     cout << "Nhap gio ra: "; NhapTime(GioRa);
+
 	Person *p = new Acti(HoTen, NgaySinh, SDT, NgayDen, GioVao, GioRa);
     AC[n++] = p;
     file <<HoTen <<","<<NgaySinh.ngay<<"/"<<NgaySinh.thang<<"/"<<NgaySinh.nam<<","<<SDT<<","<<NgayDen.ngay<<"/"<<NgayDen.thang<<"/"<<NgayDen.nam\
@@ -444,7 +446,7 @@ int main()
     tm* now = localtime(&t);
     time.gio = now->tm_hour; time.phut = now->tm_min; time.giay = now->tm_sec;
     cout << time.gio << ":" << time.phut << ":" << time.giay << "PM"<< endl;
-
+    AC.hienDS();
     TitleUser();
     U.hienDS();
     // AC.add(FActivity);
