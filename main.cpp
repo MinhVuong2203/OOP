@@ -143,17 +143,19 @@ class Acti : public Person {
 private:
     Day NgayDen;
     Time GioVao, GioRa;
+    int id;
 public:
     Acti() {}
-    Acti(string HoTen, Day NgaySinh, string SDT, Day ngayden, Time giovao, Time giora) : Person(HoTen, NgaySinh, SDT), NgayDen(ngayden), GioVao(giovao), GioRa(giora) {}
-
+    Acti(string HoTen, Day NgaySinh, string SDT, Day ngayden, Time giovao, Time giora, int ID) : Person(HoTen, NgaySinh, SDT), NgayDen(ngayden), GioVao(giovao), GioRa(giora), id(ID){}
+    Day getNgayDen() {return NgayDen;}
     void hienThiThongTin() override {
         Person::hienThiThongTin();
-        cout<< "| " << setw(14); XuatDay(NgayDen);
-        cout<< "| " << setw(14); XuatTime(GioVao);
-        cout<< "| " << setw(14); XuatTime(GioRa);
-        cout<< "|" << endl;
-        cout<< "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
+        cout<< "| " << setw(10) << (to_string(NgayDen.ngay) + "/" + to_string(NgayDen.thang) + "/" + to_string(NgayDen.nam))
+        << "| " << setw(10) << (to_string(GioVao.gio) + ":" + to_string(GioVao.phut) + ":" + to_string(GioVao.giay))
+        << "| " << setw(10) << (to_string(GioRa.gio) + ":" + to_string(GioRa.phut) + ":" + to_string(GioRa.giay))
+        << "| " << id
+        << " |" << endl
+        << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
     }
 };
 // class Qli Admin
@@ -295,9 +297,10 @@ QLAC::QLAC(string filename)
     string line;
     while (getline(file, line))
     {
-        string hoten, ngaysinh_str, sdt, ngayden_str, giovao_str, giora_str;
+        string hoten, ngaysinh_str, sdt, ngayden_str, giovao_str, giora_str, id_str;
         Day ngaysinh, ngayden;
         Time giovao, giora;
+        int id;
         istringstream ss(line);
         getline(ss, hoten, ',');
         getline(ss, ngaysinh_str, ',');
@@ -305,33 +308,45 @@ QLAC::QLAC(string filename)
         getline(ss, ngayden_str, ',');
         getline(ss, giovao_str, ',');
         getline(ss, giora_str, ',');
+        getline(ss, id_str, ',');
         
         sscanf(ngaysinh_str.c_str(), "%d/%d/%d", &ngaysinh.ngay, &ngaysinh.thang, &ngaysinh.nam);
         sscanf(ngayden_str.c_str(), "%d/%d/%d", &ngayden.ngay, &ngayden.thang, &ngayden.nam);
         sscanf(giovao_str.c_str(), "%d:%d:%d", &giovao.gio, &giovao.phut, &giovao.giay);
         sscanf(giora_str.c_str(), "%d:%d:%d", &giora.gio, &giora.phut, &giora.giay);
+        sscanf(id_str.c_str(), "%d", &id);
         hoten.erase(0, hoten.find_first_not_of(" "));
         sdt.erase(0, sdt.find_first_not_of(" "));
-        Person *p = new Acti(hoten, ngaysinh, sdt, ngayden, giovao, giora);
+        Person *p = new Acti(hoten, ngaysinh, sdt, ngayden, giovao, giora, id);
         AC[n++] = p;
     }
 }
 void QLAC::add(string nameFile) 
 {
-    AC(nameFile);
     fstream file(nameFile, ios::app);
     string HoTen, SDT;
     Day NgaySinh, NgayDen;
     Time GioVao, GioRa;
     int id;
+    pair<int,int> checkSan[SL];  // Tạo ra một mảng pair để lưu hai giá trị gồm id sân và trạng thái sân 
     cout << "Nhap ho ten: ";  getline(cin, HoTen);
     cout << "Nhap ngay sinh: "; NhapDay(NgaySinh);
     cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
     cout << "Nhap ngay vao: "; NhapDay(NgayDen);
     cout << "Nhap gio vao: "; NhapTime(GioVao);
     cout << "Nhap gio ra: "; NhapTime(GioRa);
+    
+    // for (int i=0; i<n; i++)
+    // {
+    //     Acti::getNgayDen();
+    //     Day ngayDenCuaAC = AC[i]->getNgayDen();
+    //     cout << "NgayDen cua AC[" << i << "]: " 
+    //              << ngayDenCuaAC.ngay << "/" 
+    //              << ngayDenCuaAC.thang << "/" 
+    //              << ngayDenCuaAC.nam << endl;
+    // }
 
-	Person *p = new Acti(HoTen, NgaySinh, SDT, NgayDen, GioVao, GioRa);
+	Person *p = new Acti(HoTen, NgaySinh, SDT, NgayDen, GioVao, GioRa, id);
     AC[n++] = p;
     file <<HoTen <<","<<NgaySinh.ngay<<"/"<<NgaySinh.thang<<"/"<<NgaySinh.nam<<","<<SDT<<","<<NgayDen.ngay<<"/"<<NgayDen.thang<<"/"<<NgayDen.nam\
     <<","<<GioVao.gio<<":"<<GioVao.phut<<":"<<GioVao.giay<<","<<GioRa.gio<<":"<<GioRa.phut<<":"<<GioRa.giay<<endl;
@@ -449,7 +464,7 @@ int main()
     AC.hienDS();
     TitleUser();
     U.hienDS();
-    // AC.add(FActivity);
+   
 
     setColor(10);
     	printf("+------------------------------------------------+\n");
