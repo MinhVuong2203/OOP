@@ -300,7 +300,6 @@ void hidePassword(std::string &password) {
     }
 }
 
-
 int main() 
 {
     //Khai báo file
