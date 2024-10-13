@@ -1,18 +1,23 @@
 #include <iostream>
-#include <string.h>
+#include <string>
 #include <ctype.h>
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
 #include <iomanip>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
+const int SL = 20;
+
+// Tạo màu
 void setColor(int color) {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, color);
 }
+
 // Xử lí Time
 struct Time {
     int gio, phut, giay;
@@ -88,7 +93,10 @@ public:
     string getSDT() { return SDT; }
 
     virtual void hienThiThongTin() {
-        cout << Hoten << " " << NgaySinh.ngay << "/" << NgaySinh.thang << "/" << NgaySinh.nam << " " <<  SDT << " ";
+        cout << left 
+         << "| " << setw(19) << Hoten 
+         << "| " << setw(14) << (to_string(NgaySinh.ngay) + "/" + to_string(NgaySinh.thang) + "/" + to_string(NgaySinh.nam))
+         << "| " << setw(14) << SDT;
     }
 };
 
@@ -117,7 +125,10 @@ public:
 
     void hienThiThongTin() override {
         Person::hienThiThongTin();
-        cout << username << " " << password << endl;
+        cout<< "| " << setw(14) << username
+            << "| " << setw(14) << password
+            << "|" << endl
+            << "+--------------------+---------------+---------------+---------------+---------------+" << endl;
     }
 };
 
@@ -127,9 +138,23 @@ private:
     int n;
 public:
     QLAD() { this->n = 0; } 
-	void add(string nameFile) 
+	
+    void add(string nameFile);
+    void hienDS() 
 	{
+        for (int i = 0; i < n; i++) {
+            A[i]->hienThiThongTin();
+        }
+    }
+};
+void QLAD::add(string nameFile) 
+{
         fstream file(nameFile, ios::app);
+        if (!file.is_open())
+        {
+            cerr << "Unable to open file: " << nameFile << endl;
+            return;
+        }
         string HoTen, SDT, CCCD;
         Day NgaySinh;
         cout << "Nhap ho ten: ";  getline(cin, HoTen);
@@ -138,53 +163,20 @@ public:
         cout << "Nhap CCCD: ";  getline(cin, CCCD);
 		Person *p = new Admin(HoTen, NgaySinh, SDT, CCCD);
         A[n++] = p;
-        file << "\n" << HoTen <<" "<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<" "<< SDT <<" "<< CCCD;
-        if (!file.is_open())
-        {
-            cerr << "Unable to open file: " << nameFile << endl;
-            return;
-        }
+        file << HoTen <<" "<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<" "<< SDT <<" "<< CCCD << endl;
+        
         cout << "Add Admin successful!" << endl;
         file.close();
-    }
-    
-    void hienDS() 
-	{
-        for (int i = 0; i < n; i++) {
-            A[i]->hienThiThongTin();
-        }
-    }
-};
+}
 
 class QLUS{
 private:
-    Person *U[20];
+    Person *U[100];
     int n;
 
 public:
-    QLUS() { this->n = 0; }
-    void add(string nameFile) 
-	{
-        fstream file(nameFile, ios::app);
-        string HoTen, SDT, MK, TDN;
-        Day NgaySinh;
-        cout << "Nhap ho ten: ";  getline(cin, HoTen);
-        cout << "Nhap ngay sinh: "; NhapDay(NgaySinh);
-        cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
-        cout << "Ten dang nhap: ";  getline(cin, TDN);
-        cout << "Mat khau: ";   getline(cin, MK);
-		Person *p = new User(HoTen, NgaySinh, SDT, TDN, MK);
-        U[n++] = p;
-        file << "\n" <<HoTen <<" "<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<" "<< SDT <<" "<< TDN <<" "<< MK;
-        if (!file.is_open())
-        {
-            cerr << "Unable to open file: " << nameFile << endl;
-            return;
-        }
-        cout << "Add User successful!" << endl;
-        file.close();
-    }
-    
+    QLUS(string filename);
+    void add(string nameFile);
     void hienDS() 
 	{
         for (int i = 0; i < n; i++) 
@@ -193,7 +185,62 @@ public:
         }
     }
 };
+QLUS::QLUS(string filename)
+{
+    this->n = 0;
+    ifstream file(filename);
+    if (!file.is_open()) {
+    cerr << "Unable to open file" << endl;
+        return;
+    }
+    
+    string line;
+    while (getline(file, line))
+    {
+        string hoten, ngaysinh_str, sdt, tdn, mk;
+        Day ngaysinh;
+        istringstream ss(line);
+        getline(ss, hoten, ',');
+        getline(ss, ngaysinh_str, ',');
+        getline(ss, sdt, ',');
+        getline(ss, tdn, ',');
+        getline(ss, mk, ',');
+        sscanf(ngaysinh_str.c_str(), "%d/%d/%d", &ngaysinh.ngay, &ngaysinh.thang, &ngaysinh.nam);
+        hoten.erase(0, hoten.find_first_not_of(" "));
+        sdt.erase(0, sdt.find_first_not_of(" "));
+        tdn.erase(0, tdn.find_first_not_of(" "));
+        mk.erase(0, mk.find_first_not_of(" "));
+        Person *p = new User(hoten, ngaysinh, sdt, tdn, mk);
+        U[n++] = p;
+    }
+}
 
+void QLUS::add(string nameFile) 
+{
+    fstream file(nameFile, ios::app);
+    string HoTen, SDT, MK, TDN;
+    Day NgaySinh;
+    cout << "Nhap ho ten: ";  getline(cin, HoTen);
+    cout << "Nhap ngay sinh: "; NhapDay(NgaySinh);
+    cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
+    cout << "Ten dang nhap: ";  getline(cin, TDN);
+    cout << "Mat khau: ";   getline(cin, MK);
+	Person *p = new User(HoTen, NgaySinh, SDT, TDN, MK);
+    U[n++] = p;
+    file <<HoTen <<","<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<","<< SDT <<","<< TDN <<","<< MK << endl;
+    if (!file.is_open())
+    {
+        cerr << "Unable to open file: " << nameFile << endl;
+        return;
+    }
+    cout << "Add User successful!" << endl;
+    file.close();
+}
+
+void Menu()
+{
+    cout << "----------------"; setColor(11); cout << "MENU"; setColor(7); cout << "---------------\n";
+}
 
 void TitleAdmin()
 {
@@ -203,14 +250,12 @@ void TitleAdmin()
         << setw(10) << "ID" << endl;
 }
 
-void TitleUser()
+void TitleUser() 
 {
-	cout << left << setw(20) << "Ho ten" 
-        << setw(15) << "Ngay Sinh" 
-        << setw(15) << "SDT" 
-        << setw(10) << "Ngay vao"
-        << setw(10) << "Gio Vao"
-        << setw(10) << "Gio Ra" << endl;
+    cout << left 
+         << "+--------------------+---------------+---------------+---------------+---------------+" << endl
+         << "|       Ho ten       |   Ngay Sinh   |     SDT       | Ten dang nhap |    Mat khau   |" << endl
+         << "+--------------------+---------------+---------------+---------------+---------------+" << endl;
 }
 
 int authenticateUser(string username, string password, string FilePass) {
@@ -256,14 +301,18 @@ void hidePassword(std::string &password) {
 }
 
 
-
 int main() 
 {
+    //Khai báo file
+    string FAdmin = "assets//Admin.txt";
+    string FUser = "assets//User.txt";
+    string FRetail = "assets//Retail.txt";
+    string FActivity = "assets//Activity.txt";
+
     QLAD AD;
-    QLUS U;
-    string HoTen, id, SDT;
-    Day NgaySinh, NgayVao;
-    Time GioVao, GioRa;
+    QLUS U(FUser);
+    int San[SL];
+
     string username, password;
     time_t presentTime;
     char delay;
@@ -281,13 +330,7 @@ int main()
     time.gio = now->tm_hour; time.phut = now->tm_min; time.giay = now->tm_sec;
     cout << time.gio << ":" << time.phut << ":" << time.giay << "PM"<< endl;
 
-    //Khai báo file
-    string FileAdminPass = "assets//FileAdminPass.txt";
-    string FileUserPass = "assets//FileUserPass.txt";
-    string FAdmin = "assets//Admin.txt";
-    string FUser = "assets//User.txt";
-    string FRetail = "assets//Retail.txt";
-    string FActivity = "assets//Activity.txt";
+    
 
 
     setColor(10);
@@ -301,7 +344,7 @@ int main()
 	{
         case 1:    
             read_loopA2:	system("cls");
-            cout << "---------MENU---------\n";
+            Menu();
 			cout << "1. Ban muon dang ky tai khoan\n2. Dang nhap\n3. Quay lai\n4. Thoat\nMoi nhap lua chon cua ban: ";
         	char Achoice2;
 			Achoice2=getche();	system("cls");	
@@ -309,21 +352,60 @@ int main()
 			{
                 case 1: AD.add(FAdmin); break;
                 case 2: 
+                {
+                    read_loop_autA: system("cls");
+                    cout << "Ten dang nhap (viet lien, khong dau): "; cin >> username; 
+                    cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynA1 = getche();
+                    if (ynA1 == 'y' ) { cout << "\nMat khau (viet lien, khong dau): ";  hidePassword(password);}
+                    else if (ynA1 == 'n') { cout << "\nMat khau (viet lien, khong dau): ";  cin >> password;}
+                    else {
+                        cout << "\nLua chon khong hop le. Enter de quay lai!";
+                        delay = getch(); goto read_loop_autA;
+                    }
+                    
+                    if (authenticateUser(username,password, FAdmin)) 
                     {
-                        read_loop_autA: system("cls");
-                        cout << "Ten dang nhap (viet lien, khong dau): "; cin >> username; 
-                        cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynA1 = getche();
-                        if (ynA1 == 'y' ) { cout << "\nMat khau (viet lien, khong dau): ";  hidePassword(password);}
-                        else if (ynA1 == 'n') { cout << "\nMat khau (viet lien, khong dau): ";  cin >> password;}
-                        else {
-                            cout << "\nLua chon khong hop le. Enter de quay lai!";
-                            delay = getch(); goto read_loop_autA;
-                        }
-                       
-                        if (authenticateUser(username,password, FAdmin)) 
+                        cout << "\n<<< Dang nhap thanh cong>>>" << endl; 
+                        delay = getch();
+                        read_loopA3: system("cls");
+                        Menu();
+                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4.Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Achoice3 = getche(); 
+                        switch (Achoice3 - '0')
                         {
-                            cout << "\n<<< Dang nhap thanh cong>>>" << endl; 
-                            // Thực hiện công việc
+                            case 1:
+                            {   system("cls");
+                                TitleUser();
+                                U.hienDS();
+                                Menu();
+                                cout << "1. Them user\n2. Xoa user\n3. Sua user\n4.Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Achoice4 = getche(); 
+                                switch (Achoice4 - '0')
+                                {
+                                case 1:
+                                break;
+                                case 2:
+                                break;
+                                case 3:
+                                break;
+                                case 4: goto read_loopA3;
+                                case 5:
+                                return 0;
+                                default:
+                                    break;
+                                }
+                            }
+                            break;
+                            case 2:
+                            break;
+                            case 3:
+                            break;
+                            case 4: goto read_loopA2;
+                            break;
+                            case 5:
+                            return 0;
+                            default:
+                            break;
+                        }
+                        // Thực hiện công việc    
                         }
                         else 
                         {
@@ -331,7 +413,7 @@ int main()
                             delay = getche();
                             goto read_loop_autA;
                         }
-                    }
+                }
                 break;
                 case 3: goto read_loopA2;
                 case 4: break;
@@ -340,7 +422,7 @@ int main()
 
         case 2: 
             read_loopU2:	system("cls");
-            cout << "---------MENU---------\n";
+            Menu();
 			cout << "1. Ban muon dang ky tai khoan\n2. Dang nhap\n3. Quay lai\n4. Thoat\nMoi nhap lua chon cua ban:";
             char Uchoice2;
 			Uchoice2=getche();	system("cls");	
@@ -348,32 +430,32 @@ int main()
 			{
                 case 1: 
                     U.add(FUser); 
-
                     break;
                 case 2: 
-                    {
-                        read_loop_autU: system("cls");
-                        cout << "Ten dang nhap (viet lien, khong dau): "; cin >> username; 
-                        cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynU1 = getche();
-                        if (ynU1 == 'y' ) { cout << "\nMat khau (viet lien, khong dau): ";  hidePassword(password);}
-                        else if (ynU1 == 'n') { cout << "\nMat khau (viet lien, khong dau): ";  cin >> password;}
-                        else {
-                            cout << "\nLua chon khong hop le. Enter de quay lai!";
-                            delay = getch(); goto read_loop_autU;
-                        }
-                       
-                        if (authenticateUser(username,password, FUser))
-                        {
-                            cout << "\n<<< Dang nhap thanh cong >>>" << endl;
-                            // Thực hiện công việc
-                        }
-                        else 
-                        {
-                            cout << "\n<<< Dang nhap that bai. Enter de dang nhap lai! >>>" << endl;
-                            delay = getche();
-                            goto read_loop_autU;
-                        }
+                {
+                    read_loop_autU: system("cls");
+                    cout << "Ten dang nhap (viet lien, khong dau): "; cin >> username; 
+                    cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynU1 = getche();
+                    if (ynU1 == 'y' ) { cout << "\nMat khau (viet lien, khong dau): ";  hidePassword(password);}
+                    else if (ynU1 == 'n') { cout << "\nMat khau (viet lien, khong dau): ";  cin >> password;}
+                    else {
+                        cout << "\nLua chon khong hop le. Enter de quay lai!";
+                        delay = getch(); goto read_loop_autU;
                     }
+                    
+                    if (authenticateUser(username,password, FUser))
+                    {
+                        cout << "\n<<< Dang nhap thanh cong >>>" << endl;
+                        
+                        // Thực hiện công việc
+                    }
+                    else 
+                    {
+                        cout << "\n<<< Dang nhap that bai. Enter de dang nhap lai! >>>" << endl;
+                        delay = getche();
+                        goto read_loop_autU;
+                    }
+                }
                 break;
                 case 3: goto read_loopU2;
                 case 4: break;
