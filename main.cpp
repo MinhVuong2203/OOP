@@ -79,6 +79,37 @@ void XuatDay(Day x)
 {
     cout << x.ngay << "/" << x.thang << "/" << x.nam;
 }
+int compareTime(Day a, Day b) //hàm so sánh ngày nếu ngày a > b thì trả về 1 ngược lại trả về -1, nếu bằng nhau trả về 0
+{
+    if (a.nam > b.nam) return 1;
+    if (a.nam < b.nam) return -1;
+    if (a.thang > b.thang) return 1;
+    if (a.thang < b.thang) return -1;
+    if (a.ngay > b.ngay) return 1;
+    if (a.ngay < b.ngay) return -1;
+    return 0;
+}
+
+int distanceTime(Day a, Day b)  //Hàm tính khoảng cách giữa 2 ngày
+{
+	int t,luongthang=0;
+	t = (a.thang < b.thang)?  a.thang+12:a.thang;
+	for (int i=b.thang; i<t; i++)
+	{
+		int j=i;
+		if (i>12) j=i-12;
+			switch(j)
+			{
+			case 1: case 3: case 5: case 7:  case 8: case 10: case 12: luongthang++; break;
+			case 4: case 6: case 9: case 11: break;
+			case 2: if (a.nam%4 == 0) 
+					luongthang--;
+				else
+					luongthang = luongthang - 2;  break;
+			}		
+	}
+	return (a.nam - b.nam)*365 + (a.thang-b.thang)*30+luongthang +(a.ngay - b.ngay);
+}
 
 //các class liên quan
 class Person{
@@ -120,45 +151,6 @@ public:
         cout << CCCD << endl;
     }
 };
-// class đối tượng user
-class User : public Person {
-private:
-    string username;
-    string password;
-
-public:
-    User() {}
-    User(string HoTen, Day NgaySinh, string SDT, string TDN, string MK) : Person(HoTen, NgaySinh, SDT), username(TDN), password(MK) {}
-
-    void hienThiThongTin() override {
-        Person::hienThiThongTin();
-        cout<< "| " << setw(14) << username
-            << "| " << setw(14) << password
-            << "|" << endl
-            << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
-    }
-};
-// class Activity để lưu trữ các hoạt động của user
-class Acti : public Person {
-private:
-    Day NgayDen;
-    Time GioVao, GioRa;
-    int id;
-public:
-    Acti() {}
-    Acti(string HoTen, Day NgaySinh, string SDT, Day ngayden, Time giovao, Time giora, int ID) : Person(HoTen, NgaySinh, SDT), NgayDen(ngayden), GioVao(giovao), GioRa(giora), id(ID){}
-    Day getNgayDen() {return NgayDen;}
-    void hienThiThongTin() override {
-        Person::hienThiThongTin();
-        cout<< "| " << setw(10) << (to_string(NgayDen.ngay) + "/" + to_string(NgayDen.thang) + "/" + to_string(NgayDen.nam))
-        << "| " << setw(10) << (to_string(GioVao.gio) + ":" + to_string(GioVao.phut) + ":" + to_string(GioVao.giay))
-        << "| " << setw(10) << (to_string(GioRa.gio) + ":" + to_string(GioRa.phut) + ":" + to_string(GioRa.giay))
-        << "| " << id
-        << " |" << endl
-        << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
-    }
-};
-// class Qli Admin
 class QLAD{
 private:
     Person *A[20];
@@ -197,7 +189,25 @@ void QLAD::add(string nameFile)
         cout << "Add Admin successful!" << endl;
         file.close();
 }
-// Class Qli user
+
+// class đối tượng user
+class User : public Person {
+private:
+    string username;
+    string password;
+
+public:
+    User() {}
+    User(string HoTen, Day NgaySinh, string SDT, string TDN, string MK) : Person(HoTen, NgaySinh, SDT), username(TDN), password(MK) {}
+
+    void hienThiThongTin() override {
+        Person::hienThiThongTin();
+        cout<< "| " << setw(14) << username
+            << "| " << setw(14) << password
+            << "|" << endl
+            << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
+    }
+};
 class QLUS{
 private:
     Person *U[100];
@@ -244,7 +254,6 @@ QLUS::QLUS(string filename)
         U[n++] = p;
     }
 }
-
 void QLUS::add(string nameFile) 
 {
     fstream file(nameFile, ios::app);
@@ -267,6 +276,30 @@ void QLUS::add(string nameFile)
     file.close();
 }
 
+
+// class Activity để lưu trữ các hoạt động của user
+class Acti : public Person {
+private:
+    Day NgayDen;
+    Time GioVao, GioRa;
+    int id;
+public:
+    Acti() {}
+    Acti(string HoTen, Day NgaySinh, string SDT, Day ngayden, Time giovao, Time giora, int ID) : Person(HoTen, NgaySinh, SDT), NgayDen(ngayden), GioVao(giovao), GioRa(giora), id(ID){}
+    Day getNgayDen() {return NgayDen;}
+    Time getGioVao() {return GioVao;}
+    Time getGioRa() {return GioRa;}
+    int getID() {return id;}
+    void hienThiThongTin() override {
+        Person::hienThiThongTin();
+        cout<< "| " << setw(10) << (to_string(NgayDen.ngay) + "/" + to_string(NgayDen.thang) + "/" + to_string(NgayDen.nam))
+        << "| " << setw(10) << (to_string(GioVao.gio) + ":" + to_string(GioVao.phut) + ":" + to_string(GioVao.giay))
+        << "| " << setw(10) << (to_string(GioRa.gio) + ":" + to_string(GioRa.phut) + ":" + to_string(GioRa.giay))
+        << "| " << id
+        << " |" << endl
+        << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
+    }
+};
 class QLAC{
 private:
     Person *AC[100];
@@ -274,6 +307,7 @@ private:
 
 public:
     QLAC(string filename);
+    ~QLAC();
     void add(string nameFile);
     void hienDS() 
 	{
@@ -284,7 +318,6 @@ public:
         }
     }
 };
-
 QLAC::QLAC(string filename)
 {
     this->n = 0;
@@ -321,41 +354,53 @@ QLAC::QLAC(string filename)
         AC[n++] = p;
     }
 }
+QLAC::~QLAC() {
+    for (int i = 0; i < n; i++) {
+        delete AC[i]; // Giải phóng từng đối tượng
+    }
+}
 void QLAC::add(string nameFile) 
 {
     fstream file(nameFile, ios::app);
+    if (!file.is_open())
+    {
+        cerr << "Unable to open file: " << nameFile << endl;
+        return;
+    }
     string HoTen, SDT;
     Day NgaySinh, NgayDen;
     Time GioVao, GioRa;
     int id;
-    pair<int,int> checkSan[SL];  // Tạo ra một mảng pair để lưu hai giá trị gồm id sân và trạng thái sân 
+    int San[SL] = {0}; // Tạo ra một mảng sân để lưu id và trạng thái sân thứ i có id là i+1, giá trị s[i] = 0 (sân trống), s[i] = 1 (sân có người)
+
     cout << "Nhap ho ten: ";  getline(cin, HoTen);
     cout << "Nhap ngay sinh: "; NhapDay(NgaySinh);
     cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
     cout << "Nhap ngay vao: "; NhapDay(NgayDen);
     cout << "Nhap gio vao: "; NhapTime(GioVao);
     cout << "Nhap gio ra: "; NhapTime(GioRa);
-    
-    // for (int i=0; i<n; i++)
-    // {
-    //     Acti::getNgayDen();
-    //     Day ngayDenCuaAC = AC[i]->getNgayDen();
-    //     cout << "NgayDen cua AC[" << i << "]: " 
-    //              << ngayDenCuaAC.ngay << "/" 
-    //              << ngayDenCuaAC.thang << "/" 
-    //              << ngayDenCuaAC.nam << endl;
-    // }
 
+    for (int i = 0; i < n; i++) 
+    {
+        Acti *ActiPtr = dynamic_cast<Acti*>(AC[i]);  //chuyển đổi kiểu person sang acti
+        if (ActiPtr != nullptr) 
+        {
+            if (compareTime(ActiPtr->getNgayDen(), NgayDen) > 0)
+            San[ActiPtr->getID()-1] = 1;
+        }
+    }
+    cout << "\nCac san con trong: ";
+    for ( int i=0; i<SL; i++)
+    {
+        if (San[i] == 0)
+        cout << i+1 << " ";
+    }
+    cout << "\nBan chon san: "; cin >> id;
 	Person *p = new Acti(HoTen, NgaySinh, SDT, NgayDen, GioVao, GioRa, id);
     AC[n++] = p;
     file <<HoTen <<","<<NgaySinh.ngay<<"/"<<NgaySinh.thang<<"/"<<NgaySinh.nam<<","<<SDT<<","<<NgayDen.ngay<<"/"<<NgayDen.thang<<"/"<<NgayDen.nam\
-    <<","<<GioVao.gio<<":"<<GioVao.phut<<":"<<GioVao.giay<<","<<GioRa.gio<<":"<<GioRa.phut<<":"<<GioRa.giay<<endl;
-    if (!file.is_open())
-    {
-        cerr << "Unable to open file: " << nameFile << endl;
-        return;
-    }
-    cout << "Add Activity successful!" << endl;
+    <<","<<GioVao.gio<<":"<<GioVao.phut<<":"<<GioVao.giay<<","<<GioRa.gio<<":"<<GioRa.phut<<":"<<GioRa.giay<<"," << id << endl;
+    cout << "Da dat san thanh cong!" << endl;
     file.close();
 }
 
@@ -464,6 +509,7 @@ int main()
     AC.hienDS();
     TitleUser();
     U.hienDS();
+    
    
 
     setColor(10);
