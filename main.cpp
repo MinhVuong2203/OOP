@@ -37,6 +37,10 @@ void NhapTime(Time &x)
         scanf("%d:%d:%d",&x.gio, &x.phut, &x.giay);
     }
 }
+void XuatTime(Time x)
+{
+    cout << x.gio <<":" << x.phut <<":"<<x.giay;
+}
 // Xử lí day
 struct Day {
     int ngay, thang, nam;
@@ -71,6 +75,10 @@ void NhapDay(Day &x)
         scanf("%d/%d/%d",&x.ngay, &x.thang, &x.nam);
 	}
 }
+void XuatDay(Day x)
+{
+    cout << x.ngay << "/" << x.thang << "/" << x.nam;
+}
 
 //các class liên quan
 class Person{
@@ -93,13 +101,12 @@ public:
     string getSDT() { return SDT; }
 
     virtual void hienThiThongTin() {
-        cout << left 
-         << "| " << setw(19) << Hoten 
-         << "| " << setw(14) << (to_string(NgaySinh.ngay) + "/" + to_string(NgaySinh.thang) + "/" + to_string(NgaySinh.nam))
-         << "| " << setw(14) << SDT;
+        cout << "| " << setw(19) << Hoten 
+            << "| " << setw(14) << (to_string(NgaySinh.ngay) + "/" + to_string(NgaySinh.thang) + "/" + to_string(NgaySinh.nam))
+            << "| " << setw(14) << SDT;
     }
 };
-
+// Class đối tượng admin
 class Admin : public Person {
 private:
     string CCCD;
@@ -113,7 +120,7 @@ public:
         cout << CCCD << endl;
     }
 };
-
+// class đối tượng user
 class User : public Person {
 private:
     string username;
@@ -128,10 +135,28 @@ public:
         cout<< "| " << setw(14) << username
             << "| " << setw(14) << password
             << "|" << endl
-            << "+--------------------+---------------+---------------+---------------+---------------+" << endl;
+            << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
     }
 };
+// class Activity để lưu trữ các hoạt động của user
+class Acti : public Person {
+private:
+    Day NgayDen;
+    Time GioVao, GioRa;
+public:
+    Acti() {}
+    Acti(string HoTen, Day NgaySinh, string SDT, Day ngayden, Time giovao, Time giora) : Person(HoTen, NgaySinh, SDT), NgayDen(ngayden), GioVao(giovao), GioRa(giora) {}
 
+    void hienThiThongTin() override {
+        Person::hienThiThongTin();
+        cout<< "| " << setw(14); XuatDay(NgayDen);
+        cout<< "| " << setw(14); XuatTime(GioVao);
+        cout<< "| " << setw(14); XuatTime(GioRa);
+        cout<< "|" << endl;
+        cout<< "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
+    }
+};
+// class Qli Admin
 class QLAD{
 private:
     Person *A[20];
@@ -142,10 +167,12 @@ public:
     void add(string nameFile);
     void hienDS() 
 	{
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) 
+        {
             A[i]->hienThiThongTin();
         }
     }
+    void fixAccountUser(string nameFile);
 };
 void QLAD::add(string nameFile) 
 {
@@ -168,7 +195,7 @@ void QLAD::add(string nameFile)
         cout << "Add Admin successful!" << endl;
         file.close();
 }
-
+// Class Qli user
 class QLUS{
 private:
     Person *U[100];
@@ -181,6 +208,7 @@ public:
 	{
         for (int i = 0; i < n; i++) 
 		{
+            cout << left << "| "; setColor(12); cout << setw(4) << i+1; setColor(7);
             U[i]->hienThiThongTin();
         }
     }
@@ -237,6 +265,85 @@ void QLUS::add(string nameFile)
     file.close();
 }
 
+class QLAC{
+private:
+    Person *AC[100];
+    int n;
+
+public:
+    QLAC(string filename);
+    void add(string nameFile);
+    void hienDS() 
+	{
+        for (int i = 0; i < n; i++) 
+		{
+            cout << left << "| "; setColor(12); cout << setw(4) << i+1; setColor(7);
+            AC[i]->hienThiThongTin();
+        }
+    }
+};
+
+QLAC::QLAC(string filename)
+{
+    this->n = 0;
+    ifstream file(filename);
+    if (!file.is_open()) {
+    cerr << "Unable to open file" << endl;
+        return;
+    }
+    
+    string line;
+    while (getline(file, line))
+    {
+        string hoten, ngaysinh_str, sdt, ngayden_str, giovao_str, giora_str;
+        Day ngaysinh, ngayden;
+        Time giovao, giora;
+        istringstream ss(line);
+        getline(ss, hoten, ',');
+        getline(ss, ngaysinh_str, ',');
+        getline(ss, sdt, ',');
+        getline(ss, ngayden_str, ',');
+        getline(ss, giovao_str, ',');
+        getline(ss, giora_str, ',');
+        
+        sscanf(ngaysinh_str.c_str(), "%d/%d/%d", &ngaysinh.ngay, &ngaysinh.thang, &ngaysinh.nam);
+        sscanf(ngayden_str.c_str(), "%d/%d/%d", &ngayden.ngay, &ngayden.thang, &ngayden.nam);
+        sscanf(giovao_str.c_str(), "%d:%d:%d", &giovao.gio, &giovao.phut, &giovao.giay);
+        sscanf(giora_str.c_str(), "%d:%d:%d", &giora.gio, &giora.phut, &giora.giay);
+        hoten.erase(0, hoten.find_first_not_of(" "));
+        sdt.erase(0, sdt.find_first_not_of(" "));
+        Person *p = new Acti(hoten, ngaysinh, sdt, ngayden, giovao, giora);
+        AC[n++] = p;
+    }
+}
+void QLAC::add(string nameFile) 
+{
+    fstream file(nameFile, ios::app);
+    string HoTen, SDT;
+    Day NgaySinh, NgayDen;
+    Time GioVao, GioRa;
+
+    cout << "Nhap ho ten: ";  getline(cin, HoTen);
+    cout << "Nhap ngay sinh: "; NhapDay(NgaySinh);
+    cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
+    cout << "Nhap ngay vao: "; NhapDay(NgayDen);
+    cout << "Nhap gio vao: "; NhapTime(GioVao);
+    cout << "Nhap gio ra: "; NhapTime(GioRa);
+	Person *p = new Acti(HoTen, NgaySinh, SDT, NgayDen, GioVao, GioRa);
+    AC[n++] = p;
+    file <<HoTen <<","<<NgaySinh.ngay<<"/"<<NgaySinh.thang<<"/"<<NgaySinh.nam<<","<<SDT<<","<<NgayDen.ngay<<"/"<<NgayDen.thang<<"/"<<NgayDen.nam\
+    <<","<<GioVao.gio<<":"<<GioVao.phut<<":"<<GioVao.giay<<","<<GioRa.gio<<":"<<GioRa.phut<<":"<<GioRa.giay<<endl;
+    if (!file.is_open())
+    {
+        cerr << "Unable to open file: " << nameFile << endl;
+        return;
+    }
+    cout << "Add Activity successful!" << endl;
+    file.close();
+}
+
+
+
 void Menu()
 {
     cout << "----------------"; setColor(11); cout << "MENU"; setColor(7); cout << "---------------\n";
@@ -251,34 +358,42 @@ void TitleAdmin()
 }
 
 void TitleUser() 
-{
+{   setColor(6);
     cout << left 
-         << "+--------------------+---------------+---------------+---------------+---------------+" << endl
-         << "|       Ho ten       |   Ngay Sinh   |     SDT       | Ten dang nhap |    Mat khau   |" << endl
-         << "+--------------------+---------------+---------------+---------------+---------------+" << endl;
+         << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl
+         << "| STT |       Ho ten       |   Ngay Sinh   |     SDT       | Ten dang nhap |    Mat khau   |" << endl
+         << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
+    setColor(7);
 }
 
 int authenticateUser(string username, string password, string FilePass) {
     ifstream file(FilePass);
-    if (!file.is_open())
-    {
+    if (!file.is_open()) {
         cerr << "Unable to open file: " << FilePass << endl;
         return 0;
     }
-
-    string fileUsername, filePassword;
-
-    while (file >> filePassword) {
-        if (fileUsername == username) {
-            file.close();
-            return (filePassword == password) ? 1 : 0;
+    string line;
+    getline(file, line);
+    stringstream ss(line);
+    string fileUsername, filePassword, item;
+    bool isFirst = true;
+    while (getline(ss, item, ',')) 
+    {
+        
+        if(isFirst){
+            filePassword = item;
+            fileUsername = "";
+            isFirst = false;
         }
-        else
-        fileUsername = filePassword;
+        else{
+            fileUsername = filePassword;
+            filePassword = item;
+        }
+        if (fileUsername == username && filePassword == password) return 1;
     }
 
     file.close();
-    return 0;
+    return 0; // Username not found
 }
 
 void hidePassword(std::string &password) {
@@ -310,6 +425,7 @@ int main()
 
     QLAD AD;
     QLUS U(FUser);
+    QLAC AC(FActivity);
     int San[SL];
 
     string username, password;
@@ -329,8 +445,9 @@ int main()
     time.gio = now->tm_hour; time.phut = now->tm_min; time.giay = now->tm_sec;
     cout << time.gio << ":" << time.phut << ":" << time.giay << "PM"<< endl;
 
-    
-
+    TitleUser();
+    U.hienDS();
+    // AC.add(FActivity);
 
     setColor(10);
     	printf("+------------------------------------------------+\n");
@@ -376,11 +493,11 @@ int main()
                                 TitleUser();
                                 U.hienDS();
                                 Menu();
-                                cout << "1. Them user\n2. Xoa user\n3. Sua user\n4.Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Achoice4 = getche(); 
+                                cout << "1. Them user\n2. Xoa user\n3. Sua user\n4.Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Achoice4 = getche(); cin.ignore();
                                 switch (Achoice4 - '0')
                                 {
-                                case 1:
-                                break;
+                                case 1: cout << endl; U.add(FUser); TitleUser(); U.hienDS(); delay = getch(); 
+                                goto read_loopA3;
                                 case 2:
                                 break;
                                 case 3:
@@ -444,9 +561,26 @@ int main()
                     
                     if (authenticateUser(username,password, FUser))
                     {
-                        cout << "\n<<< Dang nhap thanh cong >>>" << endl;
-                        
+                        cout << "\n<<< Dang nhap thanh cong>>>" << endl; 
                         // Thực hiện công việc
+                        delay = getch();
+                        read_loopU3: system("cls");
+                        Menu();
+                        cout << "1. Dat san\n2. Xem lich su dat\n3. Xoa dat san\n4. Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Uchoice3 = getche(); cin.ignore();
+                        switch (Uchoice3 - '0')
+                        {
+                            case 1: cout << endl; AC.add(FActivity);
+                            break;
+                            case 2:
+                            break;
+                            case 3:
+                            break;
+                            case 4:
+                            case 5: 
+                            return 0;
+                            default:
+                                break;
+                        }
                     }
                     else 
                     {
