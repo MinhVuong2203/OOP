@@ -41,6 +41,17 @@ void XuatTime(Time x)
 {
     cout << x.gio <<":" << x.phut <<":"<<x.giay;
 }
+int compareTime(Time a, Time b)
+{
+    if (a.gio > b.gio) return 1;
+    if (a.gio < b.gio) return -1;
+    if (a.phut > b.phut) return 1;
+    if (a.phut < b.phut) return -1;
+    if (a.giay > b.giay) return 1;
+    if (a.giay < b.giay) return -1;
+    return 0;
+}
+
 // Xử lí day
 struct Day {
     int ngay, thang, nam;
@@ -79,7 +90,7 @@ void XuatDay(Day x)
 {
     cout << x.ngay << "/" << x.thang << "/" << x.nam;
 }
-int compareTime(Day a, Day b) //hàm so sánh ngày nếu ngày a > b thì trả về 1 ngược lại trả về -1, nếu bằng nhau trả về 0
+int compareDay(Day a, Day b) //hàm so sánh ngày nếu ngày a > b thì trả về 1 ngược lại trả về -1, nếu bằng nhau trả về 0
 {
     if (a.nam > b.nam) return 1;
     if (a.nam < b.nam) return -1;
@@ -126,9 +137,7 @@ public:
     }
 
     string getHoten() { return Hoten; }
-    int getNgay() { return NgaySinh.ngay; }
-    int getThang() { return NgaySinh.thang; }
-    int getNam() { return NgaySinh.nam; }
+    Day getNgaySinh(){return NgaySinh;};
     string getSDT() { return SDT; }
 
     virtual void hienThiThongTin() {
@@ -198,6 +207,7 @@ private:
 
 public:
     User() {}
+    
     User(string HoTen, Day NgaySinh, string SDT, string TDN, string MK) : Person(HoTen, NgaySinh, SDT), username(TDN), password(MK) {}
 
     void hienThiThongTin() override {
@@ -207,6 +217,7 @@ public:
             << "|" << endl
             << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
     }
+    string getUsername() {return this->username;}
 };
 class QLUS{
 private:
@@ -224,6 +235,17 @@ public:
             U[i]->hienThiThongTin();
         }
     }
+    User *getUser(string username)
+    {
+        for (int i=0; i<n; i++)
+        {
+            User *ActiPtr = dynamic_cast<User*>(U[i]);
+            if (ActiPtr != nullptr && ActiPtr->getUsername() == username)
+            return ActiPtr;   
+        }
+        return nullptr;
+    }
+    
 };
 QLUS::QLUS(string filename)
 {
@@ -290,6 +312,7 @@ public:
     Time getGioVao() {return GioVao;}
     Time getGioRa() {return GioRa;}
     int getID() {return id;}
+    
     void hienThiThongTin() override {
         Person::hienThiThongTin();
         cout<< "| " << setw(10) << (to_string(NgayDen.ngay) + "/" + to_string(NgayDen.thang) + "/" + to_string(NgayDen.nam))
@@ -300,7 +323,8 @@ public:
         << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
     }
 };
-class QLAC{
+class QLAC
+{
 private:
     Person *AC[100];
     int n;
@@ -308,7 +332,7 @@ private:
 public:
     QLAC(string filename);
     ~QLAC();
-    void add(string nameFile);
+    void add(string nameFile, string HoTen, Day NgaySinh, string SDT);
     void hienDS() 
 	{
         for (int i = 0; i < n; i++) 
@@ -317,6 +341,7 @@ public:
             AC[i]->hienThiThongTin();
         }
     }
+   
 };
 QLAC::QLAC(string filename)
 {
@@ -359,7 +384,7 @@ QLAC::~QLAC() {
         delete AC[i]; // Giải phóng từng đối tượng
     }
 }
-void QLAC::add(string nameFile) 
+void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT) 
 {
     fstream file(nameFile, ios::app);
     if (!file.is_open())
@@ -367,15 +392,11 @@ void QLAC::add(string nameFile)
         cerr << "Unable to open file: " << nameFile << endl;
         return;
     }
-    string HoTen, SDT;
-    Day NgaySinh, NgayDen;
+    Day NgayDen;
     Time GioVao, GioRa;
     int id;
     int San[SL] = {0}; // Tạo ra một mảng sân để lưu id và trạng thái sân thứ i có id là i+1, giá trị s[i] = 0 (sân trống), s[i] = 1 (sân có người)
 
-    cout << "Nhap ho ten: ";  getline(cin, HoTen);
-    cout << "Nhap ngay sinh: "; NhapDay(NgaySinh);
-    cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
     cout << "Nhap ngay vao: "; NhapDay(NgayDen);
     cout << "Nhap gio vao: "; NhapTime(GioVao);
     cout << "Nhap gio ra: "; NhapTime(GioRa);
@@ -385,17 +406,33 @@ void QLAC::add(string nameFile)
         Acti *ActiPtr = dynamic_cast<Acti*>(AC[i]);  //chuyển đổi kiểu person sang acti
         if (ActiPtr != nullptr) 
         {
-            if (compareTime(ActiPtr->getNgayDen(), NgayDen) > 0)
-            San[ActiPtr->getID()-1] = 1;
+            if (compareDay(ActiPtr->getNgayDen(), NgayDen) == 0)
+            {
+                if (compareTime(ActiPtr->getGioVao(), GioRa) <=0 && compareTime(ActiPtr->getGioRa(), GioRa) >=0) //TH1
+                    San[ActiPtr->getID()-1] = 1;
+                if (compareTime(ActiPtr->getGioVao(), GioVao) <=0 && compareTime(ActiPtr->getGioRa(), GioVao) >=0)  //TH2  
+                    San[ActiPtr->getID()-1] = 1;
+                if (compareTime(ActiPtr->getGioVao(), GioVao) >=0 && compareTime(ActiPtr->getGioRa(), GioRa) <=0) //TH3
+                    San[ActiPtr->getID()-1] = 1;
+                if (compareTime(ActiPtr->getGioVao(), GioVao) <=0 && compareTime(ActiPtr->getGioRa(), GioRa) >=0) //TH4
+                    San[ActiPtr->getID()-1] = 1;    
+            }
         }
     }
     cout << "\nCac san con trong: ";
     for ( int i=0; i<SL; i++)
     {
         if (San[i] == 0)
-        cout << i+1 << " ";
+        {
+            cout << "| "; cout << i+1;  cout << " |  ";
+        }
     }
-    cout << "\nBan chon san: "; cin >> id;
+    cout << "\nBan chon san:\n"; cin >> id;
+    while (San[id-1])
+    {
+        cout << "San nay da co nguoi. Vui long chon lai: ";
+        cin >> id;
+    }
 	Person *p = new Acti(HoTen, NgaySinh, SDT, NgayDen, GioVao, GioRa, id);
     AC[n++] = p;
     file <<HoTen <<","<<NgaySinh.ngay<<"/"<<NgaySinh.thang<<"/"<<NgaySinh.nam<<","<<SDT<<","<<NgayDen.ngay<<"/"<<NgayDen.thang<<"/"<<NgayDen.nam\
@@ -403,8 +440,6 @@ void QLAC::add(string nameFile)
     cout << "Da dat san thanh cong!" << endl;
     file.close();
 }
-
-
 
 void Menu()
 {
@@ -435,23 +470,29 @@ int authenticateUser(string username, string password, string FilePass) {
         return 0;
     }
     string line;
-    getline(file, line);
-    stringstream ss(line);
-    string fileUsername, filePassword, item;
-    bool isFirst = true;
-    while (getline(ss, item, ',')) 
+    stringstream ss;
+    while (getline(file, line))
     {
-        
-        if(isFirst){
-            filePassword = item;
-            fileUsername = "";
-            isFirst = false;
+        stringstream ss(line);
+        string fileUsername, filePassword, item;
+        bool isFirst = true;
+        while (getline(ss, item, ',')) 
+        {
+            
+            if(isFirst){
+                filePassword = item;
+                fileUsername = "";
+                isFirst = false;
+            }
+            else{
+                fileUsername = filePassword;
+                filePassword = item;
+            }
+            if (fileUsername == username && filePassword == password) {
+                file.close();
+                return 1;
+            }
         }
-        else{
-            fileUsername = filePassword;
-            filePassword = item;
-        }
-        if (fileUsername == username && filePassword == password) return 1;
     }
 
     file.close();
@@ -510,13 +551,12 @@ int main()
     TitleUser();
     U.hienDS();
     
-   
-
     setColor(10);
     	printf("+------------------------------------------------+\n");
       	printf("|     San cau long CIB xin kinh chao quy khach   |\n");
 		printf("+------------------------------------------------+\n\n");
     setColor(7);
+    read_loop1:
     cout << "1. Nguoi quan ly\t\t2. Nguoi dung\t\t3. Thoat\n\nMoi nhap lua chon cua ban: ";
     char choice1 = getche();	
     switch (choice1-'0') 
@@ -632,13 +672,17 @@ int main()
                         cout << "1. Dat san\n2. Xem lich su dat\n3. Xoa dat san\n4. Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Uchoice3 = getche(); cin.ignore();
                         switch (Uchoice3 - '0')
                         {
-                            case 1: cout << endl; AC.add(FActivity);
-                            break;
+                            case 1: 
+                            {
+                                User *x = U.getUser(username);
+                                cout << endl; AC.add(FActivity, x->getHoten(), x->getNgaySinh(), x->getSDT());
+                            }
+                            goto read_loopU3;
                             case 2:
                             break;
                             case 3:
                             break;
-                            case 4:
+                            case 4: goto read_loopU2;
                             case 5: 
                             return 0;
                             default:
@@ -653,7 +697,7 @@ int main()
                     }
                 }
                 break;
-                case 3: goto read_loopU2;
+                case 3: goto read_loop1;
                 case 4: break;
             }
         break; //case 2:
