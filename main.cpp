@@ -420,13 +420,13 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
         }
     }
     cout << "\nCac san con trong: ";
-    for ( int i=0; i<SL; i++)
+  for ( int i=0; i<SL; i++)
     {
-        if (San[i] == 0)
-        {
-            cout << "| "; cout << i+1;  cout << " |  ";
-        }
-    }
+        if (i%5==0) cout << endl << endl;
+        (San[i])? setColor(12) : setColor(2); 
+        cout << left <<  "| "; cout << setw(2) << i+1; cout<< " |  ";   
+    }	
+    setColor(7);    
     cout << "\nBan chon san:\n"; cin >> id;
     while (San[id-1])
     {
