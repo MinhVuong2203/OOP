@@ -427,7 +427,7 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
         cout << left <<  "| "; cout << setw(2) << i+1; cout<< " |  ";   
     }	
     setColor(7);    
-    cout << "\nBan chon san:\n"; cin >> id;
+    cout << "\nBan chon san: "; cin >> id;
     while (San[id-1])
     {
         cout << "San nay da co nguoi. Vui long chon lai: ";
@@ -676,6 +676,7 @@ int main()
                             {
                                 User *x = U.getUser(username);
                                 cout << endl; AC.add(FActivity, x->getHoten(), x->getNgaySinh(), x->getSDT());
+                                delay = getch();
                             }
                             goto read_loopU3;
                             case 2:
