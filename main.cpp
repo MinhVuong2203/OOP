@@ -187,13 +187,14 @@ void QLAD::add(string nameFile)
         }
         string HoTen, SDT, CCCD;
         Day NgaySinh;
+        cin.ignore();
         cout << "Nhap ho ten: ";  getline(cin, HoTen);
         cout << "Nhap ngay sinh: "; NhapDay(NgaySinh);
         cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
         cout << "Nhap CCCD: ";  getline(cin, CCCD);
 		Person *p = new Admin(HoTen, NgaySinh, SDT, CCCD);
         A[n++] = p;
-        file << HoTen <<" "<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<" "<< SDT <<" "<< CCCD << endl;
+        file << HoTen <<","<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<","<< SDT <<","<< CCCD << endl;
         
         cout << "Add Admin successful!" << endl;
         file.close();
@@ -573,9 +574,9 @@ int main()
                 case 2: 
                 {
                     read_loop_autA: system("cls");
-                    cout << "Ten dang nhap (viet lien, khong dau): "; cin >> username; 
+                    cout << "Ten dang nhap (SDT): "; cin >> username; 
                     cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynA1 = getche();
-                    if (ynA1 == 'y' ) { cout << "\nMat khau (viet lien, khong dau): ";  hidePassword(password);}
+                    if (ynA1 == 'y' ) { cout << "\nMat khau (CCCD): ";  hidePassword(password);}
                     else if (ynA1 == 'n') { cout << "\nMat khau (viet lien, khong dau): ";  cin >> password;}
                     else {
                         cout << "\nLua chon khong hop le. Enter de quay lai!";
@@ -588,7 +589,7 @@ int main()
                         delay = getch();
                         read_loopA3: system("cls");
                         Menu();
-                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4.Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Achoice3 = getche(); 
+                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Achoice3 = getche(); 
                         switch (Achoice3 - '0')
                         {
                             case 1:
