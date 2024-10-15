@@ -194,8 +194,7 @@ void QLAD::add(string nameFile)
         cout << "Nhap CCCD: ";  getline(cin, CCCD);
 		Person *p = new Admin(HoTen, NgaySinh, SDT, CCCD);
         A[n++] = p;
-        file << HoTen <<","<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<","<< SDT <<","<< CCCD << endl;
-        
+        file << HoTen <<","<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<","<< SDT <<","<< CCCD << endl; 
         cout << "Add Admin successful!" << endl;
         file.close();
 }
@@ -246,6 +245,7 @@ public:
         }
         return nullptr;
     }
+    
     
 };
 QLUS::QLUS(string filename)
@@ -299,7 +299,6 @@ void QLUS::add(string nameFile)
     file.close();
 }
 
-
 // class Activity để lưu trữ các hoạt động của user
 class Acti : public Person {
 private:
@@ -342,6 +341,7 @@ public:
             AC[i]->hienThiThongTin();
         }
     }
+    void Sreach(string Hoten);
    
 };
 QLAC::QLAC(string filename)
@@ -440,6 +440,14 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
     <<","<<GioVao.gio<<":"<<GioVao.phut<<":"<<GioVao.giay<<","<<GioRa.gio<<":"<<GioRa.phut<<":"<<GioRa.giay<<"," << id << endl;
     cout << "Da dat san thanh cong!" << endl;
     file.close();
+}
+void QLAC::Sreach(string Hoten)
+{
+    for (int i=0; i<n; i++)
+    {
+        if (AC[i]->getHoten() == Hoten)
+        AC[i]->hienThiThongTin();
+    }
 }
 
 void Menu()
@@ -617,6 +625,15 @@ int main()
                             case 2:
                             break;
                             case 3:
+                            {
+                                string hoten, sdt;
+                                Day day;
+                                cout << "\nhap ten user: "; cin.ignore(); cin >> hoten;
+                                cout << "Nhap ngay sinh: "; NhapDay(day);
+                                cout << "Nhap so dien thoai: "; cin.ignore(); cin >> sdt;
+                                cout << endl; AC.add(FActivity, hoten, day, sdt);
+                                delay = getch();
+                            }
                             break;
                             case 4: goto read_loopA2;
                             break;
@@ -671,16 +688,17 @@ int main()
                         read_loopU3: system("cls");
                         Menu();
                         cout << "1. Dat san\n2. Xem lich su dat\n3. Xoa dat san\n4. Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Uchoice3 = getche(); cin.ignore();
+                        User *x = U.getUser(username);
                         switch (Uchoice3 - '0')
                         {
                             case 1: 
                             {
-                                User *x = U.getUser(username);
                                 cout << endl; AC.add(FActivity, x->getHoten(), x->getNgaySinh(), x->getSDT());
                                 delay = getch();
                             }
                             goto read_loopU3;
-                            case 2:
+                            case 2: system("cls");
+                                AC.Sreach(x->getHoten());
                             break;
                             case 3:
                             break;
