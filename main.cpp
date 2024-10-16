@@ -21,9 +21,7 @@ int main()
     string FUser = "assets//User.txt";
     string FRetail = "assets//Retail.txt";
     string FActivity = "assets//Activity.txt";
-
-
-
+    
     QLAD AD;
     QLUS U(FUser);
     QLAC AC(FActivity);
