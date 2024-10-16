@@ -50,7 +50,6 @@ public:
     }
 };
 
- U[i]->getUser
 QLUS::QLUS(string filename)
 {
     this->n = 0;
