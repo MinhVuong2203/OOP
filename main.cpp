@@ -23,6 +23,7 @@ int main()
     string FRetail = "assets//Retail.txt";
     string FActivity = "assets//Activity.txt";
 
+
     QLAD AD;
     QLUS U(FUser);
     QLAC AC(FActivity);
@@ -44,6 +45,7 @@ int main()
     tm* now = localtime(&t);
     time.gio = now->tm_hour; time.phut = now->tm_min; time.giay = now->tm_sec;
     cout << time.gio << ":" << time.phut << ":" << time.giay << "PM"<< endl;
+
     AC.hienDS();
     TitleUser();
     U.hienDS();
