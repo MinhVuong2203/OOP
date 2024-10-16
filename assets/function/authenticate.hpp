@@ -2,7 +2,8 @@
 // #include "Person.hpp"
 using namespace std;
 
-int authenticateUser(string username, string password, string FilePass) {
+int authenticateUser(string username, string password, string FilePass) 
+{
     ifstream file(FilePass);
     if (!file.is_open()) {
         cerr << "Unable to open file: " << FilePass << endl;

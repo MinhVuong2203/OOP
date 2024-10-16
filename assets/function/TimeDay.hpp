@@ -25,7 +25,7 @@ void XuatTime(Time x)
 {
     cout << x.gio <<":" << x.phut <<":"<<x.giay;
 }
-int compareTime(Time a, Time b)
+int compareTime(Time a, Time b)  // a>b return 1, a<b return -1  a=b return 0
 {
     if (a.gio > b.gio) return 1;
     if (a.gio < b.gio) return -1;

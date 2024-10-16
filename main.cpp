@@ -21,7 +21,9 @@ int main()
     string FUser = "assets//User.txt";
     string FRetail = "assets//Retail.txt";
     string FActivity = "assets//Activity.txt";
+
     
+
     QLAD AD;
     QLUS U(FUser);
     QLAC AC(FActivity);
@@ -83,7 +85,7 @@ int main()
                     {
                         cout << "\n<<< Dang nhap thanh cong>>>" << endl; 
                         delay = getch();
-                        read_loopA3: system("cls");
+                        read_loopA3: system("cls"); //Xóa màn hình
                         Menu();
                         cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Achoice3 = getche(); 
                         switch (Achoice3 - '0')
@@ -144,7 +146,7 @@ int main()
                 case 4: break;
             }
         break;  //case 1
-
+//////////////////////////////////////////////////
         case 2: 
             read_loopU2:	system("cls");
             Menu();

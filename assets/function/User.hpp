@@ -48,9 +48,9 @@ public:
         }
         return nullptr;
     }
-    
-    
 };
+
+ U[i]->getUser
 QLUS::QLUS(string filename)
 {
     this->n = 0;
