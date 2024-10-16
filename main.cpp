@@ -1,17 +1,16 @@
 #include <iostream>
-// #include <string>
-// #include <ctype.h>
 #include <conio.h>
 #include <fstream>
 #include <sstream>
 
-#include "Title.hpp"  //liên kết với file Title
-#include "TimeDay.hpp"
-#include "Person.hpp"
-#include "Admin.hpp"
-#include "User.hpp"
-#include "Activity.hpp"
-#include "authenticate.hpp"
+#include "./assets/function/Title.hpp"  //liên kết với file Title
+#include "./assets/function/TimeDay.hpp"
+#include "./assets/function/Person.hpp"
+#include "./assets/function/Admin.hpp"
+#include "./assets/function/User.hpp"
+#include "./assets/function/Activity.hpp"
+#include "./assets/function/authenticate.hpp"
+
 
 using namespace std;
 
@@ -22,6 +21,7 @@ int main()
     string FUser = "assets//User.txt";
     string FRetail = "assets//Retail.txt";
     string FActivity = "assets//Activity.txt";
+
 
 
     QLAD AD;

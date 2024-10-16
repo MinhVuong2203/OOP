@@ -1,5 +1,6 @@
 #pragma once
 #include "Person.hpp"
+
 using namespace std;
 const int SL = 20;
 // class Activity để lưu trữ các hoạt động của user
