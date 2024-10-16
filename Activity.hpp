@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include "Person.hpp"
 using namespace std;
 const int SL = 20;
@@ -147,11 +146,12 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
 }
 void QLAC::History(string Hoten)
 {
+    int k = 0;
     for (int i=0; i<n; i++)
     {
         if (AC[i]->getHoten() == Hoten)
         {
-            cout << left << "| "; setColor(12); cout << setw(4) << i+1; setColor(7);
+            cout << left << "| "; setColor(12); cout << setw(4) << ++k; setColor(7);
             AC[i]->hienThiThongTin();
         }
     }
