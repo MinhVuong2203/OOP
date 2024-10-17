@@ -28,7 +28,7 @@ int main()
     string FActivity = "assets//Activity.txt";
 
 
-    QLAD AD;
+    QLAD AD(FAdmin);
     QLUS U(FUser);
     QLAC AC(FActivity);
     int San[SL];
@@ -88,8 +88,12 @@ int main()
                         delay = getch();
                         read_loopA3: system("cls"); //Xóa màn hình
                         Menu();
+<<<<<<< HEAD
                         cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n "; icon_cost(); cout << "  4. In hoa don\n";  icon_return(); cout << " 5. Quay lai\n"; icon_exit(); cout << " 6. Thoat\nNhap lua chon cua ban: "; 
                         char Achoice3 = getche();
+=======
+                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Xoa Admin\n5. Quay lai\n6. Thoat\nNhap lua chon cua ban: "; char Achoice3 = getche(); 
+>>>>>>> fd836bf43bcbd97994a30391d12875a000bf5104
                         switch (Achoice3 - '0')
                         {
                             case 1:
@@ -127,8 +131,21 @@ int main()
                                 delay = getch();
                             }
                             break;
+<<<<<<< HEAD
                             case 4: goto read_loopA2;
                             case 5:
+=======
+                            case 4:
+                            {
+                                AD.hienDS();
+                                AD.delAd(FAdmin);
+                                delay = getch();
+                                goto read_loopA3;
+                            }
+                            case 5: goto read_loopA2;
+                            break;
+                            case 6:
+>>>>>>> fd836bf43bcbd97994a30391d12875a000bf5104
                             return 0;
                             default:
                             break;
