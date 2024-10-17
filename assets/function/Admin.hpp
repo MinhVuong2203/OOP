@@ -23,7 +23,7 @@ private:
     int n;
 public:
     QLAD() { this->n = 0; } 
-	
+	~QLAD();
     void add(string nameFile);
     void hienDS() 
 	{
@@ -54,4 +54,9 @@ void QLAD::add(string nameFile)
         file << HoTen <<","<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<","<< SDT <<","<< CCCD << endl; 
         cout << "Add Admin successful!" << endl;
         file.close();
+}
+QLAD::~QLAD() {
+    for (int i = 0; i < n; i++) {
+        delete A[i]; // Giải phóng từng đối tượng
+    }
 }

@@ -29,6 +29,7 @@ private:
 
 public:
     QLUS(string filename);
+    ~QLUS();
     void add(string nameFile);
     void hienDS() 
 	{
@@ -99,4 +100,10 @@ void QLUS::add(string nameFile)
     }
     cout << "Add User successful!" << endl;
     file.close();
+}
+
+QLUS::~QLUS() {
+    for (int i = 0; i < n; i++) {
+        delete U[i]; // Giải phóng từng đối tượng
+    }
 }
