@@ -87,20 +87,17 @@ int main()
                         delay = getch();
                         read_loopA3: system("cls"); //Xóa màn hình
                         Menu();
-<<<<<<< HEAD
-<<<<<<< HEAD
+
                         cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n "; icon_cost(); cout << "  4. In hoa don\n";  icon_return(); cout << " 5. Quay lai\n"; icon_exit(); cout << " 6. Thoat\nNhap lua chon cua ban: "; 
                         char Achoice3 = getche();
-=======
+
                         cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Xoa Admin\n5. Quay lai\n6. Thoat\nNhap lua chon cua ban: "; char Achoice3 = getche(); 
->>>>>>> fd836bf43bcbd97994a30391d12875a000bf5104
-=======
+
 
                         cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n "; icon_cost(); cout << "  4. In hoa don\n";  icon_return(); cout << " 5. Quay lai\n"; icon_exit(); cout << " 6. Thoat\nNhap lua chon cua ban: "; 
                         char Achoice3 = getche();
                         cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Xoa Admin\n5. Quay lai\n6. Thoat\nNhap lua chon cua ban: "; 
 
->>>>>>> a7596ec7007f9c357db4016cdd37e83fd3219a24
                         switch (Achoice3 - '0')
                         {
                             case 1:
@@ -138,14 +135,8 @@ int main()
                                 delay = getch();
                             }
                             break;
-<<<<<<< HEAD
-<<<<<<< HEAD
                             case 4: goto read_loopA2;
                             case 5:
-=======
-=======
-
->>>>>>> a7596ec7007f9c357db4016cdd37e83fd3219a24
                             case 4:
                             {
                                 AD.hienDS();
@@ -156,11 +147,6 @@ int main()
                             case 5: goto read_loopA2;
                             break;
                             case 6:
-<<<<<<< HEAD
->>>>>>> fd836bf43bcbd97994a30391d12875a000bf5104
-=======
-
->>>>>>> a7596ec7007f9c357db4016cdd37e83fd3219a24
                             return 0;
                             default:
                             break;
