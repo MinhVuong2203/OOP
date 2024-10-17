@@ -22,11 +22,18 @@ private:
     Person *A[20];
     int n;
 public:
+<<<<<<< HEAD
     QLAD() { this->n = 0; } 
 	~QLAD();
     QLAD(string filename);
 	
 
+=======
+
+    QLAD() { this->n = 0; } 
+	~QLAD();
+    QLAD(string filename);
+>>>>>>> a7596ec7007f9c357db4016cdd37e83fd3219a24
     void add(string nameFile);
     void hienDS() 
 	{
@@ -93,6 +100,10 @@ QLAD::~QLAD() {
     for (int i = 0; i < n; i++) {
         delete A[i]; // Giải phóng từng đối tượng
     }
+<<<<<<< HEAD
+=======
+}
+>>>>>>> a7596ec7007f9c357db4016cdd37e83fd3219a24
 
 void QLAD::delAd(string nameFile){
     int deleteAdmin;
@@ -128,5 +139,8 @@ void QLAD::delAd(string nameFile){
     }
     file.close();
 
+<<<<<<< HEAD
 }
+=======
+>>>>>>> a7596ec7007f9c357db4016cdd37e83fd3219a24
 }
