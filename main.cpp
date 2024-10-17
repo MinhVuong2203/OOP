@@ -2,7 +2,7 @@
 #include <conio.h>
 #include <fstream>
 #include <sstream>
-
+#include <stdio.h>
 #include "./assets/function/Title.hpp"  //liên kết với file Title
 #include "./assets/function/TimeDay.hpp"
 #include "./assets/function/Person.hpp"
