@@ -22,13 +22,10 @@ private:
     Person *A[20];
     int n;
 public:
-<<<<<<< HEAD
+
     QLAD() { this->n = 0; } 
 	~QLAD();
-=======
     QLAD(string filename);
-	
->>>>>>> fd836bf43bcbd97994a30391d12875a000bf5104
     void add(string nameFile);
     void hienDS() 
 	{
@@ -90,12 +87,13 @@ void QLAD::add(string nameFile)
         cout << "Add Admin successful!" << endl;
         file.close();
 }
-<<<<<<< HEAD
+
 QLAD::~QLAD() {
     for (int i = 0; i < n; i++) {
         delete A[i]; // Giải phóng từng đối tượng
     }
-=======
+}
+
 void QLAD::delAd(string nameFile){
     int deleteAdmin;
     cout<<"Nhap Admin ban muon xoa:"<<endl;
@@ -129,5 +127,5 @@ void QLAD::delAd(string nameFile){
         }
     }
     file.close();
->>>>>>> fd836bf43bcbd97994a30391d12875a000bf5104
+
 }
