@@ -10,9 +10,14 @@
 #include "./assets/function/User.hpp"
 #include "./assets/function/Activity.hpp"
 #include "./assets/function/authenticate.hpp"
-
+#include  "./assets/function/templateBill.hpp"
 
 using namespace std;
+
+// Time time16h = {16,0,0};   //Khai báo để sử dụng cho việc in bill. từ 7h - 16h giá 50000đ/h, từ 16h - 22h giá 110000đ/h
+const int GiaThuong = 50000;
+const int GiaVang = 110000;
+
 
 int main() 
 {
@@ -22,33 +27,29 @@ int main()
     string FRetail = "assets//Retail.txt";
     string FActivity = "assets//Activity.txt";
 
-    
 
     QLAD AD;
     QLUS U(FUser);
     QLAC AC(FActivity);
     int San[SL];
 
+    
+
     string username, password;
-    time_t presentTime;
+    
     char delay;
 
-    // Lấy ngày hien tai
-    struct tm *tm_info;
-    time(&presentTime); 
-    tm_info = localtime(&presentTime); 
     Day day;  Time time;
-    day.ngay =  tm_info->tm_mday; day.thang = tm_info->tm_mon+1; day.nam = tm_info->tm_year+1900;
+    day = getday();
+    time = getTime();
     cout << "Hom nay: " << day.ngay << "/" << day.thang << "/" << day.nam << " ";
     // In ra giờ, phút, giây
-    time_t t = std::time(nullptr);
-    tm* now = localtime(&t);
-    time.gio = now->tm_hour; time.phut = now->tm_min; time.giay = now->tm_sec;
     cout << time.gio << ":" << time.phut << ":" << time.giay << "PM"<< endl;
 
     AC.hienDS();
     TitleUser();
-    U.hienDS();
+    // U.hienDS();
+    AC.priBill(day);
     
     setColor(10);
     	printf("+------------------------------------------------+\n");
@@ -87,7 +88,8 @@ int main()
                         delay = getch();
                         read_loopA3: system("cls"); //Xóa màn hình
                         Menu();
-                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Achoice3 = getche(); 
+                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n "; icon_cost(); cout << "  4. In hoa don\n";  icon_return(); cout << " 5. Quay lai\n"; icon_exit(); cout << " 6. Thoat\nNhap lua chon cua ban: "; 
+                        char Achoice3 = getche();
                         switch (Achoice3 - '0')
                         {
                             case 1:
@@ -126,7 +128,6 @@ int main()
                             }
                             break;
                             case 4: goto read_loopA2;
-                            break;
                             case 5:
                             return 0;
                             default:

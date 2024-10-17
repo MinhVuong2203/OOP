@@ -1,6 +1,5 @@
 #pragma once
 #include <windows.h>
-#include <time.h>
 #include <iomanip>
 using namespace std;
 
@@ -30,3 +29,30 @@ void TitleUser()
          << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
     setColor(7);
 }
+
+void TitleBill(){
+    cout << left << "\t" << setw(14) << "Khung gio" 
+        << setw(10) << "Don gia" 
+        << setw(10) << "SL" 
+        << setw(10) << "Thanh tien" << endl;
+}
+
+void icon_exit()
+{
+    setColor(6); 
+    cout << "->[";
+    setColor(7);
+}
+
+void icon_return(){
+    setColor(6);
+    cout << "<--";
+    setColor(7);
+}
+
+void icon_cost(){
+    setColor(6);
+    cout << "$";
+    setColor(7);
+}
+

@@ -30,6 +30,7 @@ private:
 
 public:
     QLUS(string filename);
+    ~QLUS();
     void add(string nameFile);
     void del(string nameFile, string username);
     void hienDS() 
@@ -103,6 +104,7 @@ void QLUS::add(string nameFile)
     file.close();
 }
 
+<<<<<<< HEAD
 
 void QLUS::del(string nameFile, string username) {
     int index = -1;
@@ -142,4 +144,10 @@ void QLUS::del(string nameFile, string username) {
 
     file.close();
     cout << "Delete User successful!" << endl;
+=======
+QLUS::~QLUS() {
+    for (int i = 0; i < n; i++) {
+        delete U[i]; // Giải phóng từng đối tượng
+    }
+>>>>>>> 2b2fb58032c579a472ef33b68f5b1b51b1e2ccf7
 }

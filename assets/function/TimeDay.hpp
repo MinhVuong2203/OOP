@@ -1,5 +1,7 @@
 #pragma once
-
+#include <time.h>
+#include <ctime>
+time_t presentTime;
 using namespace std;
 
 // Xử lí Time
@@ -34,6 +36,10 @@ int compareTime(Time a, Time b)  // a>b return 1, a<b return -1  a=b return 0
     if (a.giay > b.giay) return 1;
     if (a.giay < b.giay) return -1;
     return 0;
+}
+float distanceTime(Time a ,Time b)   //Hàm tính toán khoảng cách thời gian, trả về là số giây chênh lệch, chú ý a > b
+{
+	return ((a.gio - b.gio)*3600 + (a.phut - b.phut)*60 + (a.giay - b.giay))/3600;
 }
 
 // Xử lí day
@@ -85,7 +91,7 @@ int compareDay(Day a, Day b) //hàm so sánh ngày nếu ngày a > b thì trả 
     return 0;
 }
 
-int distanceTime(Day a, Day b)  //Hàm tính khoảng cách giữa 2 ngày
+int distanceDay(Day a, Day b)  //Hàm tính khoảng cách giữa 2 ngày
 {
 	int t,luongthang=0;
 	t = (a.thang < b.thang)?  a.thang+12:a.thang;
@@ -104,4 +110,29 @@ int distanceTime(Day a, Day b)  //Hàm tính khoảng cách giữa 2 ngày
 			}		
 	}
 	return (a.nam - b.nam)*365 + (a.thang-b.thang)*30+luongthang +(a.ngay - b.ngay);
+}
+
+
+// Lấy ngày hien tai
+
+Day getday()
+{
+	Day day;
+	struct tm *tm_info;
+	time(&presentTime); 
+	tm_info = localtime(&presentTime); 
+	day.ngay =  tm_info->tm_mday; day.thang = tm_info->tm_mon+1; day.nam = tm_info->tm_year+1900;
+	return day;
+}
+
+// Lấy giờ hiện tại
+Time getTime()
+{
+	Time time;
+
+	time_t t = std::time(nullptr);
+	tm* now = localtime(&t);
+	time.gio = now->tm_hour; time.phut = now->tm_min; time.giay = now->tm_sec;
+
+	return time;
 }
