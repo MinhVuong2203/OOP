@@ -108,7 +108,7 @@ void QLUS::add(string nameFile)
 void QLUS::del(string nameFile, string username) {
     int index = -1;
 
-    // Find the index of the user to delete
+ 
     for (int i = 0; i < n; i++) {
         User *ActiPtr = dynamic_cast<User*>(U[i]);
         if (ActiPtr != nullptr && ActiPtr->getUsername() == username) {
