@@ -177,7 +177,7 @@ int main()
                         delay = getch();
                         read_loopU3: system("cls");
                         Menu();
-                        cout << "1. Dat san\n2. Xem lich su dat\n3. Xoa dat san\n4. Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Uchoice3 = getche(); cin.ignore();
+                        cout << "1. Dat san\n2. Xem lich su dat\n3. Xoa dat san\n4. Quay lai\n5. Thoat\n6. Xoa tai khoan\nNhap lua chon cua ban: "; char Uchoice3 = getche(); cin.ignore();
                         User *x = U.getUser(username);
                         switch (Uchoice3 - '0')
                         {
@@ -195,6 +195,27 @@ int main()
                             case 4: goto read_loopU2;
                             case 5: 
                             return 0;
+                            //xóa tài khoản user
+                            case 6: {
+                            system("cls");
+                            cout << "Ban co that su muon xoa tai khoan(y/n)?";
+                            char Uchoice4; 
+                            Uchoice4 = getche();
+                            system("cls");
+                            if (Uchoice4 == 'y') {
+                            U.del(FUser, username);  // call del function with username
+                            goto read_loop1;
+                            } else if (Uchoice4 == 'n') {
+                            cout << "\nVui long nhan Enter de quay lai!";
+                            delay = getch(); 
+                            goto read_loopU3;
+                            } else {
+                            cout << "\nLua chon khong hop le. Enter de quay lai!";
+                            delay = getch(); 
+                            goto read_loopU3;
+                            }
+                            }   
+
                             default:
                                 break;
                         }

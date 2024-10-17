@@ -21,6 +21,7 @@ public:
             << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
     }
     string getUsername() {return this->username;}
+    string getPassword() {return this->password;}
 };
 class QLUS{
 private:
@@ -30,6 +31,7 @@ private:
 public:
     QLUS(string filename);
     void add(string nameFile);
+    void del(string nameFile, string username);
     void hienDS() 
 	{
         for (int i = 0; i < n; i++) 
@@ -99,4 +101,45 @@ void QLUS::add(string nameFile)
     }
     cout << "Add User successful!" << endl;
     file.close();
+}
+
+
+void QLUS::del(string nameFile, string username) {
+    int index = -1;
+
+    // Find the index of the user to delete
+    for (int i = 0; i < n; i++) {
+        User *ActiPtr = dynamic_cast<User*>(U[i]);
+        if (ActiPtr != nullptr && ActiPtr->getUsername() == username) {
+            index = i;
+            break;
+        }
+    }
+    
+    for (int i = index; i < n - 1; i++) {
+        U[i] = U[i + 1];
+    }
+    n--;
+
+    ofstream file(nameFile, ios::out);
+    if (!file.is_open()) {
+        cerr << "Unable to open file: " << nameFile << endl;
+        return;
+    }
+
+    for (int i = 0; i < n; i++) {
+        User *ActiPtr = dynamic_cast<User*>(U[i]);
+        if (ActiPtr != nullptr) {
+            file << ActiPtr->getHoten() << "," 
+                 << ActiPtr->getNgaySinh().ngay << "/" 
+                 << ActiPtr->getNgaySinh().thang << "/" 
+                 << ActiPtr->getNgaySinh().nam << ","
+                 << ActiPtr->getSDT() << ","
+                 << ActiPtr->getUsername() << ","
+                 << ActiPtr->getPassword() << endl;
+        }
+    }
+
+    file.close();
+    cout << "Delete User successful!" << endl;
 }
