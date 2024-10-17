@@ -203,7 +203,7 @@ int main()
                             Uchoice4 = getche();
                             system("cls");
                             if (Uchoice4 == 'y') {
-                            U.del(FUser, username);  // call del function with username
+                            U.del(FUser, username); 
                             goto read_loop1;
                             } else if (Uchoice4 == 'n') {
                             cout << "\nVui long nhan Enter de quay lai!";
