@@ -126,7 +126,7 @@ int main()
                             }
                             break;
                             case 4:
-                            {
+                            {   cout<<endl;
                                 AD.hienDS();
                                 AD.delAd(FAdmin);
                                 delay = getch();
