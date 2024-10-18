@@ -38,24 +38,24 @@ void templateBill(Acti *x, Day current_Day, Time current_Time, double into_money
         cout<< setw(10) << into_money << endl;
         return;
     }
-    if (compareTime(x->getGioRa(),timeVang) == 1 && compareTime(x->getGioVao(),timeVang) == -1) 
+    else
     {
         float money_item = 0;
-        SL = distanceTime(timeVang,x->getGioRa());  
+        SL = distanceTime(timeVang,x->getGioVao());  
         cout << left << "\t" << setw(14) << "Thuong" 
             << setw(10) << GiaThuong
             << setw(10) << SL;
             money_item = GiaThuong * SL;
-        cout << setw(10) << into_money << endl;
+        cout << setw(10) << money_item << endl;
         into_money += money_item;
         SL = distanceTime(x->getGioRa(),timeVang);  
         cout << left << "\t" << setw(14) << "Vang" 
             << setw(10) << GiaVang
             << setw(10) << SL;
-            money_item = GiaThuong * SL;
-        cout << setw(10) << into_money << endl;
+            money_item = GiaVang * SL;
+        cout << setw(10) << money_item << endl;
         into_money += money_item;
-        cout << endl << into_money << endl;
+        cout << left << setw(26) << "Thanh tien: "; setColor(2); cout << setw(9) << into_money << endl;
         return;
     }
 
