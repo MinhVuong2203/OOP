@@ -31,10 +31,10 @@ void TitleUser()
 }
 
 void TitleBill(){
-    cout << left << "\t" << setw(14) << "Khung gio" 
-        << setw(10) << "Don gia" 
-        << setw(10) << "SL" 
-        << setw(10) << "Thanh tien" << endl;
+    cout << left << "|\t" << setw(17) << "Khung gio" 
+        << setw(14) << "Don gia" 
+        << setw(20) << "Thoi Luong" 
+        << setw(17) << "Thanh tien" << right << setw(4) << "|\n";
 }
 
 void icon_exit()

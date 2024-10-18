@@ -1,6 +1,7 @@
 #pragma once
 #include <time.h>
 #include <ctime>
+#include <cmath>
 time_t presentTime;
 using namespace std;
 
@@ -23,10 +24,14 @@ void NhapTime(Time &x)
         scanf("%d:%d:%d",&x.gio, &x.phut, &x.giay);
     }
 }
+
 void XuatTime(Time x)
 {
-    cout << x.gio <<":" << x.phut <<":"<<x.giay;
+	if (x.gio < 10) cout << "0";  cout << x.gio << ":";
+    if (x.phut < 10) cout << "0";  cout << x.phut << ":";
+	if (x.giay < 10) cout << "0"; cout << x.giay;
 }
+
 int compareTime(Time a, Time b)  // a>b return 1, a<b return -1  a=b return 0
 {
     if (a.gio > b.gio) return 1;
@@ -37,9 +42,10 @@ int compareTime(Time a, Time b)  // a>b return 1, a<b return -1  a=b return 0
     if (a.giay < b.giay) return -1;
     return 0;
 }
-float distanceTime(Time a ,Time b)   //Hàm tính toán khoảng cách thời gian, trả về là số giây chênh lệch, chú ý a > b
+float distanceTime(Time a, Time b)  // Hàm tính khoảng thời gian trả về đơn vị giờ ( a > b)
 {
-	return ((a.gio - b.gio)*3600 + (a.phut - b.phut)*60 + (a.giay - b.giay))/3600;
+    float timeDifference = ((a.gio - b.gio) * 3600 + (a.phut - b.phut) * 60 + (a.giay - b.giay)) / 3600.0;
+    return std::round(timeDifference * 1000) / 1000; // Làm tròn đến 3 chữ số thập phân
 }
 
 // Xử lí day
@@ -78,7 +84,9 @@ void NhapDay(Day &x)
 }
 void XuatDay(Day x)
 {
-    cout << x.ngay << "/" << x.thang << "/" << x.nam;
+    if (x.ngay < 10) cout << "0"; cout << x.ngay << "/";
+	if (x.thang < 10) cout << "0"; cout << x.thang << "/";
+	if (x.nam < 10) cout << "0"; cout << x.nam;
 }
 int compareDay(Day a, Day b) //hàm so sánh ngày nếu ngày a > b thì trả về 1 ngược lại trả về -1, nếu bằng nhau trả về 0
 {

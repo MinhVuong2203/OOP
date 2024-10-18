@@ -42,10 +42,10 @@ int main()
     // In ra giờ, phút, giây
     cout << time.gio << ":" << time.phut << ":" << time.giay << "PM"<< endl;
 
-    AC.hienDS();
-    TitleUser();
-    // U.hienDS();
-    AC.priBill(day);
+    // AC.hienDS();
+    // TitleUser();
+    // // U.hienDS();
+    
     
     setColor(10);
     	printf("+------------------------------------------------+\n");
@@ -85,9 +85,9 @@ int main()
                         read_loopA3: system("cls"); //Xóa màn hình
                         Menu();
 
+                        
+                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Xoa Admin\n5. In Bill\n6. Quay lai\n7. Thoat\nNhap lua chon cua ban: "; 
                         char Achoice3 = getche();
-                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Xoa Admin\n5. Quay lai\n6. Thoat\nNhap lua chon cua ban: "; 
-
                         switch (Achoice3 - '0')
                         {
                             case 1:
@@ -132,9 +132,10 @@ int main()
                                 delay = getch();
                                 goto read_loopA3;
                             }
-                            case 5: goto read_loopA2;
+                            case 5: AC.priBill(day); delay = getch(); 
+                            case 6: goto read_loopA2;
                             break;
-                            case 6:
+                            case 7:
                             return 0;
                             default:
                             break;

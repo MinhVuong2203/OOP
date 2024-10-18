@@ -184,7 +184,7 @@ void QLAC::priBill(Day ngayden)
         }
     }
 
-    cout << "Nhap STT can in hoa don: ";    cin >> STT;
+    cout << "\nNhap STT can in hoa don: ";    cin >> STT; cout << endl;
 
     if (STT <= 0 || STT > k) {
         cout << "STT khong hop le!" << endl;
