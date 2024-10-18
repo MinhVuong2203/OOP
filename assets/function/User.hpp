@@ -143,9 +143,10 @@ void QLUS::del(string nameFile, string username) {
 
     file.close();
     cout << "Delete User successful!" << endl;
-QLUS::~QLUS(); {
+}
+QLUS::~QLUS(){
     for (int i = 0; i < n; i++) {
         delete U[i];
     }
 }
-}
+

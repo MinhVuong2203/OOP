@@ -22,14 +22,6 @@ private:
     Person *A[20];
     int n;
 public:
-
-    QLAD() { this->n = 0; } 
-	~QLAD();
-    QLAD(string filename);
-	
-
-
-
     QLAD() { this->n = 0; } 
 	~QLAD();
     QLAD(string filename);

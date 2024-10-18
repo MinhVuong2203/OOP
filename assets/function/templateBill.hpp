@@ -1,7 +1,7 @@
 #pragma once
 
 using namespace std;
-Time time16h = {16,0,0}; 
+Time timeVang = {16,0,0};   //Khai báo để sử dụng cho việc in bill. từ 7h - 16h giá 50000đ/h, từ 16h - 22h giá 110000đ/h
 // void calculate()
 
 void templateBill(Acti *x, Day current_Day, Time current_Time, double into_money, const int GiaThuong, const int GiaVang)
@@ -20,7 +20,7 @@ void templateBill(Acti *x, Day current_Day, Time current_Time, double into_money
     cout << endl << endl;
     TitleBill();
     float SL = distanceTime(x->getGioRa(), x->getGioVao());  
-    if (compareTime(x->getGioRa(),time16h) == -1) 
+    if (compareTime(x->getGioRa(),timeVang) == -1) 
     {
         cout << left << "\t" << setw(14) << "Thuong" 
             << setw(10) << GiaThuong
@@ -29,13 +29,33 @@ void templateBill(Acti *x, Day current_Day, Time current_Time, double into_money
         cout << setw(10) << into_money << endl;
         return;
     }
-    if (compareTime(x->getGioVao(),time16h) == 1)
+    if (compareTime(x->getGioVao(),timeVang) == 1)
     {
         cout << left << "\t" << setw(14) << "Vang" 
             << setw(10) << GiaVang
             << setw(10) << SL;  
             into_money = GiaThuong * SL;
         cout<< setw(10) << into_money << endl;
+        return;
+    }
+    if (compareTime(x->getGioRa(),timeVang) == 1 && compareTime(x->getGioVao(),timeVang) == -1) 
+    {
+        float money_item = 0;
+        SL = distanceTime(timeVang,x->getGioRa());  
+        cout << left << "\t" << setw(14) << "Thuong" 
+            << setw(10) << GiaThuong
+            << setw(10) << SL;
+            money_item = GiaThuong * SL;
+        cout << setw(10) << into_money << endl;
+        into_money += money_item;
+        SL = distanceTime(x->getGioRa(),timeVang);  
+        cout << left << "\t" << setw(14) << "Vang" 
+            << setw(10) << GiaVang
+            << setw(10) << SL;
+            money_item = GiaThuong * SL;
+        cout << setw(10) << into_money << endl;
+        into_money += money_item;
+        cout << endl << into_money << endl;
         return;
     }
 

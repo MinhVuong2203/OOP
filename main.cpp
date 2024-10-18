@@ -12,11 +12,8 @@
 #include  "./assets/function/templateBill.hpp"
 
 using namespace std;
-
-// Time time16h = {16,0,0};   //Khai báo để sử dụng cho việc in bill. từ 7h - 16h giá 50000đ/h, từ 16h - 22h giá 110000đ/h
 const int GiaThuong = 50000;
 const int GiaVang = 110000;
-
 
 int main() 
 {
@@ -88,13 +85,6 @@ int main()
                         read_loopA3: system("cls"); //Xóa màn hình
                         Menu();
 
-                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n "; icon_cost(); cout << "  4. In hoa don\n";  icon_return(); cout << " 5. Quay lai\n"; icon_exit(); cout << " 6. Thoat\nNhap lua chon cua ban: "; 
-                        char Achoice3 = getche();
-
-                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Xoa Admin\n5. Quay lai\n6. Thoat\nNhap lua chon cua ban: "; char Achoice3 = getche(); 
-
-
-                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n "; icon_cost(); cout << "  4. In hoa don\n";  icon_return(); cout << " 5. Quay lai\n"; icon_exit(); cout << " 6. Thoat\nNhap lua chon cua ban: "; 
                         char Achoice3 = getche();
                         cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Xoa Admin\n5. Quay lai\n6. Thoat\nNhap lua chon cua ban: "; 
 
@@ -135,8 +125,6 @@ int main()
                                 delay = getch();
                             }
                             break;
-                            case 4: goto read_loopA2;
-                            case 5:
                             case 4:
                             {
                                 AD.hienDS();
