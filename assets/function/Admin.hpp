@@ -96,7 +96,6 @@ QLAD::~QLAD() {
 
 }
 
-
 void QLAD::delAd(string nameFile){
     int deleteAdmin;
     cout<<"Nhap Admin ban muon xoa:"<<endl;

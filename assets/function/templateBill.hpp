@@ -2,7 +2,10 @@
 
 using namespace std;
 Time timeVang = {16,0,0};   //Khai báo để sử dụng cho việc in bill. từ 7h - 16h giá 50000đ/h, từ 16h - 22h giá 110000đ/h
-// void calculate()
+// void calculate(Acti *x, double into_money, const int GiaThuong, const int GiaVang, Day start_day, Day end_day)
+// {
+
+// }
 
 void templateBill(Acti *x, Day current_Day, Time current_Time, double into_money, const int GiaThuong, const int GiaVang)
 {
@@ -41,7 +44,7 @@ void templateBill(Acti *x, Day current_Day, Time current_Time, double into_money
         cout << left << "|\t" << setw(10) << "Vang"  << right 
             << setw(14) << GiaVang
             << setw(14) << SL;  
-            into_money = GiaThuong * SL;
+            into_money = GiaVang * SL;
         cout<< setw(23) << into_money << right << setw(11) << "|\n";
         cout << "|" << right << setw(53) << "TONG:"; setColor(2); cout << right << setw(15) << into_money; setColor(7);  cout << right << setw(11) << "|\n";
         cout << "|" << right << setw(79) << "|\n";
@@ -70,6 +73,4 @@ void templateBill(Acti *x, Day current_Day, Time current_Time, double into_money
         cout << "+-----------------------------------------------------------------------------+\n\n";
         return;
     }
-
-   
 }
