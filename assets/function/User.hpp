@@ -49,8 +49,9 @@ public:
         }
         return nullptr;
     }
-    int getN(){return this->n};
-    Person *getU(){return this->U};
+    int getN(){return this->n;}
+    void setN(int newN) { this->n = newN; }
+    Person **getU(){return this->U;}
 };
 
 QLUS::QLUS(string filename)

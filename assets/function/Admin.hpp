@@ -124,19 +124,21 @@ void QLAD::delUS(string nameFile){
     QLUS qlus(nameFile);
     
     int deleteUser;
+    int n=qlus.getN();
     cout<<"Nhap User ban muon xoa:";
     cin>>deleteUser;
-    if(deleteUser<1 || deleteUser> qlus.getN()){
+    if(deleteUser<1 || deleteUser> n){
         cout<<"Khong ton tai User o vi tri nay";
         return;
     }
     Person** U = qlus.getU();
     delete U[deleteUser-1];
-    for(int i=deleteUser-1;i<qlus.getN()-1;i++){
+    for(int i=deleteUser-1;i<n-1;i++){
         U[i]=U[i+1];
     }
-    qlus.getN()--;
-    cout<<"Xóa User thành công"<<endl;
+    n--;
+    qlus.setN(qlus.getN()-1);
+    cout<<"Xoa User thanh cong"<<endl;
     fstream file(nameFile, ios::out);
     if (!file.is_open())
         {
