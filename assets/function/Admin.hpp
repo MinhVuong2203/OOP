@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Person.hpp"
+#include "User.hpp"
 using namespace std;
 
 // Class đối tượng admin
@@ -87,7 +88,7 @@ void QLAD::add(string nameFile)
 }
 void QLAD::delAd(string nameFile){
     int deleteAdmin;
-    cout<<"Nhap Admin ban muon xoa:"<<endl;
+    cout<<"Nhap Admin ban muon xoa:";
     cin>>deleteAdmin;
     if(deleteAdmin<1 || deleteAdmin > n){
         cout<<"Khong ton tai Admin o vi tri nay";
@@ -118,4 +119,41 @@ void QLAD::delAd(string nameFile){
         }
     }
     file.close();
+}
+void QLAD::delUS(string nameFile){
+    QLUS qlus(nameFile);
+    
+    int deleteUser;
+    cout<<"Nhap User ban muon xoa:";
+    cin>>deleteUser;
+    if(deleteUser<1 || deleteUser> qlus.getN()){
+        cout<<"Khong ton tai User o vi tri nay";
+        return;
+    }
+    Person** U = qlus.getU();
+    delete U[deleteUser-1];
+    for(int i=deleteUser-1;i<qlus.getN()-1;i++){
+        U[i]=U[i+1];
+    }
+    qlus.getN()--;
+    cout<<"Xóa User thành công"<<endl;
+    fstream file(nameFile, ios::out);
+    if (!file.is_open())
+        {
+            cerr << "Unable to open file: " << nameFile << endl;
+            return;
+        }
+    for (int i = 0; i < qlus.getN(); ++i) {
+        User* user = dynamic_cast<User*>(U[i]);
+        if (user) {
+            file << user->getHoten() << ","
+                 << user->getNgaySinh().ngay << "/"
+                 << user->getNgaySinh().thang << "/"
+                 << user->getNgaySinh().nam << ","
+                 << user->getSDT() << ","
+                 << user->getUsername() << ","
+                 << user->getPassword() << endl;
+        }
+    }
+    file.close();    
 }

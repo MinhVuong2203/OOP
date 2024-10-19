@@ -21,6 +21,7 @@ public:
             << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
     }
     string getUsername() {return this->username;}
+    string getPassword() {return this->password;}
 };
 class QLUS{
 private:
@@ -48,6 +49,8 @@ public:
         }
         return nullptr;
     }
+    int getN(){return this->n};
+    Person *getU(){return this->U};
 };
 
 QLUS::QLUS(string filename)
