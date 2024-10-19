@@ -1,10 +1,9 @@
 #pragma once
 
 using namespace std;
-Time timeVang = {16,0,0};   //Khai báo để sử dụng cho việc in bill. từ 7h - 16h giá 50000đ/h, từ 16h - 22h giá 110000đ/h
+  //Khai báo để sử dụng cho việc in bill. từ 7h - 16h giá 50000đ/h, từ 16h - 22h giá 110000đ/h
 // void calculate(Acti *x, double into_money, const int GiaThuong, const int GiaVang, Day start_day, Day end_day)
 // {
-
 // }
 
 void templateBill(Acti *x, Day current_Day, Time current_Time, double into_money, const int GiaThuong, const int GiaVang)

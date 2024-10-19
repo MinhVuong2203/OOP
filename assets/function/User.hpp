@@ -31,6 +31,7 @@ private:
 public:
     QLUS(string filename);
     ~QLUS();
+
     void add(string nameFile);
     void del(string nameFile, string username);
     void hienDS() 
@@ -88,9 +89,18 @@ void QLUS::add(string nameFile)
     string HoTen, SDT, MK, TDN;
     Day NgaySinh;
     cout << "Nhap ho ten: ";  getline(cin, HoTen);
+        while (checkName(HoTen)==false){
+            cout << "Ho ten khong hop le. Vui long nhap lai: ";  cin.ignore(); getline(cin, HoTen);
+        }
     cout << "Nhap ngay sinh: "; NhapDay(NgaySinh);
     cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
+        while (checkSDT(SDT)==false){
+            cout << "SDT khong hop le. Vui long nhap lai: "; getline(cin, SDT);
+        }
     cout << "Ten dang nhap: ";  getline(cin, TDN);
+        while (checkFile(TDN, nameFile)==false){
+            cout << "Ten dang nhap da co tai khoan. Vui long dung ten dang nhap khac: ";  cin.ignore(); getline(cin, TDN);
+        }
     cout << "Mat khau: ";   getline(cin, MK);
 	Person *p = new User(HoTen, NgaySinh, SDT, TDN, MK);
     U[n++] = p;

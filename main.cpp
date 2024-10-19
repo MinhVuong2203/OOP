@@ -2,18 +2,23 @@
 #include <conio.h>
 #include <fstream>
 #include <sstream>
+
+using namespace std;
+const int GiaThuong = 50000;
+const int GiaVang = 110000;
+const int SL = 20;
+ 
 #include "./assets/function/Title.hpp"  //liên kết với file Title
 #include "./assets/function/TimeDay.hpp"
+Time timeVang = {16,0,0};
 #include "./assets/function/Person.hpp"
 #include "./assets/function/Admin.hpp"
 #include "./assets/function/User.hpp"
 #include "./assets/function/Activity.hpp"
 #include "./assets/function/authenticate.hpp"
-#include  "./assets/function/templateBill.hpp"
+#include "./assets/function/templateBill.hpp"
 
-using namespace std;
-const int GiaThuong = 50000;
-const int GiaVang = 110000;
+
 
 int main() 
 {
@@ -23,13 +28,10 @@ int main()
     string FRetail = "assets//Retail.txt";
     string FActivity = "assets//Activity.txt";
 
-
     QLAD AD(FAdmin);
     QLUS U(FUser);
     QLAC AC(FActivity);
     int San[SL];
-
-    
 
     string username, password;
     

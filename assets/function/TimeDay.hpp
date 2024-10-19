@@ -2,6 +2,7 @@
 #include <time.h>
 #include <ctime>
 #include <cmath>
+#include "check.hpp"
 time_t presentTime;
 using namespace std;
 
@@ -9,12 +10,15 @@ using namespace std;
 struct Time {
     int gio, phut, giay;
 };
+
 bool checkTime(Time x)
 {
-    if (x.giay < 0 || x.gio < 0 || x.phut < 0 ) return false;
+	if (x.giay < 0 || x.gio < 0 || x.phut < 0 ) return false;
     if (x.giay >= 60 || x.phut >= 60 || x.gio>=24) return false;
     return true;
 }
+
+
 void NhapTime(Time &x)
 {
     scanf("%d:%d:%d",&x.gio, &x.phut, &x.giay);
@@ -53,6 +57,7 @@ struct Day {
     int ngay, thang, nam;
 };
 
+//Hàm check ngày
 bool checkDay(Day x)
 {
 	int maxDay=0;
@@ -72,7 +77,6 @@ bool checkDay(Day x)
 	
 	return true;
 }
-
 void NhapDay(Day &x)
 {
 	scanf("%d/%d/%d",&x.ngay, &x.thang, &x.nam);

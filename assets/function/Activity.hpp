@@ -4,7 +4,7 @@
 // #include "TimeDay.hpp"
 // #include "templateBill.hpp"
 using namespace std;
-const int SL = 20;
+
 
 // class Activity để lưu trữ các hoạt động của user
 class Acti : public Person {
@@ -200,7 +200,7 @@ void QLAC::priBill(Day ngayden)
             k++;
             if (k == STT) 
             {
-                templateBill(ActiPtr, getday(), getTime(), into_money, 50000, 110000);
+                templateBill(ActiPtr, getday(), getTime(), into_money, GiaThuong, GiaVang);
                 return;
             }
         }
