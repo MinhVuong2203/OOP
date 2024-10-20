@@ -97,12 +97,12 @@ int main()
                                 TitleUser();
                                 U.hienDS();
                                 Menu();
-                                cout << "1. Them user\n2. Xoa user\n3. Sua user\n4.Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Achoice4 = getche(); cin.ignore();
+                                cout << "1. Them user\n2. Xoa user\n3. Sua user\n4. Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Achoice4 = getche(); cin.ignore();
                                 switch (Achoice4 - '0')
                                 {
                                 case 1: cout << endl; U.add(FUser); TitleUser(); U.hienDS(); delay = getch(); 
                                 goto read_loopA3;
-                                case 2:
+                                case 2: AD.delAd(FUser);
                                 break;
                                 case 3:
                                 break;
