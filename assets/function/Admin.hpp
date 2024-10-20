@@ -38,6 +38,7 @@ public:
     void delAd(string nameFile);
     void delUS(string nameFile);
 
+
 };
 QLAD::QLAD(string filename)
 {

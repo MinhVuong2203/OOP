@@ -34,6 +34,7 @@ public:
 
     void add(string nameFile);
     void del(string nameFile, string username);
+    void fixUser(string nameFile,int index, int ch);
     void hienDS() 
 	{
         for (int i = 0; i < n; i++) 
@@ -116,21 +117,19 @@ void QLUS::add(string nameFile)
 
 
 void QLUS::del(string nameFile, string username) {
-    int index = -1;
-
- 
+    int index;
     for (int i = 0; i < n; i++) {
-        User *ActiPtr = dynamic_cast<User*>(U[i]);
-        if (ActiPtr != nullptr && ActiPtr->getUsername() == username) {
+        User *uDelu = dynamic_cast<User*>(U[i]);
+        if (uDelu->getUsername() == username) {
             index = i;
             break;
         }
     }
-    
-    for (int i = index; i < n - 1; i++) {
+    for (int i = index; i < n; i++) {
         U[i] = U[i + 1];
     }
     n--;
+cout << "Delete User successful!" << endl;
 
     ofstream file(nameFile, ios::out);
     if (!file.is_open()) {
@@ -139,20 +138,19 @@ void QLUS::del(string nameFile, string username) {
     }
 
     for (int i = 0; i < n; i++) {
-        User *ActiPtr = dynamic_cast<User*>(U[i]);
-        if (ActiPtr != nullptr) {
-            file << ActiPtr->getHoten() << "," 
-                 << ActiPtr->getNgaySinh().ngay << "/" 
-                 << ActiPtr->getNgaySinh().thang << "/" 
-                 << ActiPtr->getNgaySinh().nam << ","
-                 << ActiPtr->getSDT() << ","
-                 << ActiPtr->getUsername() << ","
-                 << ActiPtr->getPassword() << endl;
+        User *uDelu = dynamic_cast<User*>(U[i]);
+        if (uDelu != nullptr) {
+            file << uDelu->getHoten() << "," 
+                 << uDelu->getNgaySinh().ngay << "/" 
+                 << uDelu->getNgaySinh().thang << "/" 
+                 << uDelu->getNgaySinh().nam << ","
+                 << uDelu->getSDT() << ","
+                 << uDelu->getUsername() <<","
+                 << uDelu->getPassword() << endl;
         }
     }
 
     file.close();
-    cout << "Delete User successful!" << endl;
 }
 QLUS::~QLUS(){
     for (int i = 0; i < n; i++) {
@@ -160,3 +158,102 @@ QLUS::~QLUS(){
     }
 }
 
+
+void QLUS::fixUser(string nameFile, int index, int ch) {
+    if (index < 1 || index > n) {
+        cout << "So thu tu khong hop le!" << endl;
+        return;
+    }
+
+    // Get the user at the given index (1-based index, so we adjust to 0-based).
+    User *uFix = dynamic_cast<User*>(U[index - 1]);
+    if (uFix == nullptr) {
+        cout << "User not found!" << endl;
+        return;
+    }
+
+    switch (ch) {
+        case 1: {
+            string newHoTen;
+            cout << "Nhap ho ten moi: ";
+            cin.ignore();
+            getline(cin, newHoTen);
+            while (!checkName(newHoTen)) {
+                cout << "Ho ten khong hop le. Vui long nhap lai: ";
+                getline(cin, newHoTen);
+            }
+            for (int i = 0; i < n; i++) {
+            ofstream file(nameFile, ios::out);
+    if (!file.is_open()) {
+        cerr << "Unable to open file: " << nameFile << endl;
+        return;
+    }
+        User *user = dynamic_cast<User*>(U[i]);
+        if (user != nullptr && i != index-1) {
+            file << user->getHoten() << ","
+                 << user->getNgaySinh().ngay << "/"
+                 << user->getNgaySinh().thang << "/"
+                 << user->getNgaySinh().nam << ","
+                 << user->getSDT() << ","
+                 << user->getUsername() << ","
+                 << user->getPassword() << endl;
+        }
+        else if (user != nullptr && i== index-1) {
+            file << newHoTen << ","
+                 << user->getNgaySinh().ngay << "/"
+                 << user->getNgaySinh().thang << "/"
+                 << user->getNgaySinh().nam << ","
+                 << user->getSDT() << ","
+                 << user->getUsername() << ","
+                 << user->getPassword() << endl;
+        }
+    }
+            break;
+        }
+        case 2: {
+            Day newNgaySinh;
+            cout << "Nhap ngay sinh moi: ";
+            NhapDay(newNgaySinh);
+            uFix->setNgaySinh(newNgaySinh);
+            break;
+        }
+        case 3: {
+            string newSDT;
+            cout << "Nhap SDT moi: ";
+            cin.ignore();
+            getline(cin, newSDT);
+            while (!checkSDT(newSDT)) {
+                cout << "SDT khong hop le. Vui long nhap lai: ";
+                getline(cin, newSDT);
+            }
+            uFix->setSDT(newSDT);
+            break;
+        }
+        default:
+            cout << "Lua chon khong hop le!" << endl;
+            return;
+    }
+
+    // Update the file with the modified user information
+    ofstream file(nameFile, ios::out);
+    if (!file.is_open()) {
+        cerr << "Unable to open file: " << nameFile << endl;
+        return;
+    }
+
+    for (int i = 0; i < n; i++) {
+        User *user = dynamic_cast<User*>(U[i]);
+        if (user != nullptr) {
+            file << user->getHoten() << ","
+                 << user->getNgaySinh().ngay << "/"
+                 << user->getNgaySinh().thang << "/"
+                 << user->getNgaySinh().nam << ","
+                 << user->getSDT() << ","
+                 << user->getUsername() << ","
+                 << user->getPassword() << endl;
+        }
+    }
+
+    file.close();
+    cout << "User information updated successfully!" << endl;
+}
