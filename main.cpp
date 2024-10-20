@@ -102,8 +102,8 @@ int main()
                                 break;
                                 case 3: {
                                     int choice;cout<<endl<<"Nhap so cua nguoi ban muon sua:";cin>>choice;
-                                    cout << "1. Sua ho ten\n2. Sua ngay sinh\n3. Sua SDT\n4. Sua TDN\n5. Sua mat khau\n6. Thoat\nNhap lua chon cua ban: "; int ch; cin>>ch;
-                                U.fixUser(FUser,choice, ch);
+                                    
+                                U.fixUser(FUser,choice);
                                 cout<<"Sau khi sua:"<<endl; U.hienThi(choice);
                                 delay=getch();
                                     break;}
