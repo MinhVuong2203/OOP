@@ -85,8 +85,7 @@ int main()
                         delay = getch();
                         read_loopA3: system("cls"); //Xóa màn hình
                         Menu();
-                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Xoa Admin\n5. In Bill\n6. Quay lai\n7. Thoat\nNhap lua chon cua ban: "; 
-                        char Achoice3 = getche();
+                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Xoa Admin\n5. Xoa User\n6. Quay lai\n7. Thoat\nNhap lua chon cua ban: "; char Achoice3 = getche(); 
                         switch (Achoice3 - '0')
                         {
                             case 1:
@@ -160,9 +159,16 @@ int main()
                                 delay = getch();
                                 goto read_loopA3;
                             }
-                            case 5: AC.priBill(day); delay = getch(); 
-                            goto read_loopA3;
-                            case 6: goto read_loopA3;
+                            case 5:
+                            {
+                                cout<<endl;
+                                U.hienDS();
+                                AD.delUS(FUser);
+                                delay = getch();
+                                goto read_loopA3;
+                            }
+                            case 6: goto read_loopA2;
+                            break;
                             case 7:
                             return 0;
                             default:
