@@ -22,6 +22,9 @@ public:
     }
     string getUsername() {return this->username;}
     string getPassword() {return this->password;}
+    void setUsername(string newUsername) { this->username = newUsername; }
+    void setPassword(string newPassword) { this->password = newPassword; }
+
 };
 class QLUS{
 private:
@@ -42,6 +45,13 @@ public:
             cout << left << "| "; setColor(12); cout << setw(4) << i+1; setColor(7);
             U[i]->hienThiThongTin();
         }
+    }
+    void hienThi(int i) 
+	{
+        
+            cout << left << "| "; setColor(12); cout << setw(4) << i; setColor(7);
+            U[i-1]->hienThiThongTin();
+        
     }
     User *getUser(string username)
     {
@@ -163,12 +173,11 @@ QLUS::~QLUS(){
 
 
 void QLUS::fixUser(string nameFile, int index, int ch) {
+    // Validate the index (1-based)
     if (index < 1 || index > n) {
         cout << "So thu tu khong hop le!" << endl;
         return;
     }
-
-    // Get the user at the given index (1-based index, so we adjust to 0-based).
     User *uFix = dynamic_cast<User*>(U[index - 1]);
     if (uFix == nullptr) {
         cout << "User not found!" << endl;
@@ -185,32 +194,7 @@ void QLUS::fixUser(string nameFile, int index, int ch) {
                 cout << "Ho ten khong hop le. Vui long nhap lai: ";
                 getline(cin, newHoTen);
             }
-            for (int i = 0; i < n; i++) {
-            ofstream file(nameFile, ios::out);
-    if (!file.is_open()) {
-        cerr << "Unable to open file: " << nameFile << endl;
-        return;
-    }
-        User *user = dynamic_cast<User*>(U[i]);
-        if (user != nullptr && i != index-1) {
-            file << user->getHoten() << ","
-                 << user->getNgaySinh().ngay << "/"
-                 << user->getNgaySinh().thang << "/"
-                 << user->getNgaySinh().nam << ","
-                 << user->getSDT() << ","
-                 << user->getUsername() << ","
-                 << user->getPassword() << endl;
-        }
-        else if (user != nullptr && i== index-1) {
-            file << newHoTen << ","
-                 << user->getNgaySinh().ngay << "/"
-                 << user->getNgaySinh().thang << "/"
-                 << user->getNgaySinh().nam << ","
-                 << user->getSDT() << ","
-                 << user->getUsername() << ","
-                 << user->getPassword() << endl;
-        }
-    }
+            uFix->setHoTen(newHoTen);
             break;
         }
         case 2: {
@@ -232,12 +216,30 @@ void QLUS::fixUser(string nameFile, int index, int ch) {
             uFix->setSDT(newSDT);
             break;
         }
+        case 4: {
+            string newUsername;
+            cout << "Nhap ten dang nhap moi: ";
+            cin.ignore();
+            getline(cin, newUsername);
+            while (!checkFile(newUsername, nameFile)) {
+                cout << "Ten dang nhap da co tai khoan. Vui long nhap ten dang nhap khac: ";
+                getline(cin, newUsername);
+            }
+            uFix->setUsername(newUsername);
+            break;
+        }
+        case 5: {
+            string newPassword;
+            cout << "Nhap mat khau moi: ";
+            cin.ignore();
+            getline(cin, newPassword);
+            uFix->setPassword(newPassword);
+            break;
+        }
         default:
             cout << "Lua chon khong hop le!" << endl;
             return;
     }
-
-    // Update the file with the modified user information
     ofstream file(nameFile, ios::out);
     if (!file.is_open()) {
         cerr << "Unable to open file: " << nameFile << endl;
@@ -258,5 +260,5 @@ void QLUS::fixUser(string nameFile, int index, int ch) {
     }
 
     file.close();
-    cout << "User information updated successfully!" << endl;
 }
+

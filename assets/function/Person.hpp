@@ -19,6 +19,10 @@ public:
     string getHoten() { return Hoten; }
     Day getNgaySinh(){return NgaySinh;};
     string getSDT() { return SDT; }
+    void setHoTen(string newHoTen) { this->Hoten = newHoTen; }
+    void setNgaySinh(Day newNgaySinh) { this->NgaySinh = newNgaySinh; }
+    void setSDT(string newSDT) { this->SDT = newSDT; }
+
 
     virtual void hienThiThongTin() {
         cout << "| " << setw(19) << Hoten 
