@@ -1,8 +1,6 @@
 #pragma once
 #include <vector>
-// #include "Person.hpp"
-// #include "TimeDay.hpp"
-// #include "templateBill.hpp"
+
 using namespace std;
 
 
@@ -51,6 +49,7 @@ public:
     }
     void History(string Hoten);
     void priBill(Day ngayden);
+    void calculate(const int GiaThuong, const int GiaVang, Day start_day, Day end_day);
    
 };
 QLAC::QLAC(string filename)
@@ -204,5 +203,14 @@ void QLAC::priBill(Day ngayden)
                 return;
             }
         }
+    }
+}
+void QLAC::calculate(const int GiaThuong, const int GiaVang, Day start_day, Day end_day)
+{
+    for (int i=0; i<n; i++)
+    {
+        Acti* ActiPtr = dynamic_cast<Acti*>(AC[i]);
+        if (compareDay(ActiPtr->getNgayDen(), start_day) >= 0 && compareDay(ActiPtr->getNgayDen(), end_day) <=0)
+        ActiPtr->hienThiThongTin();
     }
 }
