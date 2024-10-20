@@ -23,8 +23,10 @@ private:
     Person *A[20];
     int n;
 public:
+    QLAD() { this->n = 0; } 
+	~QLAD();
     QLAD(string filename);
-	
+
     void add(string nameFile);
     void hienDS() 
 	{
@@ -75,20 +77,45 @@ void QLAD::add(string nameFile)
         }
         string HoTen, SDT, CCCD;
         Day NgaySinh;
-        cin.ignore();
+        // cin.ignore();
         cout << "Nhap ho ten: ";  getline(cin, HoTen);
-        cout << "Nhap ngay sinh: "; NhapDay(NgaySinh);
+            while (checkName(HoTen)==false){
+                cout << "Ho ten khong hop le. Vui long nhap lai: ";  cin.ignore(); getline(cin, HoTen);
+            }
+        cout << "Nhap ngay sinh (dd/mm/yyyy): "; NhapDay(NgaySinh);
         cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
+            while (checkSDT(SDT)==false){
+                cout << "SDT khong hop le. Vui long nhap lai: "; getline(cin, SDT);
+            }
+            while (checkFile(SDT, nameFile)==false){
+                cout << "SDT da dang ki tai khoan. Vui long dung SDT khac: ";  cin.ignore(); getline(cin, SDT);
+            }
+
         cout << "Nhap CCCD: ";  getline(cin, CCCD);
+            while (checkCCCD(CCCD) == false){
+                cout << "CCCD khong hop le. Vui long nhap lai: ";  getline(cin, CCCD);
+            }
+
 		Person *p = new Admin(HoTen, NgaySinh, SDT, CCCD);
         A[n++] = p;
         file << HoTen <<","<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<","<< SDT <<","<< CCCD << endl; 
         cout << "Add Admin successful!" << endl;
         file.close();
 }
+
+QLAD::~QLAD() {
+    for (int i = 0; i < n; i++) {
+        delete A[i]; // Giải phóng từng đối tượng
+    }
+}
+
 void QLAD::delAd(string nameFile){
     int deleteAdmin;
+<<<<<<< HEAD
     cout<<"Nhap Admin ban muon xoa:";
+=======
+    cout<<"\nNhap Admin ban muon xoa:"<<endl;
+>>>>>>> 9aca50311ff83605af35e7808a5fe660bbafd605
     cin>>deleteAdmin;
     if(deleteAdmin<1 || deleteAdmin > n){
         cout<<"Khong ton tai Admin o vi tri nay";

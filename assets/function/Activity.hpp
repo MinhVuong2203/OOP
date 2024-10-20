@@ -1,8 +1,9 @@
 #pragma once
-#include "Person.hpp"
+#include <vector>
 
 using namespace std;
-const int SL = 20;
+
+
 // class Activity để lưu trữ các hoạt động của user
 class Acti : public Person {
 private:
@@ -27,6 +28,7 @@ public:
         << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
     }
 };
+void templateBill(Acti *x, Day current_Day, Time current_Time, double into_money, const int GiaThuong, const int GiaVang);
 class QLAC
 {
 private:
@@ -46,6 +48,8 @@ public:
         }
     }
     void History(string Hoten);
+    void priBill(Day ngayden);
+    void calculate(const int GiaThuong, const int GiaVang, Day start_day, Day end_day);
    
 };
 QLAC::QLAC(string filename)
@@ -80,8 +84,13 @@ QLAC::QLAC(string filename)
         sscanf(id_str.c_str(), "%d", &id);
         hoten.erase(0, hoten.find_first_not_of(" "));
         sdt.erase(0, sdt.find_first_not_of(" "));
+        if (hoten != "")
+        {
+
         Person *p = new Acti(hoten, ngaysinh, sdt, ngayden, giovao, giora, id);
         AC[n++] = p;
+
+        }
     }
 }
 QLAC::~QLAC() {
@@ -155,5 +164,53 @@ void QLAC::History(string Hoten)
             cout << left << "| "; setColor(12); cout << setw(4) << ++k; setColor(7);
             AC[i]->hienThiThongTin();
         }
+    }
+}
+
+void QLAC::priBill(Day ngayden) 
+{
+    double into_money = 0;
+    int k = 0, STT;
+    vector<Acti*> actiList; // Tạo danh sách tạm để lưu các đối tượng cần in
+    for (int i = n - 1; i >= 0; i--) 
+    {
+        Acti* ActiPtr = dynamic_cast<Acti*>(AC[i]);
+        if (ActiPtr != nullptr && compareDay(ActiPtr->getNgayDen(), ngayden) == 0) 
+        {
+            cout << left << "| "; setColor(12);cout << setw(4) << ++k; setColor(7);
+            ActiPtr->hienThiThongTin();
+            actiList.push_back(ActiPtr); // Thêm đối tượng vào danh sách tạm
+        }
+    }
+
+    cout << "\nNhap STT can in hoa don: ";    cin >> STT; cout << endl;
+
+    if (STT <= 0 || STT > k) {
+        cout << "STT khong hop le!" << endl;
+        return;
+    }
+
+    k = 0;
+    for (int i = n - 1; i >= 0; i--) 
+    {
+        Acti* ActiPtr = dynamic_cast<Acti*>(AC[i]);
+        if (ActiPtr != nullptr && compareDay(ActiPtr->getNgayDen(), ngayden) == 0) 
+        {
+            k++;
+            if (k == STT) 
+            {
+                templateBill(ActiPtr, getday(), getTime(), into_money, GiaThuong, GiaVang);
+                return;
+            }
+        }
+    }
+}
+void QLAC::calculate(const int GiaThuong, const int GiaVang, Day start_day, Day end_day)
+{
+    for (int i=0; i<n; i++)
+    {
+        Acti* ActiPtr = dynamic_cast<Acti*>(AC[i]);
+        if (compareDay(ActiPtr->getNgayDen(), start_day) >= 0 && compareDay(ActiPtr->getNgayDen(), end_day) <=0)
+        ActiPtr->hienThiThongTin();
     }
 }

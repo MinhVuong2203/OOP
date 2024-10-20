@@ -1,17 +1,24 @@
 #pragma once
-
+#include <time.h>
+#include <ctime>
+#include <cmath>
+#include "check.hpp"
+time_t presentTime;
 using namespace std;
 
 // Xử lí Time
 struct Time {
     int gio, phut, giay;
 };
+
 bool checkTime(Time x)
 {
-    if (x.giay < 0 || x.gio < 0 || x.phut < 0 ) return false;
+	if (x.giay < 0 || x.gio < 0 || x.phut < 0 ) return false;
     if (x.giay >= 60 || x.phut >= 60 || x.gio>=24) return false;
     return true;
 }
+
+
 void NhapTime(Time &x)
 {
     scanf("%d:%d:%d",&x.gio, &x.phut, &x.giay);
@@ -21,10 +28,14 @@ void NhapTime(Time &x)
         scanf("%d:%d:%d",&x.gio, &x.phut, &x.giay);
     }
 }
+
 void XuatTime(Time x)
 {
-    cout << x.gio <<":" << x.phut <<":"<<x.giay;
+	if (x.gio < 10) cout << "0";  cout << x.gio << ":";
+    if (x.phut < 10) cout << "0";  cout << x.phut << ":";
+	if (x.giay < 10) cout << "0"; cout << x.giay;
 }
+
 int compareTime(Time a, Time b)  // a>b return 1, a<b return -1  a=b return 0
 {
     if (a.gio > b.gio) return 1;
@@ -35,12 +46,18 @@ int compareTime(Time a, Time b)  // a>b return 1, a<b return -1  a=b return 0
     if (a.giay < b.giay) return -1;
     return 0;
 }
+float distanceTime(Time a, Time b)  // Hàm tính khoảng thời gian trả về đơn vị giờ ( a > b)
+{
+    float timeDifference = ((a.gio - b.gio) * 3600 + (a.phut - b.phut) * 60 + (a.giay - b.giay)) / 3600.0;
+    return std::round(timeDifference * 1000) / 1000; // Làm tròn đến 3 chữ số thập phân
+}
 
 // Xử lí day
 struct Day {
     int ngay, thang, nam;
 };
 
+//Hàm check ngày
 bool checkDay(Day x)
 {
 	int maxDay=0;
@@ -60,7 +77,6 @@ bool checkDay(Day x)
 	
 	return true;
 }
-
 void NhapDay(Day &x)
 {
 	scanf("%d/%d/%d",&x.ngay, &x.thang, &x.nam);
@@ -72,7 +88,9 @@ void NhapDay(Day &x)
 }
 void XuatDay(Day x)
 {
-    cout << x.ngay << "/" << x.thang << "/" << x.nam;
+    if (x.ngay < 10) cout << "0"; cout << x.ngay << "/";
+	if (x.thang < 10) cout << "0"; cout << x.thang << "/";
+	if (x.nam < 10) cout << "0"; cout << x.nam;
 }
 int compareDay(Day a, Day b) //hàm so sánh ngày nếu ngày a > b thì trả về 1 ngược lại trả về -1, nếu bằng nhau trả về 0
 {
@@ -85,7 +103,7 @@ int compareDay(Day a, Day b) //hàm so sánh ngày nếu ngày a > b thì trả 
     return 0;
 }
 
-int distanceTime(Day a, Day b)  //Hàm tính khoảng cách giữa 2 ngày
+int distanceDay(Day a, Day b)  //Hàm tính khoảng cách giữa 2 ngày
 {
 	int t,luongthang=0;
 	t = (a.thang < b.thang)?  a.thang+12:a.thang;
@@ -104,4 +122,29 @@ int distanceTime(Day a, Day b)  //Hàm tính khoảng cách giữa 2 ngày
 			}		
 	}
 	return (a.nam - b.nam)*365 + (a.thang-b.thang)*30+luongthang +(a.ngay - b.ngay);
+}
+
+
+// Lấy ngày hien tai
+
+Day getday()
+{
+	Day day;
+	struct tm *tm_info;
+	time(&presentTime); 
+	tm_info = localtime(&presentTime); 
+	day.ngay =  tm_info->tm_mday; day.thang = tm_info->tm_mon+1; day.nam = tm_info->tm_year+1900;
+	return day;
+}
+
+// Lấy giờ hiện tại
+Time getTime()
+{
+	Time time;
+
+	time_t t = std::time(nullptr);
+	tm* now = localtime(&t);
+	time.gio = now->tm_hour; time.phut = now->tm_min; time.giay = now->tm_sec;
+
+	return time;
 }

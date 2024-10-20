@@ -3,16 +3,20 @@
 #include <fstream>
 #include <sstream>
 
+using namespace std;
+const int GiaThuong = 50000;  //Khai báo để sử dụng cho việc in bill. từ 7h - 16h giá 50000đ/h, từ 16h - 22h giá 110000đ/h
+const int GiaVang = 110000;
+const int SL = 20;
+ 
 #include "./assets/function/Title.hpp"  //liên kết với file Title
 #include "./assets/function/TimeDay.hpp"
+Time timeVang = {16,0,0};
 #include "./assets/function/Person.hpp"
 #include "./assets/function/Admin.hpp"
 #include "./assets/function/User.hpp"
 #include "./assets/function/Activity.hpp"
 #include "./assets/function/authenticate.hpp"
-
-
-using namespace std;
+#include "./assets/function/templateBill.hpp"
 
 int main() 
 {
@@ -22,34 +26,28 @@ int main()
     string FRetail = "assets//Retail.txt";
     string FActivity = "assets//Activity.txt";
 
-    
-
     QLAD AD(FAdmin);
     QLUS U(FUser);
     QLAC AC(FActivity);
     int San[SL];
 
     string username, password;
-    time_t presentTime;
+    
     char delay;
 
-    // Lấy ngày hien tai
-    struct tm *tm_info;
-    time(&presentTime); 
-    tm_info = localtime(&presentTime); 
     Day day;  Time time;
-    day.ngay =  tm_info->tm_mday; day.thang = tm_info->tm_mon+1; day.nam = tm_info->tm_year+1900;
+    day = getday();
+    time = getTime();
     cout << "Hom nay: " << day.ngay << "/" << day.thang << "/" << day.nam << " ";
     // In ra giờ, phút, giây
-    time_t t = std::time(nullptr);
-    tm* now = localtime(&t);
-    time.gio = now->tm_hour; time.phut = now->tm_min; time.giay = now->tm_sec;
     cout << time.gio << ":" << time.phut << ":" << time.giay << "PM"<< endl;
+    Day start_day = {12,10,2024};
+    Day end_day = {20,10,2024};
+    AC.calculate(GiaThuong,GiaVang, start_day,end_day);
+    // AC.hienDS();
+    // TitleUser();
+    // // U.hienDS();
 
-    AC.hienDS();
-    TitleUser();
-    U.hienDS();
-    
     setColor(10);
     	printf("+------------------------------------------------+\n");
       	printf("|     San cau long CIB xin kinh chao quy khach   |\n");
@@ -87,33 +85,61 @@ int main()
                         delay = getch();
                         read_loopA3: system("cls"); //Xóa màn hình
                         Menu();
+<<<<<<< HEAD
                         cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Xoa Admin\n5. Xoa User\n6. Quay lai\n7. Thoat\nNhap lua chon cua ban: "; char Achoice3 = getche(); 
+=======
+                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Xoa Admin\n5. In Bill\n6. Quay lai\n7. Thoat\nNhap lua chon cua ban: "; 
+                        char Achoice3 = getche();
+>>>>>>> 9aca50311ff83605af35e7808a5fe660bbafd605
                         switch (Achoice3 - '0')
                         {
                             case 1:
-                            {   system("cls");
+                            {   read_loopA4: system("cls"); 
                                 TitleUser();
                                 U.hienDS();
                                 Menu();
-                                cout << "1. Them user\n2. Xoa user\n3. Sua user\n4.Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Achoice4 = getche(); cin.ignore();
+                                cout << "1. Them user\n2. Xoa user\n3. Sua user\n4. Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Achoice4 = getche(); cin.ignore();
                                 switch (Achoice4 - '0')
                                 {
                                 case 1: cout << endl; U.add(FUser); TitleUser(); U.hienDS(); delay = getch(); 
-                                goto read_loopA3;
-                                case 2:
+                                goto read_loopA4;
+                                case 2: AD.delAd(FUser);
                                 break;
                                 case 3:
                                 break;
-                                case 4: goto read_loopA3;
+                                case 4: goto read_loopA4;
                                 case 5:
                                 return 0;
                                 default:
                                     break;
                                 }
+                            goto read_loopA3;
                             }
-                            break;
                             case 2:
-                            break;
+                            {
+                                read_loopA5:
+                                system("cls");
+                                Menu();
+                                cout << "1. Sap xep theo ten\n2. Tim kiem theo ten\n3. Tim kiem theo san\n4. Doanh thu theo khoang thoi gian\n5. Quay lai\n6. Thoat\nNhap lua chon cua ban: ";
+                                char Achoice4 = getch(); 
+                                switch(Achoice4 - '0')
+                                {
+                                    case 1:
+                                    goto read_loopA5;
+                                    case 2:
+                                    goto read_loopA5;
+                                    case 3:
+                                    goto read_loopA5;
+                                    case 4:
+                                    goto read_loopA5;
+                                    case 5:
+                                    goto read_loopA5;
+                                    case 6:
+                                    return 0;
+                                    default: goto read_loopA5;
+                                }
+                            goto read_loopA3;
+                            }
                             case 3:
                             {
                                 string hoten, sdt;
@@ -123,8 +149,8 @@ int main()
                                 cout << "Nhap so dien thoai: "; cin.ignore(); cin >> sdt;
                                 cout << endl; AC.add(FActivity, hoten, day, sdt);
                                 delay = getch();
+                                goto read_loopA3;
                             }
-                            break;
                             case 4:
                             {   cout<<endl;
                                 AD.hienDS();
@@ -132,6 +158,7 @@ int main()
                                 delay = getch();
                                 goto read_loopA3;
                             }
+<<<<<<< HEAD
                             case 5:
                             {
                                 cout<<endl;
@@ -142,6 +169,11 @@ int main()
                             }
                             case 6: goto read_loopA2;
                             break;
+=======
+                            case 5: AC.priBill(day); delay = getch(); 
+                            goto read_loopA3;
+                            case 6: goto read_loopA3;
+>>>>>>> 9aca50311ff83605af35e7808a5fe660bbafd605
                             case 7:
                             return 0;
                             default:
@@ -192,7 +224,7 @@ int main()
                         delay = getch();
                         read_loopU3: system("cls");
                         Menu();
-                        cout << "1. Dat san\n2. Xem lich su dat\n3. Xoa dat san\n4. Quay lai\n5. Thoat\nNhap lua chon cua ban: "; char Uchoice3 = getche(); cin.ignore();
+                        cout << "1. Dat san\n2. Xem lich su dat\n3. Xoa dat san\n4. Quay lai\n5. Thoat\n6. Xoa tai khoan\nNhap lua chon cua ban: "; char Uchoice3 = getche(); cin.ignore();
                         User *x = U.getUser(username);
                         switch (Uchoice3 - '0')
                         {
@@ -210,6 +242,26 @@ int main()
                             case 4: goto read_loopU2;
                             case 5: 
                             return 0;
+                            //xóa tài khoản user
+                            case 6: {
+                            system("cls");
+                            cout << "Ban co that su muon xoa tai khoan(y/n)?";
+                            char Uchoice4; 
+                            Uchoice4 = getche();
+                            system("cls");
+                            if (Uchoice4 == 'y') {
+                            U.del(FUser, username); 
+                            goto read_loop1;
+                            } else if (Uchoice4 == 'n') {
+                            cout << "\nVui long nhan Enter de quay lai!";
+                            delay = getch(); 
+                            goto read_loopU3;
+                            } else {
+                            cout << "\nLua chon khong hop le. Enter de quay lai!";
+                            delay = getch(); 
+                            goto read_loopU3;
+                            }
+                            }   
                             default:
                                 break;
                         }
@@ -230,4 +282,6 @@ int main()
     }
     system("pause");
     return 0;
+
 }
+
