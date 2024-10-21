@@ -27,6 +27,7 @@ public:
         << " |" << endl
         << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
     }
+    double calculate(const int GiaThuong, const int GiaVang, Day start_day, Day end_day);
 };
 void templateBill(Acti *x, Day current_Day, Time current_Time, double into_money, const int GiaThuong, const int GiaVang);
 class QLAC
@@ -49,7 +50,7 @@ public:
     }
     void History(string Hoten);
     void priBill(Day ngayden);
-    void calculate(const int GiaThuong, const int GiaVang, Day start_day, Day end_day);
+    double calculate(Day start_day, Day end_day);
    
 };
 QLAC::QLAC(string filename)
@@ -205,12 +206,22 @@ void QLAC::priBill(Day ngayden)
         }
     }
 }
-void QLAC::calculate(const int GiaThuong, const int GiaVang, Day start_day, Day end_day)
+double QLAC::calculate(Day start_day, Day end_day)
 {
+    double Tong = 0;
     for (int i=0; i<n; i++)
     {
         Acti* ActiPtr = dynamic_cast<Acti*>(AC[i]);
         if (compareDay(ActiPtr->getNgayDen(), start_day) >= 0 && compareDay(ActiPtr->getNgayDen(), end_day) <=0)
-        ActiPtr->hienThiThongTin();
+        {
+            ActiPtr->hienThiThongTin();
+            if (compareTime(ActiPtr->getGioVao(), timeVang) == 1) /*Giờ vào nằm ở giờ vip*/
+            Tong += distanceTime(ActiPtr->getGioRa(), ActiPtr->getGioVao())*GiaVang;
+            else if (compareTime(ActiPtr->getGioRa(), timeVang) == -1) //Giờ ra và ra nằm ở giờ thường
+            Tong += distanceTime(ActiPtr->getGioRa(), ActiPtr->getGioVao())*GiaThuong;
+            else
+            Tong += distanceTime(ActiPtr->getGioRa(), timeVang)*GiaThuong + distanceTime(timeVang, ActiPtr->getGioVao())*GiaVang;
+        }
     }
+    return Tong;
 }

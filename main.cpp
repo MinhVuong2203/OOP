@@ -41,13 +41,7 @@ int main()
     cout << "Hom nay: " << day.ngay << "/" << day.thang << "/" << day.nam << " ";
     // In ra giờ, phút, giây
     cout << time.gio << ":" << time.phut << ":" << time.giay << "PM"<< endl;
-    Day start_day = {12,10,2024};
-    Day end_day = {20,10,2024};
-    AC.calculate(GiaThuong,GiaVang, start_day,end_day);
-    // AC.hienDS();
-    // TitleUser();
-    // // U.hienDS();
-
+    
     setColor(10);
     	printf("+------------------------------------------------+\n");
       	printf("|     San cau long CIB xin kinh chao quy khach   |\n");
@@ -123,7 +117,7 @@ int main()
                                 read_loopA5:
                                 system("cls");
                                 Menu();
-                                cout << "1. Sap xep theo ten\n2. Tim kiem theo ten\n3. Tim kiem theo san\n4. Doanh thu theo khoang thoi gian\n5. Quay lai\n6. Thoat\nNhap lua chon cua ban: ";
+                                cout << "1. Sap xep theo ten\n2. Tim kiem\n3. Doanh thu theo khoang thoi gian\n4. Quay lai\n5. Thoat\nNhap lua chon cua ban: ";
                                 char Achoice4 = getch(); 
                                 switch(Achoice4 - '0')
                                 {
@@ -132,12 +126,19 @@ int main()
                                     case 2:
                                     goto read_loopA5;
                                     case 3:
+                                    {
+                                        Day start_day, end_day;
+                                        cout << "\nNhap thoi gian bat dau: "; NhapDay(start_day);
+                                        cout << "Nhap thoi gian ket thuc: "; NhapDay(end_day);
+                                        double tien = AC.calculate(start_day,end_day);
+                                        cout << "Doanh thu tu ngay "; XuatDay(start_day); cout << " den "; XuatDay(end_day); cout << " la: "; 
+                                        cout << fixed << setprecision(0) << tien << endl;
+                                        delay = getch();
                                     goto read_loopA5;
+                                    }
                                     case 4:
                                     goto read_loopA5;
                                     case 5:
-                                    goto read_loopA5;
-                                    case 6:
                                     return 0;
                                     default: goto read_loopA5;
                                 }
