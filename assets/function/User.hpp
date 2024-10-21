@@ -1,5 +1,6 @@
 #pragma once
 #include "Person.hpp"
+#include "Activity.hpp"
 using namespace std;
 
 // class đối tượng user
