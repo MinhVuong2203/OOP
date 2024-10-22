@@ -95,16 +95,9 @@ int main()
                                 case 2: AD.delAd(FUser);
                                 break;
                                 case 3: {
-                                    int i;cout<<endl<<"Nhap so cua nguoi ban muon sua:";cin>>i;
-                                    if (i < 1 || i > n) {
-                                    cout << "So thu tu khong hop le!" << endl;
-                                    return;
-                                    }
-                                    int ch;
-    
-                                    cout << "1. Sua ho ten\n2. Sua ngay sinh\n3. Sua SDT\n4. Sua TDN\n5. Sua mat khau\n6. Thoat\nNhap lua chon cua ban: "; cin>>ch;
+                                    int choice;cout<<endl<<"Nhap so cua nguoi ban muon sua:";cin>>choice;
                                     
-                                U.fixUser(FUser,i, ch);
+                                U.fixUser(FUser,choice);
                                 cout<<"Sau khi sua:"<<endl; U.hienThi(choice);
                                 delay=getch();
                                     break;}

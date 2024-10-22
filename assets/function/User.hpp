@@ -38,7 +38,7 @@ public:
 
     void add(string nameFile);
     void del(string nameFile, string username);
-    void fixUser(string nameFile,int index, int ch);
+    void fixUser(string nameFile,int index);
     void hienDS() 
 	{
         for (int i = 0; i < n; i++) 
@@ -173,12 +173,19 @@ QLUS::~QLUS(){
 }
 
 
-void QLUS::fixUser(string nameFile, int index, int ch) {
+void QLUS::fixUser(string nameFile, int index) {
+    if (index < 1 || index > n) {
+        cout << "So thu tu khong hop le!" << endl;
+        return;
+    }
     User *uFix = dynamic_cast<User*>(U[index - 1]);
     if (uFix == nullptr) {
         cout << "User not found!" << endl;
         return;
     }
+    int ch=1;
+    while(ch){
+        cout << "1. Sua ho ten\n2. Sua ngay sinh\n3. Sua SDT\n4. Sua TDN\n5. Sua mat khau\n6. Thoat\nNhap lua chon cua ban: "; cin>>ch;
     switch (ch) {
         case 1: {
             string newHoTen;
@@ -257,6 +264,6 @@ void QLUS::fixUser(string nameFile, int index, int ch) {
     }
 
     file.close();
-    
+    }
 }
 
