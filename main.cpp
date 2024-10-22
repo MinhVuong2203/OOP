@@ -95,10 +95,12 @@ int main()
                                 case 2: AD.delAd(FUser);
                                 break;
                                 case 3: {
-                                    int choice;cout<<endl<<"Nhap so cua nguoi ban muon sua:";cin>>choice;
+                                    int i,ch;cout<<"Nhap so cua nguoi ban muon chinh sua:"; cin>>i;
+                                    string oldName, newName, newSDT; Day newBD;
                                     
-                                U.fixUser(FUser,choice);
-                                cout<<"Sau khi sua:"<<endl; U.hienThi(choice);
+                                U.fixUser(FUser, i, ch, oldName, newName, newBD, newSDT);
+                                AC.update(FActivity, ch, oldName, newName, newBD, newSDT);
+                                cout<<"Sau khi sua:"<<endl; U.hienThi(i);
                                 delay=getch();
                                     break;}
 

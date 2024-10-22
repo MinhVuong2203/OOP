@@ -38,7 +38,7 @@ public:
 
     void add(string nameFile);
     void del(string nameFile, string username);
-    void fixUser(string nameFile,int index);
+    void fixUser(string nameFile,int index, int &ch, string &oldName,string &newName, Day &newBD, string &newSDT);
     void hienDS() 
 	{
         for (int i = 0; i < n; i++) 
@@ -173,7 +173,7 @@ QLUS::~QLUS(){
 }
 
 
-void QLUS::fixUser(string nameFile, int index) {
+void QLUS::fixUser(string nameFile,int index, int &ch, string &oldName,string &newName, Day &newBD, string &newSDT) {
     if (index < 1 || index > n) {
         cout << "So thu tu khong hop le!" << endl;
         return;
@@ -183,31 +183,27 @@ void QLUS::fixUser(string nameFile, int index) {
         cout << "User not found!" << endl;
         return;
     }
-    int ch=1;
-    while(ch){
+    oldName=uFix->getHoten();
         cout << "1. Sua ho ten\n2. Sua ngay sinh\n3. Sua SDT\n4. Sua TDN\n5. Sua mat khau\n6. Thoat\nNhap lua chon cua ban: "; cin>>ch;
     switch (ch) {
         case 1: {
-            string newHoTen;
             cout << "Nhap ho ten moi: ";
             cin.ignore();
-            getline(cin, newHoTen);
-            while (!checkName(newHoTen)) {
+            getline(cin, newName);
+            while (!checkName(newName)) {
                 cout << "Ho ten khong hop le. Vui long nhap lai: ";
-                getline(cin, newHoTen);
+                getline(cin, newName);
             }
-            uFix->setHoTen(newHoTen);
+            uFix->setHoTen(newName);
             break;
         }
         case 2: {
-            Day newNgaySinh;
             cout << "Nhap ngay sinh moi: ";
-            NhapDay(newNgaySinh);
-            uFix->setNgaySinh(newNgaySinh);
+            NhapDay(newBD);
+            uFix->setNgaySinh(newBD);
             break;
         }
         case 3: {
-            string newSDT;
             cout << "Nhap SDT moi: ";
             cin.ignore();
             getline(cin, newSDT);
@@ -264,6 +260,6 @@ void QLUS::fixUser(string nameFile, int index) {
     }
 
     file.close();
-    }
+    
 }
 

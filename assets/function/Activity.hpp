@@ -51,7 +51,7 @@ public:
     void History(string Hoten);
     void priBill(Day ngayden);
     double calculate(Day start_day, Day end_day);
-   
+    void update(string nameFile, int ch, string oldName,string newName, Day newBD, string newSDT);
 };
 QLAC::QLAC(string filename)
 {
@@ -224,4 +224,40 @@ double QLAC::calculate(Day start_day, Day end_day)
         }
     }
     return Tong;
+}
+
+void QLAC::update(string nameFile, int ch, string oldName,string newName, Day newBD, string newSDT){
+    for (int i = 0; i < n; i++) {
+        Acti *ActiPtr = dynamic_cast<Acti*>(AC[i]);
+        if (ActiPtr->getHoten() == oldName) {
+           if(ch==1){
+            ActiPtr->setHoTen(newName);
+           }
+           else if(ch==2){
+            ActiPtr->setNgaySinh(newBD);
+           }
+           else if(ch==3){
+            ActiPtr->setSDT(newSDT);
+           }
+        }
+    }
+    ofstream file(nameFile);
+    if (!file.is_open()) {
+        cerr << "Unable to open file: " << nameFile << endl;
+        return;
+    }
+    for (int i = 0; i < n; i++) {
+        Acti* ActiPtr = dynamic_cast<Acti*>(AC[i]);
+        if (ActiPtr != nullptr) {
+            file << ActiPtr->getHoten() << ","
+                 << ActiPtr->getNgaySinh().ngay << "/" << ActiPtr->getNgaySinh().thang << "/" << ActiPtr->getNgaySinh().nam << ","
+                 << ActiPtr->getSDT() << ","
+                 << ActiPtr->getNgayDen().ngay << "/" << ActiPtr->getNgayDen().thang << "/" << ActiPtr->getNgayDen().nam << ","
+                 << ActiPtr->getGioVao().gio << ":" << ActiPtr->getGioVao().phut << ":" << ActiPtr->getGioVao().giay << ","
+                 << ActiPtr->getGioRa().gio << ":" << ActiPtr->getGioRa().phut << ":" << ActiPtr->getGioRa().giay << ","
+                 << ActiPtr->getID() << endl;
+        }
+    }
+
+    file.close();
 }
