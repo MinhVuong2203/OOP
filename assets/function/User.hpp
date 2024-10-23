@@ -49,10 +49,8 @@ public:
     }
     void hienThi(int i) 
 	{
-        
             cout << left << "| "; setColor(12); cout << setw(4) << i; setColor(7);
-            U[i-1]->hienThiThongTin();
-        
+            U[i-1]->hienThiThongTin(); 
     }
     User *getUser(string username)
     {
@@ -67,6 +65,7 @@ public:
     int getN(){return this->n;}
     void setN(int newN) { this->n = newN; }
     Person **getU(){return this->U;}
+
 };
 
 QLUS::QLUS(string filename)
