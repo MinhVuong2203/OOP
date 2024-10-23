@@ -20,6 +20,7 @@ Time timeVang = {16,0,0};
 
 int main() 
 {
+    
     //Khai báo file
     string FAdmin = "assets//Admin.txt";
     string FUser = "assets//User.txt";
@@ -42,11 +43,7 @@ int main()
     // In ra giờ, phút, giây
     cout << time.gio << ":" << time.phut << ":" << time.giay << "PM"<< endl;
     
-    setColor(10);
-    	printf("+------------------------------------------------+\n");
-      	printf("|     San cau long CIB xin kinh chao quy khach   |\n");
-		printf("+------------------------------------------------+\n\n");
-    setColor(7);
+    banner();
     read_loop1:
     cout << "1. Nguoi quan ly\t\t2. Nguoi dung\t\t3. Thoat\n\nMoi nhap lua chon cua ban: ";
     char choice1 = getche();	
@@ -79,7 +76,7 @@ int main()
                         delay = getch();
                         read_loopA3: system("cls"); //Xóa màn hình
                         Menu();
-                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Xoa Admin\n5. Xoa User\n6. Quay lai\n7. Thoat\nNhap lua chon cua ban: "; char Achoice3 = getche(); 
+                        cout << "1. Quan li danh sach user\n2. Thong ke\n3. Dat san\n4. Quan li Admin\n6. Quay lai\n7. Thoat\nNhap lua chon cua ban: "; char Achoice3 = getche(); 
                         switch (Achoice3 - '0')
                         {
                             case 1:
@@ -94,18 +91,18 @@ int main()
                                 goto read_loopA4;
                                 case 2: AD.delAd(FUser);
                                 break;
-                                case 3: {
+                                case 3: 
+                                {
                                     int i,ch;cout<<"Nhap so cua nguoi ban muon chinh sua:"; cin>>i;
                                     string oldName, newName, newSDT; Day newBD;
                                     
-                                U.fixUser(FUser, i, ch, oldName, newName, newBD, newSDT);
-                                AC.update(FActivity, ch, oldName, newName, newBD, newSDT);
-                                cout<<"Sau khi sua:"<<endl; U.hienThi(i);
-                                delay=getch();
-                                    break;}
+                                    U.fixUser(FUser, i, ch, oldName, newName, newBD, newSDT);
+                                    AC.update(FActivity, ch, oldName, newName, newBD, newSDT);
+                                    cout<<"Sau khi sua:"<<endl; U.hienThi(i);
+                                    delay=getch();
+                                    break;
+                                }
 
-                                
-                                
                                 case 4: goto read_loopA4;
                                 case 5:
                                 return 0;
@@ -224,7 +221,7 @@ int main()
                         delay = getch();
                         read_loopU3: system("cls");
                         Menu();
-                        cout << "1. Dat san\n2. Xem lich su dat\n3. Xoa dat san\n4. Quay lai\n5. Thoat\n6. Xoa tai khoan\nNhap lua chon cua ban: "; char Uchoice3 = getche(); cin.ignore();
+                        cout << "1. Dat san\n2. Xem lich su dat\n3. Xoa dat san\n4. Xoa tai khoan\n5. Quay lai\n6. Thoat\nNhap lua chon cua ban: "; char Uchoice3 = getche(); cin.ignore();
                         User *x = U.getUser(username);
                         switch (Uchoice3 - '0')
                         {
@@ -239,11 +236,9 @@ int main()
                             break;
                             case 3:
                             break;
-                            case 4: goto read_loopU2;
-                            case 5: 
-                            return 0;
+                            
                             //xóa tài khoản user
-                            case 6: {
+                            case 4: {
                             system("cls");
                             cout << "Ban co that su muon xoa tai khoan(y/n)?";
                             char Uchoice4; 
@@ -261,9 +256,12 @@ int main()
                             delay = getch(); 
                             goto read_loopU3;
                             }
-                            }   
+                            }
+                            case 5: goto read_loopU3;
+                            case 6: 
+                            return 0;   
                             default:
-                                break;
+                                goto read_loopU3;
                         }
                     }
                     else 
@@ -276,9 +274,13 @@ int main()
                 break;
                 case 3: goto read_loop1;
                 case 4: break;
+                default:
+                    goto read_loopU2;
             }
         break; //case 2:
         case 3: break;
+        default:
+            goto read_loop1;
     }
     system("pause");
     return 0;
