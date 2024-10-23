@@ -191,47 +191,48 @@ void QLAD::delUS(string nameFile){
 void QLAD::searchUS(string search, string nameFile){
     ifstream file(nameFile);
     if (!file.is_open()) {
-        cerr << "Unable to open file: " << FilePass << endl;
+        cerr << "Unable to open file: " << nameFile << endl;
         return;
     }
-    cout<<"Nhap nguoi dung ma ban muon tim kiem:";
-    cin>>search;
     string line;
     bool found = false; // Biến để kiểm tra nếu tìm thấy user
-    while (getline(file, line)) 
-    {
+
+    while (getline(file, line)) {
         stringstream ss(line);
-        string item;
-        bool isFirst = true;
+        string item; 
+        string HoTen, NgaySinh, SDT, username, password;
+        bool isFirst = true; 
 
-        while (getline(ss, item, ',')) 
-        {
-            if (item == search) 
-            {
-                string HoTen, NgaySinh, SDT, username, password;
-                stringstream ss2(line);
-
-                getline(ss2, HoTen, ',');
-                getline(ss2, NgaySinh, ',');
-                getline(ss2, SDT, ',');
-                getline(ss2, username, ',');
-                getline(ss2, password, ',');
-
-                cout << "Thong tin nguoi dung ma ban  da tim kiem:\n";
-                cout << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
-                cout << "| " << setw(20) << HoTen 
-                     << "| " << setw(10) << NgaySinh 
-                     << "| " << setw(14) << SDT 
-                     << "| " << setw(14) << username 
-                     << "| " << setw(14) << password 
-                     << "|\n";
-                cout << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
-
-                found = true;
-                break;
+        // Tách các trường trong dòng
+        while (getline(ss, item, ',')) {
+            if (isFirst) {
+                HoTen = item;
+                isFirst = false;
+            } else if (HoTen != "" && NgaySinh == "") {
+                NgaySinh = item; 
+            } else if (NgaySinh != "" && SDT == "") {
+                SDT = item;
+            } else if (SDT != "" && username == "") {
+                username = item;
+            } else if (username != "" && password == "") {
+                password = item; 
             }
         }
-        if (found) break;
+
+        if (HoTen == search || NgaySinh == search || SDT == search || username == search || password == search) {
+            cout << "Thong tin nguoi dung ma ban da tim kiem:\n";
+            cout << "+--------------------+------------+--------------+---------------+---------------+\n";
+            cout << "| " << setw(18) << HoTen
+                 << "| " << setw(10) << NgaySinh
+                 << "| " << setw(12) << SDT
+                 << "| " << setw(13) << username
+                 << "| " << setw(13) << password
+                 << "|\n";
+            cout << "+--------------------+------------+--------------+---------------+---------------+\n";
+
+            found = true;
+            break;
+        }
     }
 
     if (!found) {
@@ -239,5 +240,4 @@ void QLAD::searchUS(string search, string nameFile){
     }
 
     file.close();
-
 }
