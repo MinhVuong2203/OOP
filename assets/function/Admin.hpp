@@ -38,14 +38,8 @@ public:
     }
     void fixAccountUser(string nameFile);
     void delAd(string nameFile);
-<<<<<<< HEAD
     void delUS(string nameFile, QLUS &U);
-   
-=======
-    void delUS(string nameFile);
     void searchUS(string search, string nameFile);
-
->>>>>>> dce0ef1addf673c1cfef2a542946eabbecb4d7e4
 };
 
 
@@ -225,10 +219,6 @@ void QLAD::searchUS(string search, string nameFile){
         string item;
         bool isFirst = true;
 
-<<<<<<< HEAD
-
-
-=======
         while (getline(ss, item, ',')) 
         {
             if (item == search) 
@@ -266,4 +256,3 @@ void QLAD::searchUS(string search, string nameFile){
     file.close();
 
 }
->>>>>>> dce0ef1addf673c1cfef2a542946eabbecb4d7e4
