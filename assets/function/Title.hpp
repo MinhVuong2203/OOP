@@ -22,7 +22,7 @@ void banner()
 }
 void Menu()
 {
-    cout << "----------------"; setColor(11); cout << "MENU"; setColor(7); cout << "---------------\n";
+    cout << "================"; setColor(11); cout << "<MENU>"; setColor(7); cout << "================\n";
 }
 
 void TitleAdmin()
@@ -74,7 +74,7 @@ void icon_user(){
     setColor(7);
 }
 
-void icon_amin(){
+void icon_admin(){
     setColor(6);
     cout << " ^_^ ";
     setColor(7);
