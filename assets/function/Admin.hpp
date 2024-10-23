@@ -38,8 +38,14 @@ public:
     }
     void fixAccountUser(string nameFile);
     void delAd(string nameFile);
+<<<<<<< HEAD
     void delUS(string nameFile, QLUS &U);
    
+=======
+    void delUS(string nameFile);
+    void searchUS(string search, string nameFile);
+
+>>>>>>> dce0ef1addf673c1cfef2a542946eabbecb4d7e4
 };
 
 
@@ -203,6 +209,61 @@ void QLAD::delUS(string nameFile, QLUS &U) {
     }
     file.close();  // Đóng file sau khi ghi
 }
+void QLAD::searchUS(string search, string nameFile){
+    ifstream file(nameFile);
+    if (!file.is_open()) {
+        cerr << "Unable to open file: " << FilePass << endl;
+        return;
+    }
+    cout<<"Nhap nguoi dung ma ban muon tim kiem:";
+    cin>>search;
+    string line;
+    bool found = false; // Biến để kiểm tra nếu tìm thấy user
+    while (getline(file, line)) 
+    {
+        stringstream ss(line);
+        string item;
+        bool isFirst = true;
+
+<<<<<<< HEAD
 
 
+=======
+        while (getline(ss, item, ',')) 
+        {
+            if (item == search) 
+            {
+                string HoTen, NgaySinh, SDT, username, password;
+                stringstream ss2(line);
 
+                getline(ss2, HoTen, ',');
+                getline(ss2, NgaySinh, ',');
+                getline(ss2, SDT, ',');
+                getline(ss2, username, ',');
+                getline(ss2, password, ',');
+
+                cout << "Thong tin nguoi dung ma ban  da tim kiem:\n";
+                cout << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
+                cout << "| " << setw(20) << HoTen 
+                     << "| " << setw(10) << NgaySinh 
+                     << "| " << setw(14) << SDT 
+                     << "| " << setw(14) << username 
+                     << "| " << setw(14) << password 
+                     << "|\n";
+                cout << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
+
+                found = true;
+                break;
+            }
+        }
+        if (found) break;
+    }
+
+    if (!found) {
+        cout << "Khong tim thay nguoi dung su dung du lieu nay!" << endl;
+    }
+
+    file.close();
+
+}
+>>>>>>> dce0ef1addf673c1cfef2a542946eabbecb4d7e4
