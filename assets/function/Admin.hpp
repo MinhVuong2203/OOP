@@ -86,7 +86,7 @@ void QLAD::add(string nameFile)
             while (checkName(HoTen)==false){
             cout << "Ho ten khong hop le. Vui long nhap lai: ";  cin.ignore(); getline(cin, HoTen);
             }
-        icon_Order(); cout << "Nhap ngay sinh (dd/mm/yyyy): "; NhapDay(NgaySinh);
+        icon_Order(); cout << "Nhap ngay sinh (dd/mm/yyyy): "; NgaySinh.nhapDay();
         icon_Order(); cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
             while (checkSDT(SDT)==false){
             cout << "SDT khong hop le. Vui long nhap lai: "; getline(cin, SDT);
@@ -206,7 +206,7 @@ void QLAD::delUS(string nameFile, QLUS &U) {
 void QLAD::searchUS(string search, string nameFile){
     ifstream file(nameFile);
     if (!file.is_open()) {
-        cerr << "Unable to open file: " << FilePass << endl;
+        cerr << "Unable to open file: " << endl;
         return;
     }
     cout<<"Nhap nguoi dung ma ban muon tim kiem:";

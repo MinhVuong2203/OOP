@@ -112,24 +112,24 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
     int id;
     int San[SL] = {0}; // Tạo ra một mảng sân để lưu id và trạng thái sân thứ i có id là i+1, giá trị s[i] = 0 (sân trống), s[i] = 1 (sân có người)
 
-    cout << "Nhap ngay vao: "; NhapDay(NgayDen);
-    cout << "Nhap gio vao: "; NhapTime(GioVao);
-    cout << "Nhap gio ra: "; NhapTime(GioRa);
+    cout << "Nhap ngay vao: ";NgayDen.nhapDay();
+    cout << "Nhap gio vao: "; GioVao.nhapTime();
+    cout << "Nhap gio ra: "; GioRa.nhapTime();
 
     for (int i = 0; i < n; i++) 
     {
         Acti *ActiPtr = dynamic_cast<Acti*>(AC[i]);  //chuyển đổi kiểu person sang acti
         if (ActiPtr != nullptr) 
         {
-            if (compareDay(ActiPtr->getNgayDen(), NgayDen) == 0)
+            if (ActiPtr->getNgayDen() == NgayDen)
             {
-                if (compareTime(ActiPtr->getGioVao(), GioRa) <=0 && compareTime(ActiPtr->getGioRa(), GioRa) >=0) //TH1
+                if (ActiPtr->getGioVao() <= GioRa  && ActiPtr->getGioRa() >= GioRa)  //TH1
                     San[ActiPtr->getID()-1] = 1;
-                if (compareTime(ActiPtr->getGioVao(), GioVao) <=0 && compareTime(ActiPtr->getGioRa(), GioVao) >=0)  //TH2  
+                if (ActiPtr->getGioVao() <= GioVao && ActiPtr->getGioRa() >= GioVao) //TH2  
                     San[ActiPtr->getID()-1] = 1;
-                if (compareTime(ActiPtr->getGioVao(), GioVao) >=0 && compareTime(ActiPtr->getGioRa(), GioRa) <=0) //TH3
+                if (ActiPtr->getGioVao() >= GioVao && ActiPtr->getGioRa() <= GioRa) //TH3
                     San[ActiPtr->getID()-1] = 1;
-                if (compareTime(ActiPtr->getGioVao(), GioVao) <=0 && compareTime(ActiPtr->getGioRa(), GioRa) >=0) //TH4
+                if (ActiPtr->getGioVao() <= GioVao && ActiPtr->getGioRa() >= GioRa) //TH4
                     San[ActiPtr->getID()-1] = 1;    
             }
         }
@@ -176,7 +176,7 @@ void QLAC::priBill(Day ngayden)
     for (int i = n - 1; i >= 0; i--) 
     {
         Acti* ActiPtr = dynamic_cast<Acti*>(AC[i]);
-        if (ActiPtr != nullptr && compareDay(ActiPtr->getNgayDen(), ngayden) == 0) 
+        if (ActiPtr != nullptr && ActiPtr->getNgayDen() == ngayden) 
         {
             cout << left << "| "; setColor(12);cout << setw(4) << ++k; setColor(7);
             ActiPtr->hienThiThongTin();
@@ -195,7 +195,7 @@ void QLAC::priBill(Day ngayden)
     for (int i = n - 1; i >= 0; i--) 
     {
         Acti* ActiPtr = dynamic_cast<Acti*>(AC[i]);
-        if (ActiPtr != nullptr && compareDay(ActiPtr->getNgayDen(), ngayden) == 0) 
+        if (ActiPtr != nullptr && ActiPtr->getNgayDen() == ngayden)  
         {
             k++;
             if (k == STT) 
@@ -212,15 +212,15 @@ double QLAC::calculate(Day start_day, Day end_day)
     for (int i=0; i<n; i++)
     {
         Acti* ActiPtr = dynamic_cast<Acti*>(AC[i]);
-        if (compareDay(ActiPtr->getNgayDen(), start_day) >= 0 && compareDay(ActiPtr->getNgayDen(), end_day) <=0)
+        if (ActiPtr->getNgayDen() >= start_day && ActiPtr->getNgayDen() <= end_day)
         {
             ActiPtr->hienThiThongTin();
-            if (compareTime(ActiPtr->getGioVao(), timeVang) == 1) /*Giờ vào nằm ở giờ vip*/
-            Tong += distanceTime(ActiPtr->getGioRa(), ActiPtr->getGioVao())*GiaVang;
-            else if (compareTime(ActiPtr->getGioRa(), timeVang) == -1) //Giờ ra và ra nằm ở giờ thường
-            Tong += distanceTime(ActiPtr->getGioRa(), ActiPtr->getGioVao())*GiaThuong;
+            if (ActiPtr->getGioVao() > timeVang) /*Giờ vào nằm ở giờ vip*/
+            Tong += (ActiPtr->getGioRa() - ActiPtr->getGioVao())*GiaVang;
+            else if (ActiPtr->getGioRa() < timeVang) //Giờ ra và ra nằm ở giờ thường
+            Tong += (ActiPtr->getGioRa() - ActiPtr->getGioVao())*GiaThuong;
             else
-            Tong += distanceTime(ActiPtr->getGioRa(), timeVang)*GiaThuong + distanceTime(timeVang, ActiPtr->getGioVao())*GiaVang;
+            Tong += (ActiPtr->getGioRa() - timeVang)*GiaThuong + (timeVang - ActiPtr->getGioVao())*GiaVang;
         }
     }
     return Tong;

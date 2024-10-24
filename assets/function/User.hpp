@@ -106,7 +106,7 @@ void QLUS::add(string nameFile)
         while (checkName(HoTen)==false){
             cout << "Ho ten khong hop le. Vui long nhap lai: ";  cin.ignore(); getline(cin, HoTen);
         }
-    cout << "Nhap ngay sinh: "; NhapDay(NgaySinh);
+    cout << "Nhap ngay sinh: "; NgaySinh.nhapDay();
     cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
         while (checkSDT(SDT)==false){
             cout << "SDT khong hop le. Vui long nhap lai: "; getline(cin, SDT);
@@ -198,7 +198,7 @@ void QLUS::fixUser(string nameFile,int index, int &ch, string &oldName,string &n
         }
         case 2: {
             cout << "Nhap ngay sinh moi: ";
-            NhapDay(newBD);
+            newBD.nhapDay();
             uFix->setNgaySinh(newBD);
             break;
         }

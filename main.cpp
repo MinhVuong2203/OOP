@@ -189,11 +189,11 @@ int main()
                                     {
                                         Day start_day, end_day;
                                         cout << endl;
-                                        icon_Order(); cout << "Nhap thoi gian bat dau: "; NhapDay(start_day);
+                                        icon_Order(); cout << "Nhap thoi gian bat dau: "; start_day.nhapDay();
                                         cout << endl;
-                                        icon_Order(); cout << "Nhap thoi gian ket thuc: "; NhapDay(end_day);
+                                        icon_Order(); cout << "Nhap thoi gian ket thuc: "; end_day.nhapDay();
                                         double tien = AC.calculate(start_day,end_day);
-                                        cout << "Doanh thu tu ngay "; XuatDay(start_day); cout << " den "; XuatDay(end_day); cout << " la: "; 
+                                        cout << "Doanh thu tu ngay "; start_day.xuatDay() ; cout << " den "; end_day.xuatDay(); cout << " la: "; 
                                         cout << fixed << setprecision(0) << tien << endl;
                                         delay = getch();
                                     goto read_loopA5;
@@ -211,7 +211,7 @@ int main()
                                 string hoten, sdt;
                                 Day day;
                                 icon_Order(); cout << "Nhap ten user: "; cin.ignore(); cin >> hoten;
-                                icon_Order(); cout << "Nhap ngay sinh: "; NhapDay(day);
+                                icon_Order(); cout << "Nhap ngay sinh: "; day.nhapDay();
                                 icon_Order(); cout << "Nhap so dien thoai: "; cin.ignore(); cin >> sdt;
                                 cout << endl; AC.add(FActivity, hoten, day, sdt);
                                 delay = getch();
