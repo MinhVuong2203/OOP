@@ -146,10 +146,9 @@ int main()
                                 case 3: 
                                 {
                                     int i,ch;
-                                    icon_Order();
-                                    cout<<"Nhap so cua nguoi ban muon chinh sua:"; cin>>i;
+                                    icon_Order();cout<<endl;
+                                    cout<<"Nhap so thu tu cua nguoi ban muon chinh sua:"; cin>>i;
                                     string oldName, newName, newSDT; Day newBD;
-                                    
                                     U.fixUser(FUser, i, ch, oldName, newName, newBD, newSDT);
                                     AC.update(FActivity, ch, oldName, newName, newBD, newSDT);
                                     cout<<"Sau khi sua:"<<endl; U.hienThi(i);
