@@ -210,49 +210,45 @@ void QLAD::searchUS(string search, string nameFile){
         return;
     }
     string line;
+    int i=0;
     bool found = false; // Biến để kiểm tra nếu tìm thấy user
-
-    while (getline(file, line)) {
+    cout<<endl;
+    TitleUser();
+    while (getline(file, line)) 
+    {
         stringstream ss(line);
         string item; 
-        string HoTen, NgaySinh, SDT, username, password;
+        string HoTen, NgaySinh_str, SDT, username, password;
         bool isFirst = true; 
-
-        // Tách các trường trong dòng
-        while (getline(ss, item, ',')) {
-            if (isFirst) {
-                HoTen = item;
-                isFirst = false;
-            } else if (HoTen != "" && NgaySinh == "") {
-                NgaySinh = item; 
-            } else if (NgaySinh != "" && SDT == "") {
-                SDT = item;
-            } else if (SDT != "" && username == "") {
-                username = item;
-            } else if (username != "" && password == "") {
-                password = item; 
-            }
-        }
-
-        if (HoTen == search || NgaySinh == search || SDT == search || username == search || password == search) {
-            cout << "Thong tin nguoi dung ma ban da tim kiem:\n";
-            cout << "+--------------------+------------+--------------+---------------+---------------+\n";
-            cout << "| " << setw(18) << HoTen
-                 << "| " << setw(10) << NgaySinh
-                 << "| " << setw(12) << SDT
-                 << "| " << setw(13) << username
-                 << "| " << setw(13) << password
+        
+        getline(ss, HoTen, ',');
+        getline(ss, NgaySinh_str, ',');
+        getline(ss, SDT, ',');
+        getline(ss, username, ',');
+        getline(ss, password, ',');
+       
+            if (HoTen == search || NgaySinh_str == search || SDT == search || username == search || password == search) 
+            {
+                i++;
+            
+            
+            cout << "| ";setColor(12);cout << setw(4) << i;
+            setColor(7); 
+            cout << "| " << setw(19) << HoTen
+                 << "| " << setw(14) << NgaySinh_str
+                 << "| " << setw(14) << SDT
+                 << "| " << setw(14) << username
+                 << "| " << setw(14) << password
                  << "|\n";
-            cout << "+--------------------+------------+--------------+---------------+---------------+\n";
+            cout << "+-----+--------------------+---------------+---------------+---------------+---------------+\n";
 
             found = true;
-            break;
-        }
+            }
     }
-
+    cin.ignore();
     if (!found) {
         cout << "Khong tim thay nguoi dung su dung du lieu nay!" << endl;
     }
-
+    
     file.close();
 }
