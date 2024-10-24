@@ -21,10 +21,6 @@ Time timeVang = {16,0,0};
 int main() 
 {
 
-    
-
-    
-    
     //Khai báo file
     string FAdmin = "assets//Admin.txt";
     string FUser = "assets//User.txt";
