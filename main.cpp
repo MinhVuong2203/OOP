@@ -21,10 +21,6 @@ Time timeVang = {16,0,0};
 int main() 
 {
 
-    
-
-    
-    
     //Khai báo file
     string FAdmin = "assets//Admin.txt";
     string FUser = "assets//User.txt";
@@ -187,13 +183,11 @@ int main()
                                     case 2:
                                     {
                                         cout<<endl;
-                                        cin.ignore();
+                                        U.hienDS();
                                         string search;
-                                        icon_Order();
                                         cout<<"Nhap du lieu cua nguoi dung ma ban muon tim kiem:";
-                                        getline(cin,search);
+                                        cin>>search;
                                         AD.searchUS(search,FUser);
-                                        delay=getch();
                                         goto read_loopA5;
                                     }
                                    
