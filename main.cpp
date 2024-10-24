@@ -183,7 +183,7 @@ int main()
                                     case 2:
                                     {
                                         cout<<endl;
-                                        U.hienDS();
+                                        cin.ignore();
                                         string search;
                                         cout<<"Nhap du lieu cua nguoi dung ma ban muon tim kiem:";
                                         cin>>search;
