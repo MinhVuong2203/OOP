@@ -18,6 +18,7 @@ public:
         cout << CCCD << endl;
     }
 };
+
 class QLAD{
 private:
     Person *A[20];
@@ -37,10 +38,12 @@ public:
     }
     void fixAccountUser(string nameFile);
     void delAd(string nameFile);
-    void delUS(string nameFile);
-
-
+    void delUS(string nameFile, QLUS &U);
+    void searchUS(string search, string nameFile);
 };
+
+
+
 QLAD::QLAD(string filename)
 {
     this->n = 0;
@@ -79,28 +82,30 @@ void QLAD::add(string nameFile)
         string HoTen, SDT, CCCD;
         Day NgaySinh;
         // cin.ignore();
-        cout << "Nhap ho ten: ";  getline(cin, HoTen);
+        icon_Order();    cout << "Nhap ho ten: ";  getline(cin, HoTen);
             while (checkName(HoTen)==false){
-                cout << "Ho ten khong hop le. Vui long nhap lai: ";  cin.ignore(); getline(cin, HoTen);
+            cout << "Ho ten khong hop le. Vui long nhap lai: ";  cin.ignore(); getline(cin, HoTen);
             }
-        cout << "Nhap ngay sinh (dd/mm/yyyy): "; NhapDay(NgaySinh);
-        cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
+        icon_Order(); cout << "Nhap ngay sinh (dd/mm/yyyy): "; NgaySinh.nhapDay();
+        icon_Order(); cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
             while (checkSDT(SDT)==false){
-                cout << "SDT khong hop le. Vui long nhap lai: "; getline(cin, SDT);
+            cout << "SDT khong hop le. Vui long nhap lai: "; getline(cin, SDT);
             }
             while (checkFile(SDT, nameFile)==false){
                 cout << "SDT da dang ki tai khoan. Vui long dung SDT khac: ";  cin.ignore(); getline(cin, SDT);
             }
 
-        cout << "Nhap CCCD: ";  getline(cin, CCCD);
+        icon_Order(); cout << "Nhap CCCD: ";  getline(cin, CCCD);
             while (checkCCCD(CCCD) == false){
-                cout << "CCCD khong hop le. Vui long nhap lai: ";  getline(cin, CCCD);
+            cout << "CCCD khong hop le. Vui long nhap lai: ";  getline(cin, CCCD);
             }
 
 		Person *p = new Admin(HoTen, NgaySinh, SDT, CCCD);
         A[n++] = p;
         file << HoTen <<","<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<","<< SDT <<","<< CCCD << endl; 
-        cout << "Add Admin successful!" << endl;
+        setColor(6);
+        cout << "\n--------[Add Admin successful]----------\n" << endl;
+        setColor(7);
         file.close();
 }
 
@@ -149,33 +154,43 @@ void QLAD::delAd(string nameFile){
     file.close();
 }
 
-void QLAD::delUS(string nameFile){
-    QLUS qlus(nameFile);
-    
+void QLAD::delUS(string nameFile, QLUS &U) {
     int deleteUser;
-    int n=qlus.getN();
-    cout<<"Nhap User ban muon xoa:";
-    cin>>deleteUser;
-    if(deleteUser<1 || deleteUser> n){
-        cout<<"Khong ton tai User o vi tri nay";
+    int n = U.getN();  // Lấy số lượng user từ đối tượng U thực tế
+    cout << "Nhap so thu tu cua User ban muon xoa: ";
+    cin >> deleteUser;
+
+    // Kiểm tra xem chỉ số xóa có hợp lệ không
+    if (deleteUser < 1 || deleteUser > n) {
+        cout << "Khong ton tai User o vi tri nay." << endl;
         return;
     }
-    Person** U = qlus.getU();
-    delete U[deleteUser-1];
-    for(int i=deleteUser-1;i<n-1;i++){
-        U[i]=U[i+1];
+
+    Person** users = U.getU();  // Lấy danh sách người dùng từ đối tượng U
+
+    // Xóa user tại vị trí deleteUser-1
+    delete users[deleteUser - 1];  // Giải phóng bộ nhớ của User
+
+    // Dịch chuyển các phần tử sau vị trí deleteUser lên một vị trí
+    for (int i = deleteUser - 1; i < n - 1; i++) {
+        users[i] = users[i + 1];
     }
-    n--;
-    qlus.setN(qlus.getN()-1);
-    cout<<"Xoa User thanh cong"<<endl;
+
+    n--;  // Giảm số lượng user
+    U.setN(n);  // Cập nhật lại số lượng người dùng sau khi xóa
+
+    cout << "Xoa User thanh cong." << endl;
+
+    // Mở file để ghi lại danh sách mới
     fstream file(nameFile, ios::out);
-    if (!file.is_open())
-        {
-            cerr << "Unable to open file: " << nameFile << endl;
-            return;
-        }
-    for (int i = 0; i < qlus.getN(); ++i) {
-        User* user = dynamic_cast<User*>(U[i]);
+    if (!file.is_open()) {
+        cerr << "Khong the mo file: " << nameFile << endl;
+        return;
+    }
+
+    // Ghi lại danh sách User vào file
+    for (int i = 0; i < U.getN(); ++i) {
+        User* user = dynamic_cast<User*>(users[i]);
         if (user) {
             file << user->getHoten() << ","
                  << user->getNgaySinh().ngay << "/"
@@ -186,6 +201,58 @@ void QLAD::delUS(string nameFile){
                  << user->getPassword() << endl;
         }
     }
-    file.close();    
+    file.close();  // Đóng file sau khi ghi
 }
+void QLAD::searchUS(string search, string nameFile){
+    ifstream file(nameFile);
+    if (!file.is_open()) {
+        cerr << "Unable to open file: " << endl;
+        return;
+    }
+    string line;
+    bool found = false; // Biến để kiểm tra nếu tìm thấy user
 
+    while (getline(file, line)) {
+        stringstream ss(line);
+        string item; 
+        string HoTen, NgaySinh, SDT, username, password;
+        bool isFirst = true; 
+
+        // Tách các trường trong dòng
+        while (getline(ss, item, ',')) {
+            if (isFirst) {
+                HoTen = item;
+                isFirst = false;
+            } else if (HoTen != "" && NgaySinh == "") {
+                NgaySinh = item; 
+            } else if (NgaySinh != "" && SDT == "") {
+                SDT = item;
+            } else if (SDT != "" && username == "") {
+                username = item;
+            } else if (username != "" && password == "") {
+                password = item; 
+            }
+        }
+
+        if (HoTen == search || NgaySinh == search || SDT == search || username == search || password == search) {
+            cout << "Thong tin nguoi dung ma ban da tim kiem:\n";
+            cout << "+--------------------+------------+--------------+---------------+---------------+\n";
+            cout << "| " << setw(18) << HoTen
+                 << "| " << setw(10) << NgaySinh
+                 << "| " << setw(12) << SDT
+                 << "| " << setw(13) << username
+                 << "| " << setw(13) << password
+                 << "|\n";
+            cout << "+--------------------+------------+--------------+---------------+---------------+\n";
+
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        cout << "Khong tim thay nguoi dung su dung du lieu nay!" << endl;
+    }
+
+    file.close();
+}
