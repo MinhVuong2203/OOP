@@ -111,8 +111,9 @@ int main()
                         cout << "|"; icon_login(); cout << "<2> Thong ke                   |" << endl;
                         cout << "|"; icon_Res(); cout << "<3> Dat san                    |" << endl;
                         cout << "|"; icon_login(); cout << "<4> Quan li Admin              |" << endl;
-                        cout << "|"; icon_return(); cout << "<5> Quay lai                   |" << endl;
-                        cout << "|"; icon_exit(); cout << "<6> Thoat                      |" << endl;
+                        cout << "|"; icon_login(); cout << "<5> In hoa don                 |" << endl;
+                        cout << "|"; icon_return(); cout << "<6> Quay lai                   |" << endl;
+                        cout << "|"; icon_exit(); cout << "<7> Thoat                      |" << endl;
                         cout << "|                                    |" << endl;
                         cout << "+====================================+" << endl;
                         cout << "Moi nhap lua chon cua ban: ";
@@ -250,10 +251,14 @@ int main()
                                     default: goto read_loopA4_4;
                                 }
                             }
-                            case 5: goto read_loopA2;
-                            case 6:
+                            case 5:
+                                    AC.priBill(day); 
+                                    delay = getche();
+                                    goto read_loopA3;
+                            case 6: goto read_loopA2;
+                            case 7:
                             return 0;
-                            default: goto read_loopA2;
+                            default: goto read_loopA3;
                             
                         }
                         // Thực hiện công việc    

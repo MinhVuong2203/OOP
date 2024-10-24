@@ -23,31 +23,6 @@ void templateBill(Acti *x, Day current_Day, Time current_Time, double into_money
     cout << "|" << right << setw(79) << "|\n";
     TitleBill();
     float SL = x->getGioRa() - x->getGioVao(); 
-    if (x->getGioRa() < timeVang) 
-    {
-        cout << left << "|\t" << setw(10) << "Thuong" << right 
-            << setw(14) << GiaThuong
-            << setw(14) << SL;
-            into_money = GiaThuong * SL;
-        cout << setw(23) << into_money << right << setw(11) << "|\n"; 
-        cout << "|" << right << setw(53) << "TONG:"; setColor(2); cout << right << setw(15) << into_money; setColor(7);  cout << right << setw(11) << "|\n";
-        cout << "|" << right << setw(79) << "|\n";
-        cout << "+------------------------------------------------------------------------------+\n\n";
-        return;
-    }
-    if (x->getGioVao() > timeVang)
-    {
-        cout << left << "|\t" << setw(10) << "Vang"  << right 
-            << setw(14) << GiaVang
-            << setw(14) << SL;  
-            into_money = GiaVang * SL;
-        cout<< setw(23) << into_money << right << setw(11) << "|\n";
-        cout << "|" << right << setw(53) << "TONG:"; setColor(2); cout << right << setw(15) << into_money; setColor(7);  cout << right << setw(11) << "|\n";
-        cout << "|" << right << setw(79) << "|\n";
-        cout << "+-----------------------------------------------------------------------------+\n\n";
-        return;
-    }
-    else
     {
         float money_item = 0;
         SL = timeVang - x->getGioVao(); 

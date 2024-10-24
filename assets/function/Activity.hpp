@@ -172,6 +172,7 @@ void QLAC::priBill(Day ngayden)
 {
     double into_money = 0;
     int k = 0, STT;
+    cout << endl;
     vector<Acti*> actiList; // Tạo danh sách tạm để lưu các đối tượng cần in
     for (int i = n - 1; i >= 0; i--) 
     {
