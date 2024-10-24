@@ -185,7 +185,16 @@ int main()
                                     case 1:
                                     goto read_loopA5;
                                     case 2:
-                                    goto read_loopA5;
+                                    {
+                                        cout<<endl;
+                                        U.hienDS();
+                                        string search;
+                                        cout<<"Nhap du lieu cua nguoi dung ma ban muon tim kiem:";
+                                        cin>>search;
+                                        AD.searchUS(search,FUser);
+                                        goto read_loopA5;
+                                    }
+                                   
                                     case 3:
                                     {
                                         Day start_day, end_day;
