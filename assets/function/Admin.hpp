@@ -206,11 +206,7 @@ void QLAD::delUS(string nameFile, QLUS &U) {
 void QLAD::searchUS(string search, string nameFile){
     ifstream file(nameFile);
     if (!file.is_open()) {
-<<<<<<< HEAD
         cerr << "Unable to open file: " << endl;
-=======
-        cerr << "Unable to open file: " << nameFile << endl;
->>>>>>> 51bea8c90cf52c155c2cfb2f1dc912c1b2299e93
         return;
     }
     string line;
