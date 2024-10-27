@@ -42,6 +42,8 @@ public:
     void delAd(string nameFile);
     void delUS(QLUS &U, string namefile, string username);
     void searchUS(string search, string nameFile);
+    void priBill(QLAC &AC, Day day);
+    void Calculate(QLAC &AC, Day start_day, Day end_day);
 };
 
 QLAD::QLAD(string filename)
@@ -213,4 +215,12 @@ void QLAD::searchUS(string search, string nameFile){
     }
     
     file.close();
+}
+
+void QLAD::priBill(QLAC &AC, Day day){
+    AC.priBill(day);
+}
+
+void QLAD::Calculate(QLAC &AC, Day start_day, Day end_day){
+    AC.calculate(start_day, end_day);
 }

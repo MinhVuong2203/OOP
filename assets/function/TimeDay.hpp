@@ -4,17 +4,12 @@
 #include <cmath>
 #include "check.hpp"
 time_t presentTime;
-using namespace std;
 
-// Xử lí Time
-#include <iostream>
-#include <cmath>
-using namespace std;
 
-class Time {
+class Time 
+{
 public:
     int gio, phut, giay;
-
     Time() : gio(0), phut(0), giay(0) {}
     Time(int g, int p, int s) : gio(g), phut(p), giay(s) {}
 
@@ -65,8 +60,8 @@ public:
     }
 
     // Toán tử trừ để tính khoảng cách thời gian
-    float operator-(const Time& b) const {
-        float timeDifference = ((gio - b.gio) * 3600 + (phut - b.phut) * 60 + (giay - b.giay)) / 3600.0;
+    double operator-(const Time& b) const {
+        double timeDifference = ((gio - b.gio) * 3600 + (phut - b.phut) * 60 + (giay - b.giay)) / 3600.0;
         return round(timeDifference * 1000) / 1000; // Làm tròn đến 3 chữ số thập phân
     }
 };

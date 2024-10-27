@@ -180,7 +180,6 @@ int main()
                                 cout << "|                                    |" << endl;
                                 cout << "+====================================+" << endl;
                                 cout << "Moi nhap lua chon cua ban: ";
-                                //cout << "1. Sap xep theo ten\n2. Tim kiem\n3. Doanh thu theo khoang thoi gian\n4. Quay lai\n5. Thoat\nNhap lua chon cua ban: ";
                                 char Achoice4 = getch(); 
                                 switch(Achoice4 - '0')
                                 {
@@ -192,7 +191,7 @@ int main()
                                         cin.ignore();
                                         string search;
                                         icon_Order();
-                                        cout<<"Nhap du lieu cua nguoi dung ma ban muon tim kiem:";
+                                        cout<<"Nhap du lieu cua nguoi dung ma ban muon tim kiem: ";
                                         getline(cin,search);
                                         AD.searchUS(search,FUser);
                                         delay=getch();
@@ -206,9 +205,7 @@ int main()
                                         icon_Order(); cout << "Nhap thoi gian bat dau: "; start_day.nhapDay();
                                         cout << endl;
                                         icon_Order(); cout << "Nhap thoi gian ket thuc: "; end_day.nhapDay();
-                                        double tien = AC.calculate(start_day,end_day);
-                                        cout << "Doanh thu tu ngay "; start_day.xuatDay() ; cout << " den "; end_day.xuatDay(); cout << " la: "; 
-                                        cout << fixed << setprecision(0) << tien << endl;
+                                        AD.Calculate(AC, start_day,end_day);
                                         delay = getch();
                                     goto read_loopA5;
                                     }
@@ -265,7 +262,7 @@ int main()
                                 }
                             }
                             case 5:
-                                    AC.priBill(day); 
+                                    AD.priBill(AC,day); 
                                     delay = getche();
                                     goto read_loopA3;
                             case 6: goto read_loopA2;

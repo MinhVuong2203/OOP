@@ -25,9 +25,11 @@ public:
         << " |" << endl
         << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
     }
-    double calculate(const int GiaThuong, const int GiaVang, Day start_day, Day end_day);
+    void calculate(const int GiaThuong, const int GiaVang, Day start_day, Day end_day);
 };
+
 void templateBill(Acti *x, Day current_Day, Time current_Time, double into_money, const int GiaThuong, const int GiaVang);
+
 class QLAC
 {
 private:
@@ -49,7 +51,7 @@ public:
     void History(string Hoten);
     void History(string Hoten, Day ngay);
     void priBill(Day ngayden);
-    double calculate(Day start_day, Day end_day);
+    void calculate(Day start_day, Day end_day);
     void update(string nameFile, int ch, string oldName,string newName, Day newBD, string newSDT);
 };
 QLAC::QLAC(string filename)
@@ -179,7 +181,6 @@ void QLAC::History(string Hoten, Day ngay)
     }
 }
 
-
 void QLAC::priBill(Day ngayden) 
 {
     double into_money = 0;
@@ -219,7 +220,8 @@ void QLAC::priBill(Day ngayden)
         }
     }
 }
-double QLAC::calculate(Day start_day, Day end_day)
+
+void QLAC::calculate(Day start_day, Day end_day)
 {
     double Tong = 0;
     for (int i=0; i<n; i++)
@@ -236,7 +238,8 @@ double QLAC::calculate(Day start_day, Day end_day)
             Tong += (ActiPtr->getGioRa() - timeVang)*GiaThuong + (timeVang - ActiPtr->getGioVao())*GiaVang;
         }
     }
-    return Tong;
+    cout << "Doanh thu tu ngay "; start_day.xuatDay() ; cout << " den "; end_day.xuatDay(); cout << " la: "; 
+    cout << fixed << setprecision(0) << Tong << endl;
 }
 
 void QLAC::update(string nameFile, int ch, string oldName,string newName, Day newBD, string newSDT){
