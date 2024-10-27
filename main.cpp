@@ -42,7 +42,6 @@ int main()
     cout << "Hom nay: " << day.ngay << "/" << day.thang << "/" << day.nam << " ";
     // In ra giờ, phút, giây
     cout << time.gio << ":" << time.phut << ":" << time.giay << "PM"<< endl;
-    
     banner();
     read_loop1:
     cout << "+===============================+" << endl;
@@ -117,9 +116,8 @@ int main()
                         switch (Achoice3 - '0')
                         {
                             case 1:
-                            {   read_loopA4: system("cls"); 
-                                TitleUser(); 
-                                U.hienDS();  
+                            {   read_loopA4: system("cls");  
+                                TitleUser();   
                                 Menu();
                                 cout << "|                                    |" << endl;
                                 cout << "|"; icon_Res(); cout << "<1> Them user                  |" << endl;
@@ -133,11 +131,19 @@ int main()
                                 char Achoice4_1 = getch(); cin.ignore();
                                 switch (Achoice4_1 - '0')
                                 {
-                                case 1: cout << endl; U.add(FUser); TitleUser(); U.hienDS(); delay = getch(); 
+                                case 1: AD.hienDSUS(U); cout << endl; AD.addUS(U, FUser); TitleUser(); AD.hienDSUS(U); delay = getch(); 
                                     goto read_loopA4;
                                 case 2: 
-                                    U.hienDS();
-                                    AD.delUS(FUser, U);
+                                    cin.ignore();
+                                    AD.hienDSUS(U);
+                                    int STTdel;
+                                    cout << "Nhap STT nguoi dung can xoa: "; cin >> STTdel;
+                                    while (STTdel<=0 || STTdel > U.getN())
+                                    {
+                                        cout << "STT khong hop le. Vui long nhap lai: "; cin >> STTdel;
+                                    }
+                                    AD.delUS(U, FUser, U.arrayGetUsername(STTdel));
+                                    delay = getche();
                                     goto read_loopA4;
                                 case 3: 
                                 {

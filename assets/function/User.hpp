@@ -52,7 +52,7 @@ public:
             cout << left << "| "; setColor(12); cout << setw(4) << i; setColor(7);
             U[i-1]->hienThiThongTin(); 
     }
-    User *getUser(string username)
+    User *getUser(string username)    //Hàm lấy thông tin một user
     {
         for (int i=0; i<n; i++)
         {
@@ -62,6 +62,13 @@ public:
         }
         return nullptr;
     }
+    string arrayGetUsername(int x)  // Hàm lấy tên đăng nhập dựa vào chỉ số trong mảng quản lí user
+    {
+            User *ActiPtr = dynamic_cast<User*>(U[x-1]);
+            return ActiPtr->getUsername();  
+        return nullptr;
+    }
+
     int getN(){return this->n;}
     void setN(int newN) { this->n = newN; }
     Person **getU(){return this->U;}

@@ -178,17 +178,7 @@ void QLAC::History(string Hoten, Day ngay)
         }
     }
 }
-{
-    int k = 0;
-    for (int i=0; i<n; i++)
-    {
-        if (AC[i]->getHoten() == Hoten)
-        {
-            cout << left << "| "; setColor(12); cout << setw(4) << ++k; setColor(7);
-            AC[i]->hienThiThongTin();
-        }
-    }
-}
+
 
 void QLAC::priBill(Day ngayden) 
 {
