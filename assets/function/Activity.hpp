@@ -1,8 +1,6 @@
 #pragma once
 #include <vector>
-
 using namespace std;
-
 
 // class Activity để lưu trữ các hoạt động của user
 class Acti : public Person {
@@ -49,6 +47,7 @@ public:
         }
     }
     void History(string Hoten);
+    void History(string Hoten, Day ngay);
     void priBill(Day ngayden);
     double calculate(Day start_day, Day end_day);
     void update(string nameFile, int ch, string oldName,string newName, Day newBD, string newSDT);
@@ -156,6 +155,29 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
     file.close();
 }
 void QLAC::History(string Hoten)
+{
+    int k = 0;
+    for (int i=0; i<n; i++)
+    {
+        if (AC[i]->getHoten() == Hoten)
+        {
+            cout << left << "| "; setColor(12); cout << setw(4) << ++k; setColor(7);
+            AC[i]->hienThiThongTin();
+        }
+    }
+}
+void QLAC::History(string Hoten, Day ngay)
+{
+    int k = 0;
+    for (int i=0; i<n; i++)
+    {
+        if (AC[i]->getHoten() == Hoten)
+        {
+            cout << left << "| "; setColor(12); cout << setw(4) << ++k; setColor(7);
+            AC[i]->hienThiThongTin();
+        }
+    }
+}
 {
     int k = 0;
     for (int i=0; i<n; i++)

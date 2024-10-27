@@ -335,27 +335,32 @@ int main()
                             goto read_loopU3;
                             case 2: system("cls");
                                 AC.History(x->getHoten());
-                            break;
+                            goto read_loopU3;
                             case 3:
+                                system("cls");
+                                
+                                AC.History(x->getHoten());
+                            goto read_loopU3;
                             break;
                             
                             //xóa tài khoản user
-                            case 4: {
-                            system("cls");
-                            cout << "Ban co that su muon xoa tai khoan(y/n)?";
-                            char Uchoice4; 
-                            Uchoice4 = getche();
-                            system("cls");
-                            if (Uchoice4 == 'y') {
-                            U.del(FUser, username); 
-                            goto read_loop1;
-                            } else if (Uchoice4 == 'n') {
-                            cout << "\nVui long nhan Enter de quay lai!";
-                            delay = getch(); 
-                            goto read_loopU3;
-                            } else {
-                            cout << "\nLua chon khong hop le. Enter de quay lai!";
-                            delay = getch(); 
+                            case 4: 
+                            {
+                                system("cls");
+                                cout << "Ban co that su muon xoa tai khoan(y/n)?";
+                                char Uchoice4; 
+                                Uchoice4 = getche();
+                                system("cls");
+                                if (Uchoice4 == 'y') {
+                                U.del(FUser, username); 
+                                goto read_loop1;
+                                } else if (Uchoice4 == 'n') {
+                                cout << "\nVui long nhan Enter de quay lai!";
+                                delay = getch(); 
+                                goto read_loopU3;
+                                } else {
+                                cout << "\nLua chon khong hop le. Enter de quay lai!";
+                                delay = getch(); 
                             goto read_loopU3;
                             }
                             }

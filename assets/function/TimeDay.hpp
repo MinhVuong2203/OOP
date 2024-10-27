@@ -38,7 +38,6 @@ public:
         if (giay < 10) cout << "0"; cout << giay;
     }
 
-    // Định nghĩa các operator so sánh
     bool operator==(const Time& b) const {
         return gio == b.gio && phut == b.phut && giay == b.giay;
     }
@@ -164,10 +163,7 @@ public:
     }
 };
 
-
-
 // Lấy ngày hien tai
-
 Day getday()
 {
 	Day day;
