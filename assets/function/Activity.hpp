@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "TimeDay.h"
 using namespace std;
 
 // class Activity để lưu trữ các hoạt động của user

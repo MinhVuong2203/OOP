@@ -2,20 +2,21 @@
 #include <conio.h>
 #include <fstream>
 #include <sstream>
+#include <windows.h>
 
 using namespace std;
 const int GiaThuong = 50000;  //Khai báo để sử dụng cho việc in bill. từ 7h - 16h giá 50000đ/h, từ 16h - 22h giá 110000đ/h
 const int GiaVang = 110000;
 const int SL = 20;
- 
-#include "./assets/function/Title.hpp"  //liên kết với file Title
-#include "./assets/function/TimeDay.hpp"
+
+#include "./assets/function/Title.h" 
+#include "./assets/function/TimeDay.h"
 Time timeVang = {16,0,0};
 #include "./assets/function/Person.hpp"
 #include "./assets/function/Admin.hpp"
 #include "./assets/function/User.hpp"
 #include "./assets/function/Activity.hpp"
-#include "./assets/function/authenticate.hpp"
+#include "./assets/function/authenticate.h"
 #include "./assets/function/templateBill.hpp"
 
 int main() 
@@ -41,7 +42,7 @@ int main()
     // In ra giờ, phút, giây
     cout << time.gio << ":" << time.phut << ":" << time.giay << "PM"<< endl;
     banner();
-    read_loop1:
+    read_loop1: 
     cout << "+===============================+" << endl;
     cout << "|                               |" << endl;
     cout << "|"; icon_admin(); cout << "<1> Nguoi quan ly         |" << endl;
@@ -434,7 +435,7 @@ int main()
             }
         break; //case 2:
         case 3: break;
-        default:
+        default: system("cls");
             goto read_loop1;
     }
     system("pause");

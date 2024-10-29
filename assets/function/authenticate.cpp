@@ -1,4 +1,9 @@
-#pragma once
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <conio.h>
+#include "authenticate.h"
 
 using namespace std;
 
