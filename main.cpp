@@ -33,12 +33,10 @@ int main()
     int San[SL];
 
     string username, password;
-    
-    char delay;
-
     Day day;  Time time;
     day = getday();
     time = getTime();
+    char delay;
     cout << "Hom nay: " << day.ngay << "/" << day.thang << "/" << day.nam << " ";
     // In ra giờ, phút, giây
     cout << time.gio << ":" << time.phut << ":" << time.giay << "PM"<< endl;
@@ -95,7 +93,7 @@ int main()
                     if (authenticateUser(username,password, FAdmin)) 
                     {
                         setColor(10);
-                        cout << "\n<<< Dang nhap thanh cong >>>" << endl; 
+                        cout << "\n:)) Dang nhap thanh cong :))" << endl; 
                         setColor(7);
                         Sleep(500);  //Hàm dừng màn hình trong 0.5 giây
                         read_loopA3: system("cls"); //Xóa màn hình
@@ -218,13 +216,39 @@ int main()
                             goto read_loopA3;
                             }
                             case 3:
-                            {
+                            {   read_loopA4_3: system("cls");
                                 string hoten, sdt;
                                 Day day;
-                                icon_Order(); cout << "Nhap ten user: "; cin.ignore(); cin >> hoten;
+                                cout << endl;Menu();
+                                cout << "|                                    |" << endl;
+                                cout << "|"; icon_Res(); cout << setw(31) << left << "<1> Khach le" << "|" << endl;
+                                cout << "|"; icon_login(); cout << setw(31) << left << "<2> Khach da co tai khoan" << "|" << endl;
+                                cout << "|"; icon_return(); cout << setw(31) << left << "<3> Quay lai" << "|" << endl;
+                                cout << "|"; icon_exit(); cout << setw(31) << left << "<4> Thoat" << "|" << endl;
+                                cout << "|                                    |" << endl;
+                                cout << "+====================================+" << endl;
+                                char Achoice4_3 = getch();
+                                switch (Achoice4_3-'0')
+                                {
+                                case 1:
+                                {
+                                    icon_Order(); cout << "Nhap ten khach le: "; cin.ignore(); getline(cin, hoten);
+                                    hoten = hoten + " (Khach le)";
+                                    break;
+                                }
+                                case 2: 
+                                {
+                                    icon_Order(); cout << "Nhap ten user: "; cin.ignore(); getline(cin, hoten);
+                                    break;
+                                }
+                                case 3: goto read_loopA4_3;
+                                case 4: return 0;
+                                default: goto read_loopA4_3;
+                                }
                                 icon_Order(); cout << "Nhap ngay sinh: "; day.nhapDay();
-                                icon_Order(); cout << "Nhap so dien thoai: "; cin.ignore(); cin >> sdt;
-                                cout << endl; AC.add(FActivity, hoten, day, sdt);
+                                icon_Order(); cout << "Nhap so dien thoai: "; cin.ignore(); getline(cin, sdt);
+                                cout << endl; 
+                                AD.order(AC, FActivity, hoten, day, sdt);
                                 delay = getch();
                                 goto read_loopA3;
                             }
@@ -262,9 +286,11 @@ int main()
                                 }
                             }
                             case 5:
-                                    AD.priBill(AC,day); 
-                                    delay = getche();
-                                    goto read_loopA3;
+                            {
+                                AD.priBill(AC,day, AD.getName(password)); 
+                                delay = getche();
+                                goto read_loopA3;
+                            }
                             case 6: goto read_loopA2;
                             case 7:
                             return 0;
@@ -276,8 +302,9 @@ int main()
                         else 
                         {
                             setColor(4);
-                            cout << "\n<<< Dang nhap that bai >>>" << endl;
+                            cout << "\n:(( Dang nhap that bai. Enter de dang nhap lai! :((" << endl;
                             setColor(7);
+                            Sleep(500);
                             Sleep(500);
                             goto read_loop_autA;
                         }
@@ -321,29 +348,45 @@ int main()
                     
                     if (authenticateUser(username,password, FUser))
                     {
-                        cout << "\n<<< Dang nhap thanh cong>>>" << endl; 
+                        setColor(10);
+                        cout << "\n:)) Dang nhap thanh cong :))" << endl; 
+                        setColor(7);
+                        Sleep(500);  //Hàm dừng màn hình trong 0.5 giây
                         // Thực hiện công việc
-                        delay = getch();
                         read_loopU3: system("cls");
                         Menu();
-                        cout << "1. Dat san\n2. Xem lich su dat\n3. Xoa dat san\n4. Xoa tai khoan\n5. Quay lai\n6. Thoat\nNhap lua chon cua ban: "; char Uchoice3 = getche(); cin.ignore();
+                        cout << "|                                    |" << endl;
+                        cout << "|"; icon_Res(); cout << setw(31) << left << "<1> Dat san" << "|" << endl;
+                        cout << "|"; icon_login(); cout << setw(31) << left << "<2> Xem lich su dat" << "|" << endl;
+                        cout << "|"; icon_return(); cout << setw(31) << left << "<3> Xoa dat san" << "|" << endl;
+                        cout << "|"; icon_exit(); cout << setw(31) << left << "<4> Xoa tai khoan" << "|" << endl;
+                        cout << "|"; icon_return(); cout << setw(31) << left << "<5> Quay lai" << "|" << endl;
+                        cout << "|"; icon_exit(); cout << setw(31) << left << "<6> Thoat" << "|" << endl;
+                        cout << "|                                    |" << endl;
+                        cout << "+====================================+" << endl;
+
+                        icon_Order();    cout << "Nhap lua chon cua ban: "; 
+                        char Uchoice3 = getch(); cin.ignore();
                         User *x = U.getUser(username);
+                        
                         switch (Uchoice3 - '0')
                         {
                             case 1: 
                             {
-                                cout << endl; AC.add(FActivity, x->getHoten(), x->getNgaySinh(), x->getSDT());
+                                cout << endl;
+                                U.order(FActivity, AC, x->getHoten(), x->getNgaySinh(), x->getSDT());
                                 delay = getch();
                             }
                             goto read_loopU3;
                             case 2: system("cls");
-                                AC.History(x->getHoten());
+                                U.History(AC, x->getHoten(), x->getSDT());
+                                delay = getch();
                             goto read_loopU3;
                             case 3:
                                 system("cls");
-                                
-                                AC.History(x->getHoten());
-                            goto read_loopU3;
+                                U.ActiDel(FActivity, AC, x->getHoten(), x->getSDT());
+                                Sleep(500);
+                                goto read_loopU3;
                             break;
                             
                             //xóa tài khoản user
@@ -352,7 +395,7 @@ int main()
                                 system("cls");
                                 cout << "Ban co that su muon xoa tai khoan(y/n)?";
                                 char Uchoice4; 
-                                Uchoice4 = getche();
+                                Uchoice4 = getche();    
                                 system("cls");
                                 if (Uchoice4 == 'y') {
                                 U.del(FUser, username); 
@@ -367,7 +410,7 @@ int main()
                             goto read_loopU3;
                             }
                             }
-                            case 5: goto read_loopU3;
+                            case 5: goto read_loopU2;
                             case 6: 
                             return 0;   
                             default:
@@ -376,8 +419,10 @@ int main()
                     }
                     else 
                     {
-                        cout << "\n<<< Dang nhap that bai. Enter de dang nhap lai! >>>" << endl;
-                        delay = getche();
+                        setColor(4);
+                        cout << "\n:(( Dang nhap that bai. Enter de dang nhap lai! :((" << endl;
+                        setColor(7);
+                        Sleep(500);
                         goto read_loop_autU;
                     }
                 }

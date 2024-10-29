@@ -72,7 +72,9 @@ public:
     int getN(){return this->n;}
     void setN(int newN) { this->n = newN; }
     Person **getU(){return this->U;}
-
+    void order(string namefile, QLAC &AC, string hoten, Day ngaysinh, string sdt);
+    void History(QLAC &AC, string hoten, string sdt);
+    void ActiDel(string FActivity, QLAC &AC, string hoten, string sdt);
 };
 
 QLUS::QLUS(string filename)
@@ -266,6 +268,21 @@ void QLUS::fixUser(string nameFile,int index, int &ch, string &oldName,string &n
     }
 
     file.close();
-    
+}
+
+void QLUS::order(string namefile, QLAC &AC, string hoten, Day ngaysinh, string sdt)
+{
+    AC.add(namefile, hoten, ngaysinh, sdt);
+}
+
+
+void QLUS::History(QLAC &AC, string hoten, string sdt)
+{
+    AC.History(hoten, sdt);
+}
+
+void QLUS::ActiDel(string namefile, QLAC &AC, string hoten, string sdt)
+{
+    AC.ActiDel(namefile, hoten, sdt);
 }
 

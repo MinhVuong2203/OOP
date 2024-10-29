@@ -11,7 +11,6 @@ private:
 public:
     Admin() {}
     Admin(string HoTen, Day NgaySinh, string SDT,string cccd) : Person(HoTen, NgaySinh, SDT), CCCD(cccd){}
-
     string getCCCD() { return CCCD; }
     void hienThiThongTin() override {
         Person::hienThiThongTin();
@@ -27,7 +26,7 @@ public:
     QLAD() { this->n = 0; } 
 	~QLAD();
     QLAD(string filename);
-
+    string getName(string username); //Lấy tên admin dựa vào tên đăng nhập để phục vụ việc in bill
     void add(string nameFile);
     void addUS(QLUS &U, string namefile);
     void hienDS() {
@@ -42,8 +41,9 @@ public:
     void delAd(string nameFile);
     void delUS(QLUS &U, string namefile, string username);
     void searchUS(string search, string nameFile);
-    void priBill(QLAC &AC, Day day);
+    void priBill(QLAC &AC, Day day, string hoten_admin);
     void Calculate(QLAC &AC, Day start_day, Day end_day);
+    void order(QLAC &AC,string namefile, string hoten, Day day_order, string sdt);
 };
 
 QLAD::QLAD(string filename)
@@ -72,6 +72,16 @@ QLAD::QLAD(string filename)
         Person *p = new Admin(hoten, ngaysinh, sdt, cccd);
         A[n++] = p;
     }
+}
+string QLAD::getName(string CCCD)
+{
+    for (int i=0; i<n; i++)
+    {
+        Admin* admin = dynamic_cast<Admin*>(A[i]);
+        if (CCCD == admin->getCCCD())
+        return admin->getHoten();
+    }
+    return NULL;
 }
 void QLAD::add(string nameFile)
 {
@@ -168,7 +178,6 @@ void QLAD::delAd(string nameFile){
     file.close();
 }
 
-
 void QLAD::searchUS(string search, string nameFile){
     ifstream file(nameFile);
     if (!file.is_open()) {
@@ -217,10 +226,15 @@ void QLAD::searchUS(string search, string nameFile){
     file.close();
 }
 
-void QLAD::priBill(QLAC &AC, Day day){
-    AC.priBill(day);
+void QLAD::priBill(QLAC &AC, Day day, string hoten_admin){
+    AC.priBill(day, hoten_admin);
 }
 
 void QLAD::Calculate(QLAC &AC, Day start_day, Day end_day){
     AC.calculate(start_day, end_day);
+}
+
+void QLAD::order(QLAC &AC,string namefile, string hoten, Day day_order, string sdt)
+{
+    AC.add(namefile, hoten, day_order, sdt);
 }
