@@ -1,4 +1,5 @@
 #pragma once
+#include "check.h"
 #include "Person.hpp"
 #include "Activity.hpp"
 using namespace std;
@@ -52,7 +53,7 @@ public:
             cout << left << "| "; setColor(12); cout << setw(4) << i; setColor(7);
             U[i-1]->hienThiThongTin(); 
     }
-    User *getUser(string username)
+    User *getUser(string username)    //Hàm lấy thông tin một user
     {
         for (int i=0; i<n; i++)
         {
@@ -62,10 +63,19 @@ public:
         }
         return nullptr;
     }
+    string arrayGetUsername(int x)  // Hàm lấy tên đăng nhập dựa vào chỉ số trong mảng quản lí user
+    {
+            User *ActiPtr = dynamic_cast<User*>(U[x-1]);
+            return ActiPtr->getUsername();  
+        return nullptr;
+    }
+
     int getN(){return this->n;}
     void setN(int newN) { this->n = newN; }
     Person **getU(){return this->U;}
-
+    void order(string namefile, QLAC &AC, string hoten, Day ngaysinh, string sdt);
+    void History(QLAC &AC, string hoten, string sdt);
+    void ActiDel(string FActivity, QLAC &AC, string hoten, string sdt);
 };
 
 QLUS::QLUS(string filename)
@@ -259,6 +269,21 @@ void QLUS::fixUser(string nameFile,int index, int &ch, string &oldName,string &n
     }
 
     file.close();
-    
+}
+
+void QLUS::order(string namefile, QLAC &AC, string hoten, Day ngaysinh, string sdt)
+{
+    AC.add(namefile, hoten, ngaysinh, sdt);
+}
+
+
+void QLUS::History(QLAC &AC, string hoten, string sdt)
+{
+    AC.History(hoten, sdt);
+}
+
+void QLUS::ActiDel(string namefile, QLAC &AC, string hoten, string sdt)
+{
+    AC.ActiDel(namefile, hoten, sdt);
 }
 

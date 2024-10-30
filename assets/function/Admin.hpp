@@ -1,4 +1,5 @@
 #pragma once
+#include "check.h"
 #include <iostream>
 #include "Person.hpp"
 #include "User.hpp"
@@ -11,7 +12,6 @@ private:
 public:
     Admin() {}
     Admin(string HoTen, Day NgaySinh, string SDT,string cccd) : Person(HoTen, NgaySinh, SDT), CCCD(cccd){}
-
     string getCCCD() { return CCCD; }
     void hienThiThongTin() override {
         Person::hienThiThongTin();
@@ -27,22 +27,25 @@ public:
     QLAD() { this->n = 0; } 
 	~QLAD();
     QLAD(string filename);
-
+    string getName(string username); //Lấy tên admin dựa vào tên đăng nhập để phục vụ việc in bill
     void add(string nameFile);
-    void hienDS() 
-	{
-        for (int i = 0; i < n; i++) 
-        {
+    void addUS(QLUS &U, string namefile);
+    void hienDS() {
+        for (int i = 0; i < n; i++) {
             A[i]->hienThiThongTin();
         }
     }
+    void hienDSUS(QLUS &U){
+        U.hienDS();
+    }
     void fixAccountUser(string nameFile);
     void delAd(string nameFile);
-    void delUS(string nameFile, QLUS &U);
+    void delUS(QLUS &U, string namefile, string username);
     void searchUS(string search, string nameFile);
+    void priBill(QLAC &AC, Day day, string hoten_admin);
+    void Calculate(QLAC &AC, Day start_day, Day end_day);
+    void order(QLAC &AC,string namefile, string hoten, Day day_order, string sdt);
 };
-
-
 
 QLAD::QLAD(string filename)
 {
@@ -70,6 +73,16 @@ QLAD::QLAD(string filename)
         Person *p = new Admin(hoten, ngaysinh, sdt, cccd);
         A[n++] = p;
     }
+}
+string QLAD::getName(string CCCD)
+{
+    for (int i=0; i<n; i++)
+    {
+        Admin* admin = dynamic_cast<Admin*>(A[i]);
+        if (CCCD == admin->getCCCD())
+        return admin->getHoten();
+    }
+    return NULL;
 }
 void QLAD::add(string nameFile)
 {
@@ -108,6 +121,18 @@ void QLAD::add(string nameFile)
         setColor(7);
         file.close();
 }
+
+void QLAD::addUS(QLUS &U, string namefile)
+{
+    U.add(namefile);
+}
+
+void QLAD::delUS(QLUS &U, string namefile, string username)
+{
+    U.del(namefile, username);
+}
+
+
 
 QLAD::~QLAD() {
     for (int i = 0; i < n; i++) {
@@ -154,55 +179,6 @@ void QLAD::delAd(string nameFile){
     file.close();
 }
 
-void QLAD::delUS(string nameFile, QLUS &U) {
-    int deleteUser;
-    int n = U.getN();  // Lấy số lượng user từ đối tượng U thực tế
-    cout << "Nhap so thu tu cua User ban muon xoa: ";
-    cin >> deleteUser;
-
-    // Kiểm tra xem chỉ số xóa có hợp lệ không
-    if (deleteUser < 1 || deleteUser > n) {
-        cout << "Khong ton tai User o vi tri nay." << endl;
-        return;
-    }
-
-    Person** users = U.getU();  // Lấy danh sách người dùng từ đối tượng U
-
-    // Xóa user tại vị trí deleteUser-1
-    delete users[deleteUser - 1];  // Giải phóng bộ nhớ của User
-
-    // Dịch chuyển các phần tử sau vị trí deleteUser lên một vị trí
-    for (int i = deleteUser - 1; i < n - 1; i++) {
-        users[i] = users[i + 1];
-    }
-
-    n--;  // Giảm số lượng user
-    U.setN(n);  // Cập nhật lại số lượng người dùng sau khi xóa
-
-    cout << "Xoa User thanh cong." << endl;
-
-    // Mở file để ghi lại danh sách mới
-    fstream file(nameFile, ios::out);
-    if (!file.is_open()) {
-        cerr << "Khong the mo file: " << nameFile << endl;
-        return;
-    }
-
-    // Ghi lại danh sách User vào file
-    for (int i = 0; i < U.getN(); ++i) {
-        User* user = dynamic_cast<User*>(users[i]);
-        if (user) {
-            file << user->getHoten() << ","
-                 << user->getNgaySinh().ngay << "/"
-                 << user->getNgaySinh().thang << "/"
-                 << user->getNgaySinh().nam << ","
-                 << user->getSDT() << ","
-                 << user->getUsername() << ","
-                 << user->getPassword() << endl;
-        }
-    }
-    file.close();  // Đóng file sau khi ghi
-}
 void QLAD::searchUS(string search, string nameFile){
     ifstream file(nameFile);
     if (!file.is_open()) {
@@ -230,8 +206,6 @@ void QLAD::searchUS(string search, string nameFile){
             if (HoTen == search || NgaySinh_str == search || SDT == search || username == search || password == search) 
             {
                 i++;
-            
-            
             cout << "| ";setColor(12);cout << setw(4) << i;
             setColor(7); 
             cout << "| " << setw(19) << HoTen
@@ -251,4 +225,17 @@ void QLAD::searchUS(string search, string nameFile){
     }
     
     file.close();
+}
+
+void QLAD::priBill(QLAC &AC, Day day, string hoten_admin){
+    AC.priBill(day, hoten_admin);
+}
+
+void QLAD::Calculate(QLAC &AC, Day start_day, Day end_day){
+    AC.calculate(start_day, end_day);
+}
+
+void QLAD::order(QLAC &AC,string namefile, string hoten, Day day_order, string sdt)
+{
+    AC.add(namefile, hoten, day_order, sdt);
 }
