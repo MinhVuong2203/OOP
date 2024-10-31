@@ -1,10 +1,10 @@
-
 #include <time.h>
 #include <ctime>
 #include <cmath>
 #include "check.h"
 #include "TimeDay.h"
 time_t presentTime;
+
 
 
 Time::Time() : gio(0), phut(0), giay(0) {}

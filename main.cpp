@@ -5,23 +5,18 @@
 #include <windows.h>
 
 using namespace std;
-const int GiaThuong = 50000;  //Khai báo để sử dụng cho việc in bill. từ 7h - 16h giá 50000đ/h, từ 16h - 22h giá 110000đ/h
-const int GiaVang = 110000;
-const int SL = 20;
 
-#include "./assets/function/Title.h" 
+#include ".//assets/function/Title.h" 
 #include "./assets/function/TimeDay.h"
-Time timeVang = {16,0,0};
-#include "./assets/function/Person.hpp"
-#include "./assets/function/Admin.hpp"
-#include "./assets/function/User.hpp"
-#include "./assets/function/Activity.hpp"
+#include "./assets/function/Person.h"
+#include "./assets/function/Admin.h"
+#include "./assets/function/User.h"
+#include "./assets/function/Activity.h"
 #include "./assets/function/authenticate.h"
-#include "./assets/function/templateBill.hpp"
+#include "./assets/function/templateBill.h"
 
 int main() 
 {
-
     //Khai báo file
     string FAdmin = "assets//Admin.txt";
     string FUser = "assets//User.txt";
