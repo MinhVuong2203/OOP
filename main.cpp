@@ -1,10 +1,6 @@
 #include <iostream>
 #include <conio.h>
-#include <fstream>
-#include <sstream>
 #include <windows.h>
-
-using namespace std;
 
 #include ".//assets/function/Title.h" 
 #include "./assets/function/TimeDay.h"
@@ -15,6 +11,7 @@ using namespace std;
 #include "./assets/function/authenticate.h"
 #include "./assets/function/templateBill.h"
 
+using namespace std;
 int main() 
 {
     //Khai báo file
