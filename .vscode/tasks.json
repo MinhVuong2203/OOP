@@ -12,8 +12,12 @@
                 "${workspaceFolder}/assets/function/check.cpp",
                 "${workspaceFolder}/assets/function/authenticate.cpp",
                 "${workspaceFolder}/assets/function/TimeDay.cpp",
-
-				// "${workspaceFolder}/*.cpp",
+                "${workspaceFolder}/assets/function/Person.cpp",
+                "${workspaceFolder}/assets/function/templateBill.cpp",
+                "${workspaceFolder}/assets/function/Activity.cpp",
+                "${workspaceFolder}/assets/function/Admin.cpp",
+                "${workspaceFolder}/assets/function/User.cpp",
+				// "${workspaceFolder}/assets/function/*.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
