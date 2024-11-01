@@ -109,7 +109,8 @@ int main()
                         {
                             case 1:
                             {   read_loopA4: system("cls");  
-                                TitleUser();   
+                                TitleUser();
+                                U.hienDS();   
                                 Menu();
                                 cout << "|                                    |" << endl;
                                 cout << "|"; icon_Res(); cout << "<1> Them user                  |" << endl;
@@ -139,13 +140,13 @@ int main()
                                     goto read_loopA4;
                                 case 3: 
                                 {
-                                    int i,ch;
-                                    icon_Order();cout<<endl;
-                                    cout<<"Nhap so thu tu cua nguoi ban muon chinh sua:"; cin>>i;
-                                    string oldName, newName, newSDT; Day newBD;
-                                    U.fixUser(FUser, i, ch, oldName, newName, newBD, newSDT);
-                                    AC.update(FActivity, ch, oldName, newName, newBD, newSDT);
-                                    cout<<"Sau khi sua:"<<endl; U.hienThi(i);
+                                    int ch, i, w=1;
+                                    cout<<endl;icon_Order();
+                                    string oldSDT, newName, newSDT, username; Day newBD;
+                                    cout<<"Nhap SDT cua nguoi ban muon chinh sua:"; cin.ignore(); getline(cin, oldSDT);
+                                    U.fixUser(FUser, i, ch, oldSDT, newName, newBD, newSDT, username, w);
+                                    AC.update(FActivity, ch, oldSDT, newName, newBD, newSDT);
+                                    if(i!=-1){cout<<"Sau khi sua:"<<endl; U.hienThi(i);}
                                     delay=getch();
                                     goto read_loopA4;
                                 }
@@ -353,8 +354,9 @@ int main()
                         cout << "|"; icon_login(); cout << setw(31) << left << "<2> Xem lich su dat" << "|" << endl;
                         cout << "|"; icon_return(); cout << setw(31) << left << "<3> Xoa dat san" << "|" << endl;
                         cout << "|"; icon_exit(); cout << setw(31) << left << "<4> Xoa tai khoan" << "|" << endl;
-                        cout << "|"; icon_return(); cout << setw(31) << left << "<5> Quay lai" << "|" << endl;
-                        cout << "|"; icon_exit(); cout << setw(31) << left << "<6> Thoat" << "|" << endl;
+                        cout << "|"; icon_return(); cout << setw(31) << left << "<5> Sua thong tin" << "|" << endl;
+                        cout << "|"; icon_return(); cout << setw(31) << left << "<6> Quay lai" << "|" << endl;
+                        cout << "|"; icon_exit(); cout << setw(31) << left << "<7> Thoat" << "|" << endl;
                         cout << "|                                    |" << endl;
                         cout << "+====================================+" << endl;
 
@@ -403,8 +405,19 @@ int main()
                             goto read_loopU3;
                             }
                             }
-                            case 5: goto read_loopU2;
-                            case 6: 
+                            case 5:
+                            {
+                                    int ch, i, w=2;
+                                    cout<<endl;
+                                    string oldSDT, newName, newSDT; Day newBD;
+                                    U.fixUser(FUser, i, ch, oldSDT, newName, newBD, newSDT, username, w);
+                                    AC.update(FActivity, ch, oldSDT, newName, newBD, newSDT);
+                                    if(i!=-1){cout<<"Sau khi sua:"<<endl; U.hienThi(i);}
+                                    delay=getch();
+                                    goto read_loopU3;
+                                }
+                            case 6: goto read_loopU2;
+                            case 7: 
                             return 0;   
                             default:
                                 goto read_loopU3;

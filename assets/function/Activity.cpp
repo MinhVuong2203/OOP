@@ -199,10 +199,10 @@ void QLAC::calculate(Day start_day, Day end_day)
     cout << fixed << setprecision(0) << Tong << endl;
 }
 
-void QLAC::update(string nameFile, int ch, string oldName,string newName, Day newBD, string newSDT){
+void QLAC::update(string nameFile, int ch, string oldSDT,string newName, Day newBD, string newSDT){
     for (int i = 0; i < n; i++) {
         Acti *ActiPtr = dynamic_cast<Acti*>(AC[i]);
-        if (ActiPtr->getHoten() == oldName) {
+        if (ActiPtr->getSDT() == oldSDT) {
            if(ch==1){
             ActiPtr->setHoTen(newName);
            }

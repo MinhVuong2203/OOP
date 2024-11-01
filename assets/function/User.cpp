@@ -79,7 +79,7 @@ void QLUS::del(string nameFile, string username) {
         U[i] = U[i + 1];
     }
     n--;
-cout << "Delete User successful!" << endl;
+cout << "Xoa thanh cong!" << endl;
 
     ofstream file(nameFile, ios::out);
     if (!file.is_open()) {
@@ -109,17 +109,27 @@ QLUS::~QLUS(){
 }
 
 
-void QLUS::fixUser(string nameFile,int index, int &ch, string &oldName,string &newName, Day &newBD, string &newSDT) {
-    if (index < 1 || index > n) {
-        cout << "So thu tu khong hop le!" << endl;
-        return;
+void QLUS::fixUser(string nameFile,int &index, int &ch, string &oldSDT,string &newName, Day &newBD, string &newSDT, string username, int w) {
+    index=-1;
+    if(w==1){
+    for (int i = 0; i < n; i++) {
+        User *uFix = dynamic_cast<User*>(U[i]);
+        if (uFix->getSDT() == oldSDT) {
+            index = i;
+            break;
+        }
     }
-    User *uFix = dynamic_cast<User*>(U[index - 1]);
-    if (uFix == nullptr) {
-        cout << "User not found!" << endl;
-        return;
     }
-    oldName=uFix->getHoten();
+    else if(w==2){
+    for (int i = 0; i < n; i++) {
+        User *uFix = dynamic_cast<User*>(U[i]);
+        if (uFix->getUsername() == username) {
+            index = i;
+            break;
+        }
+    }
+    }
+    if(index==-1)   {cout<<"Khong ton tai nguoi nay!"; return;} User *uFix = dynamic_cast<User*>(U[index]); oldSDT=uFix->getSDT();
         cout << "1. Sua ho ten\n2. Sua ngay sinh\n3. Sua SDT\n4. Sua TDN\n5. Sua mat khau\n6. Thoat\nNhap lua chon cua ban: "; cin>>ch;
     switch (ch) {
         case 1: {
