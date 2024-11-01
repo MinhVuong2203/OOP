@@ -5,8 +5,6 @@
 #include "TimeDay.h"
 time_t presentTime;
 
-
-
 Time::Time() : gio(0), phut(0), giay(0) {}
 Time::Time(int g, int p, int s) : gio(g), phut(p), giay(s) {}
 bool Time::checkTime() const {

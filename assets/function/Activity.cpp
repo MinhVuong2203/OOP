@@ -7,6 +7,7 @@
 #include "TimeDay.h"
 #include "Title.h"
 #include "templateBill.h"
+#include "VQMM.h"
 #include "Activity.h"
 const int GiaThuong = 50000;  //Khai báo để sử dụng cho việc in bill. từ 7h - 16h giá 50000đ/h, từ 16h - 22h giá 110000đ/h
 const int GiaVang = 110000;
@@ -167,6 +168,10 @@ void QLAC::priBill(Day ngayden, string hoten_admin)
             if (k == STT) 
             {
                 templateBill(ActiPtr, hoten_admin, getday(), getTime(), into_money, GiaThuong, GiaVang);
+                if (into_money >=200000)
+                {
+                    VQMM();
+                }
                 return;
             }
         }

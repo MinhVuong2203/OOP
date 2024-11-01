@@ -2,7 +2,7 @@
 #include <conio.h>
 #include <windows.h>
 
-#include ".//assets/function/Title.h" 
+#include "./assets/function/Title.h" 
 #include "./assets/function/TimeDay.h"
 #include "./assets/function/Person.h"
 #include "./assets/function/Admin.h"
@@ -10,8 +10,9 @@
 #include "./assets/function/Activity.h"
 #include "./assets/function/authenticate.h"
 #include "./assets/function/templateBill.h"
-
+#include "./assets/function/VQMM.h"
 using namespace std;
+
 int main() 
 {
     //Khai báo file

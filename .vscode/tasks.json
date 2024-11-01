@@ -17,7 +17,8 @@
                 "${workspaceFolder}/assets/function/Activity.cpp",
                 "${workspaceFolder}/assets/function/Admin.cpp",
                 "${workspaceFolder}/assets/function/User.cpp",
-				// "${workspaceFolder}/assets/function/*.cpp",
+                "${workspaceFolder}/assets/function/VQMM.cpp",
+                
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],

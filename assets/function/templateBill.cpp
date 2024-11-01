@@ -6,7 +6,7 @@
 #include "templateBill.h"
 using namespace std;
  
-void templateBill(Acti *x,string hoten_admin, Day current_Day, Time current_Time, double into_money, const int GiaThuong, const int GiaVang)
+void templateBill(Acti *x,string hoten_admin, Day current_Day, Time current_Time, double &into_money, const int GiaThuong, const int GiaVang)
 {
     int color = 4;
     
@@ -54,8 +54,6 @@ void templateBill(Acti *x,string hoten_admin, Day current_Day, Time current_Time
             money_item = GiaThuong * SLThuong;
         cout << setw(23) << money_item << right << setw(11) << "|\n";
         into_money += money_item;
-
-
 
         cout << left << "|\t" << setw(10) << "Vang" << right 
             << setw(14) << GiaVang
