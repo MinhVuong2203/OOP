@@ -183,7 +183,7 @@ int main()
                                         cin.ignore();
                                         string search;
                                         icon_Order();
-                                        cout<<"Nhap du lieu cua nguoi dung ma ban muon tim kiem: ";
+                                        cout<<"Nhap du lieu cua nguoi dung ma ban muon tim kiem:";
                                         getline(cin,search);
                                         AD.searchUS(search,FUser);
                                         delay=getch();
