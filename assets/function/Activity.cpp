@@ -1,58 +1,20 @@
-#pragma once
+#include <iostream>
+#include <conio.h>
 #include <vector>
-
+#include <fstream>
+#include <iomanip>
+#include "Person.h"
+#include "TimeDay.h"
+#include "Title.h"
+#include "templateBill.h"
+#include "VQMM.h"
+#include "Activity.h"
+const int GiaThuong = 50000;  //Khai báo để sử dụng cho việc in bill. từ 7h - 16h giá 50000đ/h, từ 16h - 22h giá 110000đ/h
+const int GiaVang = 110000;
+const int SL = 20;
+const Time timeVang = {16,0,0};
 using namespace std;
 
-
-// class Activity để lưu trữ các hoạt động của user
-class Acti : public Person {
-private:
-    Day NgayDen;
-    Time GioVao, GioRa;
-    int id;
-public:
-    Acti() {}
-    Acti(string HoTen, Day NgaySinh, string SDT, Day ngayden, Time giovao, Time giora, int ID) : Person(HoTen, NgaySinh, SDT), NgayDen(ngayden), GioVao(giovao), GioRa(giora), id(ID){}
-    Day getNgayDen() {return NgayDen;}
-    Time getGioVao() {return GioVao;}
-    Time getGioRa() {return GioRa;}
-    int getID() {return id;}
-    
-    void hienThiThongTin() override {
-        Person::hienThiThongTin();
-        cout<< "| " << setw(10) << (to_string(NgayDen.ngay) + "/" + to_string(NgayDen.thang) + "/" + to_string(NgayDen.nam))
-        << "| " << setw(10) << (to_string(GioVao.gio) + ":" + to_string(GioVao.phut) + ":" + to_string(GioVao.giay))
-        << "| " << setw(10) << (to_string(GioRa.gio) + ":" + to_string(GioRa.phut) + ":" + to_string(GioRa.giay))
-        << "| " << id
-        << " |" << endl
-        << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
-    }
-    double calculate(const int GiaThuong, const int GiaVang, Day start_day, Day end_day);
-};
-void templateBill(Acti *x, Day current_Day, Time current_Time, double into_money, const int GiaThuong, const int GiaVang);
-class QLAC
-{
-private:
-    Person *AC[100];
-    int n;
-
-public:
-    QLAC(string filename);
-    ~QLAC();
-    void add(string nameFile, string HoTen, Day NgaySinh, string SDT);
-    void hienDS() 
-	{
-        for (int i = 0; i < n; i++) 
-		{
-            cout << left << "| "; setColor(12); cout << setw(4) << i+1; setColor(7);
-            AC[i]->hienThiThongTin();
-        }
-    }
-    void History(string Hoten);
-    void priBill(Day ngayden);
-    double calculate(Day start_day, Day end_day);
-    void update(string nameFile, int ch, string oldName,string newName, Day newBD, string newSDT);
-};
 QLAC::QLAC(string filename)
 {
     this->n = 0;
@@ -99,6 +61,7 @@ QLAC::~QLAC() {
         delete AC[i]; // Giải phóng từng đối tượng
     }
 }
+
 void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT) 
 {
     fstream file(nameFile, ios::app);
@@ -142,25 +105,28 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
         cout << left <<  "| "; cout << setw(2) << i+1; cout<< " |  ";   
     }	
     setColor(7);    
-    cout << "\nBan chon san: "; cin >> id;
+    cout << "\n\nBan chon san: "; cin >> id;
     while (San[id-1])
     {
+        setColor(4);
         cout << "San nay da co nguoi. Vui long chon lai: ";
+        setColor(7);
         cin >> id;
     }
 	Person *p = new Acti(HoTen, NgaySinh, SDT, NgayDen, GioVao, GioRa, id);
     AC[n++] = p;
     file <<HoTen <<","<<NgaySinh.ngay<<"/"<<NgaySinh.thang<<"/"<<NgaySinh.nam<<","<<SDT<<","<<NgayDen.ngay<<"/"<<NgayDen.thang<<"/"<<NgayDen.nam\
     <<","<<GioVao.gio<<":"<<GioVao.phut<<":"<<GioVao.giay<<","<<GioRa.gio<<":"<<GioRa.phut<<":"<<GioRa.giay<<"," << id << endl;
-    cout << "Da dat san thanh cong!" << endl;
+    setColor(10); cout << "Da dat san thanh cong!" << endl; setColor(7);
     file.close();
 }
-void QLAC::History(string Hoten)
+
+void QLAC::History(string hoten, string sdt)
 {
     int k = 0;
     for (int i=0; i<n; i++)
     {
-        if (AC[i]->getHoten() == Hoten)
+        if (AC[i]->getHoten() == hoten && AC[i]->getSDT() == sdt)
         {
             cout << left << "| "; setColor(12); cout << setw(4) << ++k; setColor(7);
             AC[i]->hienThiThongTin();
@@ -168,7 +134,7 @@ void QLAC::History(string Hoten)
     }
 }
 
-void QLAC::priBill(Day ngayden) 
+void QLAC::priBill(Day ngayden, string hoten_admin) 
 {
     double into_money = 0;
     int k = 0, STT;
@@ -201,13 +167,18 @@ void QLAC::priBill(Day ngayden)
             k++;
             if (k == STT) 
             {
-                templateBill(ActiPtr, getday(), getTime(), into_money, GiaThuong, GiaVang);
+                templateBill(ActiPtr, hoten_admin, getday(), getTime(), into_money, GiaThuong, GiaVang);
+                if (into_money >=200000)
+                {
+                    VQMM();
+                }
                 return;
             }
         }
     }
 }
-double QLAC::calculate(Day start_day, Day end_day)
+
+void QLAC::calculate(Day start_day, Day end_day)
 {
     double Tong = 0;
     for (int i=0; i<n; i++)
@@ -224,7 +195,8 @@ double QLAC::calculate(Day start_day, Day end_day)
             Tong += (ActiPtr->getGioRa() - timeVang)*GiaThuong + (timeVang - ActiPtr->getGioVao())*GiaVang;
         }
     }
-    return Tong;
+    cout << "Doanh thu tu ngay "; start_day.xuatDay() ; cout << " den "; end_day.xuatDay(); cout << " la: "; 
+    cout << fixed << setprecision(0) << Tong << endl;
 }
 
 void QLAC::update(string nameFile, int ch, string oldName,string newName, Day newBD, string newSDT){
@@ -262,3 +234,64 @@ void QLAC::update(string nameFile, int ch, string oldName,string newName, Day ne
 
     file.close();
 }
+
+
+void QLAC::ActiDel(string namefile, string hoten, string sdt)
+{
+    int k = 0, STT;
+    vector<int> a;
+    for (int i=0; i<n; i++)
+    {
+        Acti *ActiPtr = dynamic_cast<Acti*>(AC[i]);
+        if ((ActiPtr->getHoten() == hoten) && (ActiPtr->getSDT() == sdt))
+        {
+            if (  (ActiPtr->getNgayDen() > getday()) || ((ActiPtr->getNgayDen() == getday()) && ActiPtr->getGioVao() > getTime())  )
+            {
+                cout << left << "| "; setColor(12); cout << setw(4) << ++k; setColor(7);
+                AC[i]->hienThiThongTin();
+                a.push_back(i);
+            }
+        }
+    }
+    if (a.empty()) {
+        cout << "Quy khach chua dat san nao! Enter de quay lai" << endl;
+        char delay = getch();
+        return;
+    }
+    icon_Order();    cout << "Nhap STT can xoa: "; cin >> STT;
+    while (STT <= 0 || STT > a.size()){
+        setColor(4); cout << "STT ban nhap khong hop le. Vui long nhap lai: "; setColor(7); cin >> STT;
+    }
+    int index = a.at(STT-1);
+
+    for (int i = index; i < n; i++) {
+        AC[i] = AC[i + 1];
+    }
+    n--; 
+    setColor(10);
+    cout << "Delete activity successful!" << endl; 
+    setColor(7);
+
+    ofstream file(namefile, ios::out);
+    if (!file.is_open()) {
+        cerr << "Unable to open file: " << namefile << endl;
+        return;
+    }
+
+    for (int i = 0; i < n; i++) {
+        Acti* ActiPtr = dynamic_cast<Acti*>(AC[i]);
+        if (ActiPtr != nullptr) {
+            file << ActiPtr->getHoten() << ","
+                << ActiPtr->getNgaySinh().ngay << "/" << ActiPtr->getNgaySinh().thang << "/" << ActiPtr->getNgaySinh().nam << ","
+                << ActiPtr->getSDT() << ","
+                << ActiPtr->getNgayDen().ngay << "/" << ActiPtr->getNgayDen().thang << "/" << ActiPtr->getNgayDen().nam << ","
+                << ActiPtr->getGioVao().gio << ":" << ActiPtr->getGioVao().phut << ":" << ActiPtr->getGioVao().giay << ","
+                << ActiPtr->getGioRa().gio << ":" << ActiPtr->getGioRa().phut << ":" << ActiPtr->getGioRa().giay << ","
+                << ActiPtr->getID() << endl;
+        }
+    }
+
+    file.close();
+    
+}
+

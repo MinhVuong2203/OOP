@@ -1,6 +1,7 @@
-#pragma once
+#include <iostream>
 #include <windows.h>
 #include <iomanip>
+#include "Title.h"
 using namespace std;
 
 void setColor(int color) {
@@ -48,6 +49,7 @@ void TitleBill(){
         << setw(20) << "Thoi Luong" 
         << setw(17) << "Thanh tien" << right << setw(4) << "|\n";
 }
+
 
 void icon_exit()
 {
@@ -116,6 +118,10 @@ void icon_History(){
     cout << " o-o ";
     setColor(7);
 }
+
+
+
+
 
 
 

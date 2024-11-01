@@ -1,5 +1,8 @@
-#pragma once
-
+#include <iostream>
+#include <string> 
+#include <fstream>
+#include "check.h"
+using namespace std;
 //Hàm check số điện thoại
 bool checkName(string x)
 {
@@ -39,6 +42,3 @@ bool checkCCCD(string x)
      if (x.length() != 12 || x[0] !='0' ) return false;  
     return true;
 }
-
-
-
