@@ -119,6 +119,12 @@ void icon_History(){
     setColor(7);
 }
 
+void icon_cancel(){
+    setColor(6);
+    cout << " -x-  ";
+    setColor(7);
+}
+
 
 
 

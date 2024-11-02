@@ -351,10 +351,10 @@ int main()
                         Menu();
                         cout << "|                                    |" << endl;
                         cout << "|"; icon_Res(); cout << setw(31) << left << "<1> Dat san" << "|" << endl;
-                        cout << "|"; icon_login(); cout << setw(31) << left << "<2> Xem lich su dat" << "|" << endl;
-                        cout << "|"; icon_return(); cout << setw(31) << left << "<3> Xoa dat san" << "|" << endl;
-                        cout << "|"; icon_exit(); cout << setw(31) << left << "<4> Xoa tai khoan" << "|" << endl;
-                        cout << "|"; icon_return(); cout << setw(31) << left << "<5> Sua thong tin" << "|" << endl;
+                        cout << "|"; icon_History(); cout << setw(31) << left << "<2> Xem lich su dat" << "|" << endl;
+                        cout << "|"; icon_cancel(); cout << setw(31) << left << "<3> Xoa dat san" << "|" << endl;
+                        cout << "|"; icon_cancel(); cout << setw(31) << left << "<4> Xoa tai khoan" << "|" << endl;
+                        cout << "|"; icon_Order(); cout << setw(31) << left << "<5> Sua thong tin" << "|" << endl;
                         cout << "|"; icon_return(); cout << setw(31) << left << "<6> Quay lai" << "|" << endl;
                         cout << "|"; icon_exit(); cout << setw(31) << left << "<7> Thoat" << "|" << endl;
                         cout << "|                                    |" << endl;
