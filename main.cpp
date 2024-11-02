@@ -177,7 +177,7 @@ int main()
                                 {
                                     case 1:
                                     {
-                                        U.sortByName(FUser);
+                                        U.sort(FUser);
                                         AD.hienDSUS(U);
                                         delay=getch();
                                         goto read_loopA5;

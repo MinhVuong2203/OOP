@@ -21,6 +21,7 @@ public:
             << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
     }
     string getUsername() {return this->username;}
+
     string getPassword() {return this->password;}
     void setUsername(string newUsername) { this->username = newUsername; }
     void setPassword(string newPassword) { this->password = newPassword; }
