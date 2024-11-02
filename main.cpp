@@ -176,7 +176,13 @@ int main()
                                 switch(Achoice4 - '0')
                                 {
                                     case 1:
-                                    goto read_loopA5;
+                                    {
+                                        U.sortByName(FUser);
+                                        AD.hienDSUS(U);
+                                        delay=getch();
+                                        goto read_loopA5;
+                                    }
+                                    
                                     case 2:
                                     {
                                         cout<<endl;
