@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <conio.h>
 #include <vector>
 #include <fstream>
@@ -7,6 +8,7 @@
 #include "TimeDay.h"
 #include "Title.h"
 #include "templateBill.h"
+#include "VQMM.h"
 #include "Activity.h"
 const int GiaThuong = 50000;  //Khai báo để sử dụng cho việc in bill. từ 7h - 16h giá 50000đ/h, từ 16h - 22h giá 110000đ/h
 const int GiaVang = 110000;
@@ -167,6 +169,10 @@ void QLAC::priBill(Day ngayden, string hoten_admin)
             if (k == STT) 
             {
                 templateBill(ActiPtr, hoten_admin, getday(), getTime(), into_money, GiaThuong, GiaVang);
+                if (into_money >=200000)
+                {
+                    VQMM();
+                }
                 return;
             }
         }
@@ -194,10 +200,10 @@ void QLAC::calculate(Day start_day, Day end_day)
     cout << fixed << setprecision(0) << Tong << endl;
 }
 
-void QLAC::update(string nameFile, int ch, string oldName,string newName, Day newBD, string newSDT){
+void QLAC::update(string nameFile, int ch, string oldSDT,string newName, Day newBD, string newSDT){
     for (int i = 0; i < n; i++) {
         Acti *ActiPtr = dynamic_cast<Acti*>(AC[i]);
-        if (ActiPtr->getHoten() == oldName) {
+        if (ActiPtr->getSDT() == oldSDT) {
            if(ch==1){
             ActiPtr->setHoTen(newName);
            }
@@ -290,3 +296,45 @@ void QLAC::ActiDel(string namefile, string hoten, string sdt)
     
 }
 
+
+void QLAC::sortActivities(int choice) {
+    if (n == 0) {
+        cout << "Bạn " << endl;
+        return;
+    }
+
+    switch (choice) {
+        case 1:
+            std::sort(AC, AC + n, [](Person *a, Person *b) {
+                Acti *actA = dynamic_cast<Acti*>(a);
+                Acti *actB = dynamic_cast<Acti*>(b);
+                return actA->getNgayDen() > actB->getNgayDen() ||
+                       (actA->getNgayDen() == actB->getNgayDen() && actA->getGioVao() > actB->getGioVao());
+            });
+            break;
+
+        case 2:
+            std::sort(AC, AC + n, [](Person *a, Person *b) {
+                Acti *actA = dynamic_cast<Acti*>(a);
+                Acti *actB = dynamic_cast<Acti*>(b);
+                return actA->getNgayDen() < actB->getNgayDen() ||
+                       (actA->getNgayDen() == actB->getNgayDen() && actA->getGioVao() < actB->getGioVao());
+            });
+            break;
+
+        case 3:
+            std::sort(AC, AC + n, [](Person *a, Person *b) {
+                Acti *actA = dynamic_cast<Acti*>(a);
+                Acti *actB = dynamic_cast<Acti*>(b);
+                int durationA = (actA->getGioRa().gio * 3600 + actA->getGioRa().phut * 60 + actA->getGioRa().giay) - 
+                                (actA->getGioVao().gio * 3600 + actA->getGioVao().phut * 60 + actA->getGioVao().giay);
+                int durationB = (actB->getGioRa().gio * 3600 + actB->getGioRa().phut * 60 + actB->getGioRa().giay) - 
+                                (actB->getGioVao().gio * 3600 + actB->getGioVao().phut * 60 + actB->getGioVao().giay);
+                return durationA > durationB;
+            });
+            break;
+
+        default:
+            return;
+    }
+}

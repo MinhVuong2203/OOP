@@ -1,4 +1,5 @@
 #include <fstream>
+#include <algorithm>
 #include "check.h"
 #include "Person.h"
 #include "Activity.h"
@@ -79,7 +80,7 @@ void QLUS::del(string nameFile, string username) {
         U[i] = U[i + 1];
     }
     n--;
-cout << "Delete User successful!" << endl;
+cout << "Xoa thanh cong!" << endl;
 
     ofstream file(nameFile, ios::out);
     if (!file.is_open()) {
@@ -109,18 +110,34 @@ QLUS::~QLUS(){
 }
 
 
-void QLUS::fixUser(string nameFile,int index, int &ch, string &oldName,string &newName, Day &newBD, string &newSDT) {
-    if (index < 1 || index > n) {
-        cout << "So thu tu khong hop le!" << endl;
-        return;
+void QLUS::fixUser(string nameFile,int &index, int &ch, string &oldSDT,string &newName, Day &newBD, string &newSDT, string username, int w) {
+    index=-1;
+    if(w==1){
+    for (int i = 0; i < n; i++) {
+        User *uFix = dynamic_cast<User*>(U[i]);
+        if (uFix->getSDT() == oldSDT) {
+            index = i;
+            break;
+        }
     }
-    User *uFix = dynamic_cast<User*>(U[index - 1]);
-    if (uFix == nullptr) {
-        cout << "User not found!" << endl;
-        return;
     }
-    oldName=uFix->getHoten();
-        cout << "1. Sua ho ten\n2. Sua ngay sinh\n3. Sua SDT\n4. Sua TDN\n5. Sua mat khau\n6. Thoat\nNhap lua chon cua ban: "; cin>>ch;
+    else if(w==2){
+    for (int i = 0; i < n; i++) {
+        User *uFix = dynamic_cast<User*>(U[i]);
+        if (uFix->getUsername() == username) {
+            index = i;
+            break;
+        }
+    }
+    }
+    if(index==-1)   {cout<<"Khong ton tai nguoi nay!"; return;} User *uFix = dynamic_cast<User*>(U[index]); oldSDT=uFix->getSDT();
+        icon_choice(); cout << "1. Sua ho ten"<<endl;
+        icon_choice(); cout << "2. Sua ngay sinh"<<endl;
+        icon_choice(); cout << "3. Sua SDT"<<endl;
+        icon_choice(); cout << "4. Sua ten dang nhap"<<endl;
+        icon_choice(); cout << "5. Sua mat khau"<<endl;
+        icon_choice(); cout << "6. Thoat"<<endl;
+        cin>>ch;
     switch (ch) {
         case 1: {
             cout << "Nhap ho ten moi: ";
@@ -214,3 +231,85 @@ void QLUS::ActiDel(string namefile, QLAC &AC, string hoten, string sdt)
     AC.ActiDel(namefile, hoten, sdt);
 }
 
+string getLastName(const string &fullName) {
+    size_t pos = fullName.find_last_of(" ");
+    return fullName.substr(pos + 1);
+}
+
+
+void merge(Person *U[], int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    Person *L[n1], *R[n2];
+
+    for (int i = 0; i < n1; i++) {
+        L[i] = U[left + i];
+    }
+    for (int j = 0; j < n2; j++) {
+        R[j] = U[mid + 1 + j];
+    }
+
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        User *userL = dynamic_cast<User*>(L[i]);
+        User *userR = dynamic_cast<User*>(R[j]);
+        
+        if (userL != nullptr && userR != nullptr) {
+            if (getLastName(userL->getHoten()) <= getLastName(userR->getHoten())) {
+                U[k] = L[i];
+                i++;
+            } else {
+                U[k] = R[j];
+                j++;
+            }
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        U[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        U[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(Person *U[], int left, int right) {
+    if (left >= right) return;
+
+    int mid = left + (right - left) / 2;
+    mergeSort(U, left, mid);
+    mergeSort(U, mid + 1, right);
+    merge(U, left, mid, right);
+}
+
+void QLUS::sort(string nameFile) {
+    mergeSort(U, 0, n - 1);
+    ofstream file(nameFile, ios::out);
+    if (!file.is_open()) {
+        cerr << "Unable to open file: " << nameFile << endl;
+        return;
+    }
+
+    for (int i = 0; i < n; i++) {
+        User *user = dynamic_cast<User*>(U[i]);
+        if (user != nullptr) {
+            file << user->getHoten() << ","
+                 << user->getNgaySinh().ngay << "/"
+                 << user->getNgaySinh().thang << "/"
+                 << user->getNgaySinh().nam << ","
+                 << user->getSDT() << ","
+                 << user->getUsername() << ","
+                 << user->getPassword() << endl;
+        }
+    }
+
+    file.close();
+    cout << "Danh sach sau khi sap xep:" << endl;
+}

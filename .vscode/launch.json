@@ -29,8 +29,13 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
+<<<<<<< HEAD
       "cwd": "d:/C++/github/webg/OOP",
       "program": "d:/C++/github/webg/OOP/build/Debug/outDebug",
+=======
+      "cwd": "c:/Users/User/OneDrive/Documents/GitHub/OOP",
+      "program": "c:/Users/User/OneDrive/Documents/GitHub/OOP/build/Debug/outDebug",
+>>>>>>> dc7a34ab66fbd5bef5f2578f1bba89504b33afb7
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

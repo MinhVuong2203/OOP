@@ -21,6 +21,7 @@ public:
             << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
     }
     string getUsername() {return this->username;}
+
     string getPassword() {return this->password;}
     void setUsername(string newUsername) { this->username = newUsername; }
     void setPassword(string newPassword) { this->password = newPassword; }
@@ -37,7 +38,8 @@ public:
 
     void add(string nameFile);
     void del(string nameFile, string username);
-    void fixUser(string nameFile,int index, int &ch, string &oldName,string &newName, Day &newBD, string &newSDT);
+    void sort(string nameFile);
+    void fixUser(string nameFile, int &index, int &ch, string &oldSDT,string &newName, Day &newBD, string &newSDT, string username, int w);
     void hienDS() 
 	{
         for (int i = 0; i < n; i++) 
@@ -48,8 +50,9 @@ public:
     }
     void hienThi(int i) 
 	{
-            cout << left << "| "; setColor(12); cout << setw(4) << i; setColor(7);
-            U[i-1]->hienThiThongTin(); 
+            if(i==-1) return;
+            cout << left << "| "; setColor(12); cout << setw(4) << i+1; setColor(7);
+            U[i]->hienThiThongTin(); 
     }
     User *getUser(string username)    //Hàm lấy thông tin một user
     {

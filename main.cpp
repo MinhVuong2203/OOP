@@ -2,7 +2,7 @@
 #include <conio.h>
 #include <windows.h>
 
-#include ".//assets/function/Title.h" 
+#include "./assets/function/Title.h" 
 #include "./assets/function/TimeDay.h"
 #include "./assets/function/Person.h"
 #include "./assets/function/Admin.h"
@@ -10,8 +10,9 @@
 #include "./assets/function/Activity.h"
 #include "./assets/function/authenticate.h"
 #include "./assets/function/templateBill.h"
-
+#include "./assets/function/VQMM.h"
 using namespace std;
+
 int main() 
 {
     //Khai báo file
@@ -94,10 +95,10 @@ int main()
                         Menu();
                         cout << "|                                    |" << endl;
                         cout << "|"; icon_Res(); cout << "<1> Quan li danh sach user     |" << endl;
-                        cout << "|"; icon_login(); cout << "<2> Thong ke                   |" << endl;
+                        cout << "|"; icon_Res(); cout << "<2> Thong ke                   |" << endl;
                         cout << "|"; icon_Res(); cout << "<3> Dat san                    |" << endl;
-                        cout << "|"; icon_login(); cout << "<4> Quan li Admin              |" << endl;
-                        cout << "|"; icon_login(); cout << "<5> In hoa don                 |" << endl;
+                        cout << "|"; icon_Res(); cout << "<4> Quan li Admin              |" << endl;
+                        cout << "|"; icon_Res(); cout << "<5> In hoa don                 |" << endl;
                         cout << "|"; icon_return(); cout << "<6> Quay lai                   |" << endl;
                         cout << "|"; icon_exit(); cout << "<7> Thoat                      |" << endl;
                         cout << "|                                    |" << endl;
@@ -108,11 +109,12 @@ int main()
                         {
                             case 1:
                             {   read_loopA4: system("cls");  
-                                TitleUser();   
+                                TitleUser();
+                                U.hienDS();   
                                 Menu();
                                 cout << "|                                    |" << endl;
                                 cout << "|"; icon_Res(); cout << "<1> Them user                  |" << endl;
-                                cout << "|"; icon_login(); cout << "<2> Xoa user                   |" << endl;
+                                cout << "|"; icon_del(); cout << "<2> Xoa user                   |" << endl;
                                 cout << "|"; icon_Res(); cout << "<3> Sua user                   |" << endl;
                                 cout << "|"; icon_return(); cout << "<4> Quay lai                   |" << endl;
                                 cout << "|"; icon_exit(); cout << "<5> Thoat                      |" << endl;
@@ -138,14 +140,13 @@ int main()
                                     goto read_loopA4;
                                 case 3: 
                                 {
-                                    int i,ch;
-                                    icon_Order();
-                                    cout<<"Nhap so cua nguoi ban muon chinh sua:"; cin>>i;
-                                    string oldName, newName, newSDT; Day newBD;
-                                    
-                                    U.fixUser(FUser, i, ch, oldName, newName, newBD, newSDT);
-                                    AC.update(FActivity, ch, oldName, newName, newBD, newSDT);
-                                    cout<<"Sau khi sua:"<<endl; U.hienThi(i);
+                                    int ch, i, w=1;
+                                    cout<<endl;icon_Order();
+                                    string oldSDT, newName, newSDT, username; Day newBD;
+                                    cout<<"Nhap SDT cua nguoi ban muon chinh sua:"; cin.ignore(); getline(cin, oldSDT);
+                                    U.fixUser(FUser, i, ch, oldSDT, newName, newBD, newSDT, username, w);
+                                    AC.update(FActivity, ch, oldSDT, newName, newBD, newSDT);
+                                    if(i!=-1){cout<<"Sau khi sua:"<<endl; U.hienThi(i);}
                                     delay=getch();
                                     goto read_loopA4;
                                 }
@@ -163,9 +164,9 @@ int main()
                                 system("cls");
                                 Menu();
                                 cout << "|                                    |" << endl;
-                                cout << "|"; icon_Res(); cout << "<1> Sap xep theo ten           |" << endl;
-                                cout << "|"; icon_login(); cout << "<2> Tim kiem                   |" << endl;
-                                cout << "|"; icon_Res(); cout << "<3> Doanh thu khoang thoi gian |" << endl;
+                                cout << "|"; icon_sort(); cout << "<1> Sap xep theo ten           |" << endl;
+                                cout << "|"; icon_search(); cout << "<2> Tim kiem                   |" << endl;
+                                cout << "|"; icon_cost(); cout << "<3> Doanh thu khoang thoi gian |" << endl;
                                 cout << "|"; icon_return(); cout << "<4> Quay lai                   |" << endl;
                                 cout << "|"; icon_exit(); cout << "<5> Thoat                      |" << endl;
                                 cout << "|                                    |" << endl;
@@ -175,7 +176,13 @@ int main()
                                 switch(Achoice4 - '0')
                                 {
                                     case 1:
-                                    goto read_loopA5;
+                                    {
+                                        U.sort(FUser);
+                                        AD.hienDSUS(U);
+                                        delay=getch();
+                                        goto read_loopA5;
+                                    }
+                                    
                                     case 2:
                                     {
                                         cout<<endl;
@@ -250,7 +257,7 @@ int main()
                                 read_loopA4_4:    system("cls");
                                 Menu();
                                 cout << "|                                    |" << endl;
-                                cout << "|"; icon_Res(); cout << "<1> Xoa tai khoan admin        |" << endl;
+                                cout << "|"; icon_del(); cout << "<1> Xoa tai khoan admin        |" << endl;
                                 cout << "|"; icon_login(); cout << "<2> Sua tai khoan admin        |" << endl;
                                 cout << "|"; icon_return(); cout << "<3> Quay lai                   |" << endl;
                                 cout << "|"; icon_exit(); cout << "<4> Thoat                      |" << endl;
@@ -350,11 +357,12 @@ int main()
                         Menu();
                         cout << "|                                    |" << endl;
                         cout << "|"; icon_Res(); cout << setw(31) << left << "<1> Dat san" << "|" << endl;
-                        cout << "|"; icon_login(); cout << setw(31) << left << "<2> Xem lich su dat" << "|" << endl;
-                        cout << "|"; icon_return(); cout << setw(31) << left << "<3> Xoa dat san" << "|" << endl;
-                        cout << "|"; icon_exit(); cout << setw(31) << left << "<4> Xoa tai khoan" << "|" << endl;
-                        cout << "|"; icon_return(); cout << setw(31) << left << "<5> Quay lai" << "|" << endl;
-                        cout << "|"; icon_exit(); cout << setw(31) << left << "<6> Thoat" << "|" << endl;
+                        cout << "|"; icon_History(); cout << setw(31) << left << "<2> Xem lich su dat" << "|" << endl;
+                        cout << "|"; icon_del(); cout << setw(31) << left << "<3> Xoa dat san" << "|" << endl;
+                        cout << "|"; icon_del(); cout << setw(31) << left << "<4> Xoa tai khoan" << "|" << endl;
+                        cout << "|"; icon_Order(); cout << setw(31) << left << "<5> Sua thong tin" << "|" << endl;
+                        cout << "|"; icon_return(); cout << setw(31) << left << "<6> Quay lai" << "|" << endl;
+                        cout << "|"; icon_exit(); cout << setw(31) << left << "<7> Thoat" << "|" << endl;
                         cout << "|                                    |" << endl;
                         cout << "+====================================+" << endl;
 
@@ -372,9 +380,32 @@ int main()
                             }
                             goto read_loopU3;
                             case 2: system("cls");
+                                read_loophis: system("cls");
                                 U.History(AC, x->getHoten(), x->getSDT());
-                                delay = getch();
-                            goto read_loopU3;
+                                int choice;
+                                cout << "|                                    |" << endl;
+                                cout << "|"; icon_choice(); cout  << setw(31) << left<< "<1> Moi nhat" << "|" << endl;
+                                cout << "|"; icon_choice(); cout  << setw(31) << left<< "<2> Cu nhat" << "|" << endl;
+                                cout << "|"; icon_choice(); cout  << setw(31) << left<< "<3> Theo thoi luong choi " << "|" << endl;
+                                cout << "|"; icon_return(); cout  << setw(31) << left<< "<4> Quay lai" << "|" << endl;
+                                cout << "|"; icon_exit(); cout  << setw(31) << left<< "<5> Thoat" << "|" << endl;
+                                cout << "|                                    |" << endl;
+                                cout << "+====================================+" << endl;
+                                icon_Order();    cout << "Nhap lua chon cua ban: "; 
+                                cin>>choice;
+                                switch(choice){
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                        AC.sortActivities(choice);
+                                        goto read_loophis;
+                                    case 4:
+                                        goto read_loopU3;
+                                    case 5:
+                                        return 0;
+                                }
+                                
+                           
                             case 3:
                                 system("cls");
                                 U.ActiDel(FActivity, AC, x->getHoten(), x->getSDT());
@@ -386,7 +417,7 @@ int main()
                             case 4: 
                             {
                                 system("cls");
-                                cout << "Ban co that su muon xoa tai khoan(y/n)?";
+                                icon_confirm(); cout << "Ban co that su muon xoa tai khoan(y/n)?";
                                 char Uchoice4; 
                                 Uchoice4 = getche();    
                                 system("cls");
@@ -403,8 +434,19 @@ int main()
                             goto read_loopU3;
                             }
                             }
-                            case 5: goto read_loopU2;
-                            case 6: 
+                            case 5:
+                            {
+                                    int ch, i, w=2;
+                                    cout<<endl;
+                                    string oldSDT, newName, newSDT; Day newBD;
+                                    U.fixUser(FUser, i, ch, oldSDT, newName, newBD, newSDT, username, w);
+                                    AC.update(FActivity, ch, oldSDT, newName, newBD, newSDT);
+                                    if(i!=-1){cout<<"Sau khi sua:"<<endl; U.hienThi(i);}
+                                    delay=getch();
+                                    goto read_loopU3;
+                                }
+                            case 6: goto read_loopU2;
+                            case 7: 
                             return 0;   
                             default:
                                 goto read_loopU3;
