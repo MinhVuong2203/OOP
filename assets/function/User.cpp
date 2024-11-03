@@ -236,7 +236,6 @@ string getLastName(const string &fullName) {
     return fullName.substr(pos + 1);
 }
 
-
 void merge(Person *U[], int left, int mid, int right) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
@@ -311,5 +310,5 @@ void QLUS::sort(string nameFile) {
     }
 
     file.close();
-    cout << "Danh sach sau khi sap xep:" << endl;
+    cout << "\nDanh sach sau khi sap xep:" << endl;
 }

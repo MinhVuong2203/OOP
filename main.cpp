@@ -44,7 +44,7 @@ int main()
     cout << "|                               |" << endl;
     cout << "+===============================+" << endl;
     cout << "Moi nhap lua chon cua ban: ";
-    char choice1 = getche();	
+    char choice1 = getchar();	
     switch (choice1-'0') 
 	{
         case 1:    
@@ -59,15 +59,15 @@ int main()
             cout << "+====================================+" << endl;
             cout << "Moi nhap lua chon cua ban: ";
         	char Achoice2;
-			Achoice2=getche();	system("cls");	
+			Achoice2=getchar();	system("cls");	
 			switch (Achoice2-'0')
 			{
                 case 1: AD.add(FAdmin); break;
                 case 2: 
                 {
                     read_loop_autA: system("cls");
-                    icon_Order(); cout << "Ten dang nhap (SDT): "; cin >> username; 
-                    cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynA1 = getche();
+                    icon_Order(); cout << "Ten dang nhap (SDT): "; cin >> username; cin.ignore();
+                    cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynA1 = getchar();
                     if (ynA1 == 'y' ) 
                     {   cout << endl;
                         icon_Order(); cout << "Mat khau (CCCD): ";  
@@ -81,7 +81,7 @@ int main()
                     else 
                     {
                         cout << "\nLua chon khong hop le. Enter de quay lai!";
-                        delay = getch(); goto read_loop_autA;
+                        delay = getche(); goto read_loop_autA;
                     }
                     
                     if (authenticateUser(username,password, FAdmin)) 
@@ -104,7 +104,7 @@ int main()
                         cout << "|                                    |" << endl;
                         cout << "+====================================+" << endl;
                         cout << "Moi nhap lua chon cua ban: ";
-                        char Achoice3 = getche(); 
+                        char Achoice3 = getchar(); 
                         switch (Achoice3 - '0')
                         {
                             case 1:
@@ -121,10 +121,10 @@ int main()
                                 cout << "|                                    |" << endl;
                                 cout << "+====================================+" << endl;
                                 cout << "Moi nhap lua chon cua ban: ";
-                                char Achoice4_1 = getch(); cin.ignore();
+                                char Achoice4_1 = getchar(); cin.ignore();
                                 switch (Achoice4_1 - '0')
                                 {
-                                case 1: AD.hienDSUS(U); cout << endl; AD.addUS(U, FUser); TitleUser(); AD.hienDSUS(U); delay = getch(); 
+                                case 1: AD.hienDSUS(U); cout << endl; AD.addUS(U, FUser); TitleUser(); AD.hienDSUS(U); delay = getche(); 
                                     goto read_loopA4;
                                 case 2: 
                                     cin.ignore();
@@ -178,6 +178,7 @@ int main()
                                     case 1:
                                     {
                                         U.sort(FUser);
+                                        TitleUser();
                                         AD.hienDSUS(U);
                                         delay=getch();
                                         goto read_loopA5;
@@ -328,7 +329,7 @@ int main()
             cout << "+====================================+" << endl;
             cout << "Moi nhap lua chon cua ban: ";
             char Uchoice2;
-			Uchoice2=getche();	system("cls");	
+			Uchoice2=getchar();	system("cls");	
 			switch (Uchoice2-'0')
 			{
                 case 1: 
@@ -338,7 +339,7 @@ int main()
                 {
                     read_loop_autU: system("cls");
                     cout << "Ten dang nhap (viet lien, khong dau): "; cin >> username; 
-                    cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynU1 = getche();
+                    cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynU1 = getchar();
                     if (ynU1 == 'y' ) { cout << "\nMat khau (viet lien, khong dau): ";  hidePassword(password);}
                     else if (ynU1 == 'n') { cout << "\nMat khau (viet lien, khong dau): ";  cin >> password;}
                     else {
@@ -404,8 +405,6 @@ int main()
                                     case 5:
                                         return 0;
                                 }
-                                
-                           
                             case 3:
                                 system("cls");
                                 U.ActiDel(FActivity, AC, x->getHoten(), x->getSDT());
@@ -419,7 +418,7 @@ int main()
                                 system("cls");
                                 icon_confirm(); cout << "Ban co that su muon xoa tai khoan(y/n)?";
                                 char Uchoice4; 
-                                Uchoice4 = getche();    
+                                Uchoice4 = getchar();    
                                 system("cls");
                                 if (Uchoice4 == 'y') {
                                 U.del(FUser, username); 
