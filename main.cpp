@@ -387,8 +387,8 @@ int main()
                                 cout << "|"; icon_Order(); cout  << setw(31) << left<< "<1> Moi nhat" << "|" << endl;
                                 cout << "|"; icon_Order(); cout  << setw(31) << left<< "<2> Cu nhat" << "|" << endl;
                                 cout << "|"; icon_Order(); cout  << setw(31) << left<< "<3> Theo thoi luong choi " << "|" << endl;
-                                cout << "|"; icon_Order(); cout  << setw(31) << left<< "<4> Quay lai" << "|" << endl;
-                                cout << "|"; icon_Order(); cout  << setw(31) << left<< "<5> Thoat" << "|" << endl;
+                                cout << "|"; icon_return(); cout  << setw(31) << left<< "<4> Quay lai" << "|" << endl;
+                                cout << "|"; icon_exit(); cout  << setw(31) << left<< "<5> Thoat" << "|" << endl;
                                 cout << "|                                    |" << endl;
                                 cout << "+====================================+" << endl;
                                 icon_Order();    cout << "Nhap lua chon cua ban: "; 
