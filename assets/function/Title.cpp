@@ -53,14 +53,40 @@ void TitleBill(){
 
 void icon_exit()
 {
-    setColor(6); 
-    cout << " ->[ ";
+    setColor(4); 
+    cout << " ]<= ";
+    setColor(7);
+}
+
+void icon_choice()
+{
+    setColor(2); 
+    cout << " (+) ";
+    setColor(7);
+}
+
+void icon_confirm()
+{
+    setColor(4); 
+    cout << " (*) ";
+    setColor(7);
+}
+
+void icon_sort(){
+    setColor(6);
+    cout<<"[A-Z]";
+    setColor(7);
+}
+
+void icon_search(){
+    setColor(6);
+    cout<<" ==0 ";
     setColor(7);
 }
 
 void icon_return(){
     setColor(6);
-    cout << " <-- ";
+    cout << " <== ";
     setColor(7);
 }
 
@@ -82,9 +108,15 @@ void icon_admin(){
     setColor(7);
 }
 
+void icon_del(){
+    setColor(6);
+    cout << " [X] ";
+    setColor(7);
+}
+
 void icon_login(){
     setColor(6);
-    cout << " <-> ";
+    cout << " ->[ ";
     setColor(7);
 }
 
@@ -121,7 +153,7 @@ void icon_History(){
 
 void icon_cancel(){
     setColor(6);
-    cout << " -x-  ";
+    cout << " -x- ";
     setColor(7);
 }
 

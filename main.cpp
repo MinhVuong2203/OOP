@@ -95,10 +95,10 @@ int main()
                         Menu();
                         cout << "|                                    |" << endl;
                         cout << "|"; icon_Res(); cout << "<1> Quan li danh sach user     |" << endl;
-                        cout << "|"; icon_login(); cout << "<2> Thong ke                   |" << endl;
+                        cout << "|"; icon_Res(); cout << "<2> Thong ke                   |" << endl;
                         cout << "|"; icon_Res(); cout << "<3> Dat san                    |" << endl;
-                        cout << "|"; icon_login(); cout << "<4> Quan li Admin              |" << endl;
-                        cout << "|"; icon_login(); cout << "<5> In hoa don                 |" << endl;
+                        cout << "|"; icon_Res(); cout << "<4> Quan li Admin              |" << endl;
+                        cout << "|"; icon_Res(); cout << "<5> In hoa don                 |" << endl;
                         cout << "|"; icon_return(); cout << "<6> Quay lai                   |" << endl;
                         cout << "|"; icon_exit(); cout << "<7> Thoat                      |" << endl;
                         cout << "|                                    |" << endl;
@@ -114,7 +114,7 @@ int main()
                                 Menu();
                                 cout << "|                                    |" << endl;
                                 cout << "|"; icon_Res(); cout << "<1> Them user                  |" << endl;
-                                cout << "|"; icon_login(); cout << "<2> Xoa user                   |" << endl;
+                                cout << "|"; icon_del(); cout << "<2> Xoa user                   |" << endl;
                                 cout << "|"; icon_Res(); cout << "<3> Sua user                   |" << endl;
                                 cout << "|"; icon_return(); cout << "<4> Quay lai                   |" << endl;
                                 cout << "|"; icon_exit(); cout << "<5> Thoat                      |" << endl;
@@ -164,9 +164,9 @@ int main()
                                 system("cls");
                                 Menu();
                                 cout << "|                                    |" << endl;
-                                cout << "|"; icon_Res(); cout << "<1> Sap xep theo ten           |" << endl;
-                                cout << "|"; icon_login(); cout << "<2> Tim kiem                   |" << endl;
-                                cout << "|"; icon_Res(); cout << "<3> Doanh thu khoang thoi gian |" << endl;
+                                cout << "|"; icon_sort(); cout << "<1> Sap xep theo ten           |" << endl;
+                                cout << "|"; icon_search(); cout << "<2> Tim kiem                   |" << endl;
+                                cout << "|"; icon_cost(); cout << "<3> Doanh thu khoang thoi gian |" << endl;
                                 cout << "|"; icon_return(); cout << "<4> Quay lai                   |" << endl;
                                 cout << "|"; icon_exit(); cout << "<5> Thoat                      |" << endl;
                                 cout << "|                                    |" << endl;
@@ -257,7 +257,7 @@ int main()
                                 read_loopA4_4:    system("cls");
                                 Menu();
                                 cout << "|                                    |" << endl;
-                                cout << "|"; icon_Res(); cout << "<1> Xoa tai khoan admin        |" << endl;
+                                cout << "|"; icon_del(); cout << "<1> Xoa tai khoan admin        |" << endl;
                                 cout << "|"; icon_login(); cout << "<2> Sua tai khoan admin        |" << endl;
                                 cout << "|"; icon_return(); cout << "<3> Quay lai                   |" << endl;
                                 cout << "|"; icon_exit(); cout << "<4> Thoat                      |" << endl;
@@ -358,8 +358,8 @@ int main()
                         cout << "|                                    |" << endl;
                         cout << "|"; icon_Res(); cout << setw(31) << left << "<1> Dat san" << "|" << endl;
                         cout << "|"; icon_History(); cout << setw(31) << left << "<2> Xem lich su dat" << "|" << endl;
-                        cout << "|"; icon_cancel(); cout << setw(31) << left << "<3> Xoa dat san" << "|" << endl;
-                        cout << "|"; icon_cancel(); cout << setw(31) << left << "<4> Xoa tai khoan" << "|" << endl;
+                        cout << "|"; icon_del(); cout << setw(31) << left << "<3> Xoa dat san" << "|" << endl;
+                        cout << "|"; icon_del(); cout << setw(31) << left << "<4> Xoa tai khoan" << "|" << endl;
                         cout << "|"; icon_Order(); cout << setw(31) << left << "<5> Sua thong tin" << "|" << endl;
                         cout << "|"; icon_return(); cout << setw(31) << left << "<6> Quay lai" << "|" << endl;
                         cout << "|"; icon_exit(); cout << setw(31) << left << "<7> Thoat" << "|" << endl;
@@ -384,9 +384,9 @@ int main()
                                 U.History(AC, x->getHoten(), x->getSDT());
                                 int choice;
                                 cout << "|                                    |" << endl;
-                                cout << "|"; icon_Order(); cout  << setw(31) << left<< "<1> Moi nhat" << "|" << endl;
-                                cout << "|"; icon_Order(); cout  << setw(31) << left<< "<2> Cu nhat" << "|" << endl;
-                                cout << "|"; icon_Order(); cout  << setw(31) << left<< "<3> Theo thoi luong choi " << "|" << endl;
+                                cout << "|"; icon_choice(); cout  << setw(31) << left<< "<1> Moi nhat" << "|" << endl;
+                                cout << "|"; icon_choice(); cout  << setw(31) << left<< "<2> Cu nhat" << "|" << endl;
+                                cout << "|"; icon_choice(); cout  << setw(31) << left<< "<3> Theo thoi luong choi " << "|" << endl;
                                 cout << "|"; icon_return(); cout  << setw(31) << left<< "<4> Quay lai" << "|" << endl;
                                 cout << "|"; icon_exit(); cout  << setw(31) << left<< "<5> Thoat" << "|" << endl;
                                 cout << "|                                    |" << endl;
@@ -417,7 +417,7 @@ int main()
                             case 4: 
                             {
                                 system("cls");
-                                cout << "Ban co that su muon xoa tai khoan(y/n)?";
+                                icon_confirm(); cout << "Ban co that su muon xoa tai khoan(y/n)?";
                                 char Uchoice4; 
                                 Uchoice4 = getche();    
                                 system("cls");

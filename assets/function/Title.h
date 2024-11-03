@@ -12,6 +12,15 @@ void TitleAdmin();
 
 void TitleUser() ;
 
+void icon_choice();
+
+void icon_del();
+
+void icon_confirm();
+
+void icon_sort();
+
+void icon_search();
 
 void TitleBill();
 

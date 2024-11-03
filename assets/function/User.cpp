@@ -131,7 +131,13 @@ void QLUS::fixUser(string nameFile,int &index, int &ch, string &oldSDT,string &n
     }
     }
     if(index==-1)   {cout<<"Khong ton tai nguoi nay!"; return;} User *uFix = dynamic_cast<User*>(U[index]); oldSDT=uFix->getSDT();
-        cout << "1. Sua ho ten\n2. Sua ngay sinh\n3. Sua SDT\n4. Sua TDN\n5. Sua mat khau\n6. Thoat\nNhap lua chon cua ban: "; cin>>ch;
+        icon_choice(); cout << "1. Sua ho ten"<<endl;
+        icon_choice(); cout << "2. Sua ngay sinh"<<endl;
+        icon_choice(); cout << "3. Sua SDT"<<endl;
+        icon_choice(); cout << "4. Sua ten dang nhap"<<endl;
+        icon_choice(); cout << "5. Sua mat khau"<<endl;
+        icon_choice(); cout << "6. Thoat"<<endl;
+        cin>>ch;
     switch (ch) {
         case 1: {
             cout << "Nhap ho ten moi: ";
