@@ -138,12 +138,41 @@ void QLAD::delAd(string nameFile){
     }
     file.close();
 }
-
+bool check(char c) {
+    return c >= '0' && c <= '9';  // Kiểm tra xem ký tự có phải là số không
+    }
 void QLAD::searchUS(string search, string nameFile){
     ifstream file(nameFile);
     if (!file.is_open()) {
         cerr << "Unable to open file: " << endl;
         return;
+    }
+    bool isDate = false, isPhone = true, isName = false;
+    // Kiểm tra nếu chuỗi tìm kiếm là ngày sinh
+    if (search.length() == 10 && 
+        ((search[2] == '/' && search[5] == '/') || (search[2] == '-' && search[5] == '-'))) {
+        isDate = true;
+    }
+
+    // Kiểm tra nếu chuỗi tìm kiếm  là số điện thoại
+
+    if (search.length() != 10) {
+        isPhone = false;
+    }
+    else {
+        for (char c : search) {
+            if (!check(c)) {
+                isPhone = false;
+                break;
+            }
+        }
+    }
+    // Kiểm tra nếu chuỗi tìm kiếm là họ tên
+    for (char c : search) {
+        if (c == ' ') {
+            isName = true;
+            break;
+        }
     }
     string line;
     int i=0;
@@ -181,7 +210,10 @@ void QLAD::searchUS(string search, string nameFile){
     }
     cin.ignore();
     if (!found) {
-        cout << "Khong tim thay nguoi dung su dung du lieu nay!" << endl;
+        if(isName) cout<<"Khong tim thay nguoi dung co ho ten nay!"<<endl;
+        else if (isDate) cout<<"Khong tim thay nguoi dung co ngay sinh nay"<<endl;
+        else if (isPhone) cout<<"Khong tim thay nguoi dung co so dien thoai nay"<<endl;
+        else cout << "Khong tim thay nguoi dung su dung du lieu nay!" << endl;
     }
     
     file.close();
