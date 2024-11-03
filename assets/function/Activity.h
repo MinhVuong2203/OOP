@@ -62,6 +62,7 @@ public:
     void calculate(Day start_day, Day end_day);
     void update(string nameFile, int ch, string oldName,string newName, Day newBD, string newSDT);
     void ActiDel(string namefile, string hoten, string sdt);
+    void sortActivities(int choice);
 };
 
 #endif

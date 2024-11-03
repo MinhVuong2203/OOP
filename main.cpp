@@ -380,9 +380,32 @@ int main()
                             }
                             goto read_loopU3;
                             case 2: system("cls");
+                                read_loophis: system("cls");
                                 U.History(AC, x->getHoten(), x->getSDT());
-                                delay = getch();
-                            goto read_loopU3;
+                                int choice;
+                                cout << "|                                    |" << endl;
+                                cout << "|"; icon_Order(); cout  << setw(31) << left<< "<1> Moi nhat" << "|" << endl;
+                                cout << "|"; icon_Order(); cout  << setw(31) << left<< "<2> Cu nhat" << "|" << endl;
+                                cout << "|"; icon_Order(); cout  << setw(31) << left<< "<3> Theo thoi luong choi " << "|" << endl;
+                                cout << "|"; icon_Order(); cout  << setw(31) << left<< "<4> Quay lai" << "|" << endl;
+                                cout << "|"; icon_Order(); cout  << setw(31) << left<< "<5> Thoat" << "|" << endl;
+                                cout << "|                                    |" << endl;
+                                cout << "+====================================+" << endl;
+                                icon_Order();    cout << "Nhap lua chon cua ban: "; 
+                                cin>>choice;
+                                switch(choice){
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                        AC.sortActivities(choice);
+                                        goto read_loophis;
+                                    case 4:
+                                        goto read_loopU3;
+                                    case 5:
+                                        return 0;
+                                }
+                                
+                           
                             case 3:
                                 system("cls");
                                 U.ActiDel(FActivity, AC, x->getHoten(), x->getSDT());

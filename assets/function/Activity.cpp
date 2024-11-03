@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <conio.h>
 #include <vector>
 #include <fstream>
@@ -295,3 +296,45 @@ void QLAC::ActiDel(string namefile, string hoten, string sdt)
     
 }
 
+
+void QLAC::sortActivities(int choice) {
+    if (n == 0) {
+        cout << "Bạn " << endl;
+        return;
+    }
+
+    switch (choice) {
+        case 1:
+            std::sort(AC, AC + n, [](Person *a, Person *b) {
+                Acti *actA = dynamic_cast<Acti*>(a);
+                Acti *actB = dynamic_cast<Acti*>(b);
+                return actA->getNgayDen() > actB->getNgayDen() ||
+                       (actA->getNgayDen() == actB->getNgayDen() && actA->getGioVao() > actB->getGioVao());
+            });
+            break;
+
+        case 2:
+            std::sort(AC, AC + n, [](Person *a, Person *b) {
+                Acti *actA = dynamic_cast<Acti*>(a);
+                Acti *actB = dynamic_cast<Acti*>(b);
+                return actA->getNgayDen() < actB->getNgayDen() ||
+                       (actA->getNgayDen() == actB->getNgayDen() && actA->getGioVao() < actB->getGioVao());
+            });
+            break;
+
+        case 3:
+            std::sort(AC, AC + n, [](Person *a, Person *b) {
+                Acti *actA = dynamic_cast<Acti*>(a);
+                Acti *actB = dynamic_cast<Acti*>(b);
+                int durationA = (actA->getGioRa().gio * 3600 + actA->getGioRa().phut * 60 + actA->getGioRa().giay) - 
+                                (actA->getGioVao().gio * 3600 + actA->getGioVao().phut * 60 + actA->getGioVao().giay);
+                int durationB = (actB->getGioRa().gio * 3600 + actB->getGioRa().phut * 60 + actB->getGioRa().giay) - 
+                                (actB->getGioVao().gio * 3600 + actB->getGioVao().phut * 60 + actB->getGioVao().giay);
+                return durationA > durationB;
+            });
+            break;
+
+        default:
+            return;
+    }
+}
