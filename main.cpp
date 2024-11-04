@@ -56,7 +56,7 @@ int main()
             cout << "|                                    |" << endl;
             cout << "+====================================+" << endl;
             cout << "Moi nhap lua chon cua ban: ";
-        	char Achoice2;
+        	char Achoice2; check = 5;
 			Achoice2=getchar();	system("cls");	
 			switch (Achoice2-'0')
 			{
@@ -64,6 +64,7 @@ int main()
                 case 2: 
                 {
                     read_loop_autA: system("cls");
+                    if (check == 0 ) return 0;
                     icon_Order(); cout << "Ten dang nhap (SDT): "; cin >> username; cin.ignore();
                     cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynA1 = getchar();
                     if (ynA1 == 'y' ) 
@@ -87,7 +88,8 @@ int main()
                         setColor(10);
                         cout << "\n:)) Dang nhap thanh cong :))" << endl; 
                         setColor(7);
-                        Sleep(500);  //Hàm dừng màn hình trong 0.5 giây
+                      
+                        Sleep(1000);  //Hàm dừng màn hình trong 0.5 giây
                         read_loopA3: system("cls"); //Xóa màn hình
                        
                         Menu();
@@ -302,8 +304,9 @@ int main()
                         {
                             setColor(4);
                             cout << "\n:(( Dang nhap that bai :((" << endl;
+                            cout << "Ban con " << --check << " lan dang nhap!\n";
                             cout << "Nhan 0 de thoat hoac Enter de nhap lai"; delay = getch();
-                            if (delay - '0') return 0;
+                            if ((delay - '0')==0) return 0;
                             setColor(7);
                             Sleep(500);
                             goto read_loop_autA;
@@ -317,7 +320,7 @@ int main()
         break;  //case 1
 //////////////////////////////////////////////////
         case 2: 
-            read_loopU2:	system("cls");
+            read_loopU2:	system("cls"); check = 5;
 			Menu();
             cout << "|                                    |" << endl;
             cout << "|"; icon_Res(); cout << "<1> Ban muon dang ki tai khoan |" << endl;
