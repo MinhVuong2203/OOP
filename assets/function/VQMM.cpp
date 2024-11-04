@@ -10,7 +10,6 @@
 #include "VQMM.h"
 using namespace std;
 
-// Ham hien thi bang 3x4 voi o dang quay
 void displayBoard(const string prizes[], int prizeCount, int activeIndex) 
 {
     system("cls");  // Xoa man hinh (tren Windows)

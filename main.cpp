@@ -18,13 +18,12 @@ int main()
     //Khai báo file
     string FAdmin = "assets//Admin.txt";
     string FUser = "assets//User.txt";
-    string FRetail = "assets//Retail.txt";
     string FActivity = "assets//Activity.txt";
 
     QLAD AD(FAdmin);
     QLUS U(FUser);
     QLAC AC(FActivity);
-    int San[SL];
+    int San[SL], check = 5;
     string username, password;
     Day day;  Time time;
     day = getday();
@@ -105,7 +104,7 @@ int main()
                         cout << "Moi nhap lua chon cua ban: ";
                         char Achoice3 = getchar(); 
                         switch (Achoice3 - '0')
-                        {
+                        {   
                             case 1:
                             {   read_loopA4: system("cls");  
                                 TitleUser();
@@ -302,9 +301,10 @@ int main()
                         else 
                         {
                             setColor(4);
-                            cout << "\n:(( Dang nhap that bai. Enter de dang nhap lai! :((" << endl;
+                            cout << "\n:(( Dang nhap that bai :((" << endl;
+                            cout << "Nhan 0 de thoat hoac Enter de nhap lai"; delay = getch();
+                            if (delay - '0') return 0;
                             setColor(7);
-                            Sleep(500);
                             Sleep(500);
                             goto read_loop_autA;
                         }
@@ -338,6 +338,7 @@ int main()
                 {
                     read_loop_autU: system("cls");
                       cin.ignore();
+                      if (check == 0) return 0; //Check số lần đăng nhập
                     cout << "Ten dang nhap (viet lien, khong dau): "; cin >> username;  cin.ignore();
                     cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynU1 = getchar();
                     if (ynU1 == 'y' ) { cout << "\nMat khau (viet lien, khong dau): ";  hidePassword(password);}
@@ -454,10 +455,17 @@ int main()
                     else 
                     {
                         setColor(4);
-                        cout << "\n:(( Dang nhap that bai. Enter de dang nhap lai! :((" << endl;
+                            cout << "\n:(( Dang nhap that bai :((" << endl;
                         setColor(7);
-                        Sleep(500);
-                        goto read_loop_autU;
+                            cout << "Ban con " << --check << " lan dang nhap!\n";
+                            cout << "1. Dang nhap lai\t\t2. Quen mat khau\t\t3. Thoat"; delay = getch();
+                            switch(delay - '0')
+                            {
+                                case 1:  goto read_loop_autU;
+                                case 2:  
+                                case 3: return 0;
+                            }
+                       
                     }
                 }
                 break;
