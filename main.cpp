@@ -338,7 +338,7 @@ int main()
                 case 2: 
                 {
                     read_loop_autU: system("cls");
-                    cout << "Ten dang nhap (viet lien, khong dau): "; cin >> username; 
+                    cout << "Ten dang nhap (viet lien, khong dau): "; cin >> username;  cin.ignore();
                     cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynU1 = getchar();
                     if (ynU1 == 'y' ) { cout << "\nMat khau (viet lien, khong dau): ";  hidePassword(password);}
                     else if (ynU1 == 'n') { cout << "\nMat khau (viet lien, khong dau): ";  cin >> password;}
