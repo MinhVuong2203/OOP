@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <windows.h>
 
+
 #include "./assets/function/Title.h" 
 #include "./assets/function/TimeDay.h"
 #include "./assets/function/Person.h"
@@ -19,19 +20,18 @@ int main()
     string FAdmin = "assets//Admin.txt";
     string FUser = "assets//User.txt";
     string FActivity = "assets//Activity.txt";
-
     QLAD AD(FAdmin);
     QLUS U(FUser);
     QLAC AC(FActivity);
     int San[SL], check = 5;
     string username, password;
-    Day day;  Time time;
+    Day day;  Time time_cr;
     day = getday();
-    time = getTime();
+    time_cr = getTime();
     char delay;
     cout << "Hom nay: " << day.ngay << "/" << day.thang << "/" << day.nam << " ";
     // In ra giờ, phút, giây
-    cout << time.gio << ":" << time.phut << ":" << time.giay << "PM"<< endl;
+    cout << time_cr.gio << ":" << time_cr.phut << ":" << time_cr.giay << "PM"<< endl;
     banner();
     read_loop1: 
     cout << "+===============================+" << endl;
@@ -337,7 +337,7 @@ int main()
                 case 2: 
                 {
                     read_loop_autU: system("cls");
-                      cin.ignore();
+                    //   cin.ignore();
                       if (check == 0) return 0; //Check số lần đăng nhập
                     cout << "Ten dang nhap (viet lien, khong dau): "; cin >> username;  cin.ignore();
                     cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynU1 = getchar();
@@ -463,17 +463,19 @@ int main()
                             {
                                 case 1:  goto read_loop_autU;
                                 case 2: 
-                                {
+                                {   
+                                    system("cls");
                                     int ch, i;
-                                    cout<<endl;
+                                    string get, getc;
                                     string SDT, newName, newSDT; Day newBD; cin.ignore();
-                                    cout<<"Hay nhap so dien thoai cua ban:";  getline(cin,SDT);
+                                    icon_Order(); cout<<"Hay nhap so dien thoai cua ban: ";  getline(cin,SDT);
                                     U.fixUser(FUser, i, ch, SDT, newName, newBD, newSDT, username, 3);
-                                    goto read_loopU3;
+                                    delay = getch();
+                                    goto read_loop_autU;
                                 }
                                 case 3:  return 0;
+                                default: return 0;
                             }
-                       
                     }
                 }
                 break;

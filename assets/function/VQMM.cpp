@@ -17,7 +17,7 @@ void displayBoard(const string prizes[], int prizeCount, int activeIndex)
     for (int i = 0; i < prizeCount; ++i) {
         // Neu o hien tai dang "quay", doi mau cua o do
         if (i == activeIndex) {
-            setColor(3);  
+            setColor(228);  
         } else {
             setColor(7);   // Mau trang cho cac o con lai
         }
@@ -35,7 +35,7 @@ void displayBoard(const string prizes[], int prizeCount, int activeIndex)
 }
 
 void spinWheel(const string prizes[], int prizeCount) {
-    int totalSpins = 20 + rand() % 20;  // So vong quay ngau nhien tu 10 den 20
+    int totalSpins = 20 + rand() % 20;  // So vong quay ngau nhien tu 20 den 40
     int activeIndex = 0;  // Chi so cua o dang quay
 
     for (int i = 0; i < totalSpins; ++i) {
