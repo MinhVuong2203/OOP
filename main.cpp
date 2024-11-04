@@ -119,7 +119,7 @@ int main()
                                 cout << "|                                    |" << endl;
                                 cout << "+====================================+" << endl;
                                 cout << "Moi nhap lua chon cua ban: ";
-                                char Achoice4_1 = getchar(); cin.ignore();
+                                char Achoice4_1 = getchar(); 
                                 switch (Achoice4_1 - '0')
                                 {
                                 case 1: AD.hienDSUS(U); cout << endl; AD.addUS(U, FUser); TitleUser(); AD.hienDSUS(U); delay = getche(); 
@@ -138,11 +138,11 @@ int main()
                                     goto read_loopA4;
                                 case 3: 
                                 {
-                                    int ch, i, w=1;
+                                    int ch, i;
                                     cout<<endl;icon_Order();
                                     string oldSDT, newName, newSDT, username; Day newBD;
                                     cout<<"Nhap SDT cua nguoi ban muon chinh sua:"; cin.ignore(); getline(cin, oldSDT);
-                                    U.fixUser(FUser, i, ch, oldSDT, newName, newBD, newSDT, username, w);
+                                    U.fixUser(FUser, i, ch, oldSDT, newName, newBD, newSDT, username, 1);
                                     AC.update(FActivity, ch, oldSDT, newName, newBD, newSDT);
                                     if(i!=-1){cout<<"Sau khi sua:"<<endl; U.hienThi(i);}
                                     delay=getch();
@@ -436,10 +436,10 @@ int main()
                             }
                             case 5:
                             {
-                                    int ch, i, w=2;
+                                    int ch, i;
                                     cout<<endl;
                                     string oldSDT, newName, newSDT; Day newBD;
-                                    U.fixUser(FUser, i, ch, oldSDT, newName, newBD, newSDT, username, w);
+                                    U.fixUser(FUser, i, ch, oldSDT, newName, newBD, newSDT, username, 2);
                                     AC.update(FActivity, ch, oldSDT, newName, newBD, newSDT);
                                     if(i!=-1){cout<<"Sau khi sua:"<<endl; U.hienThi(i);}
                                     delay=getch();
@@ -462,8 +462,16 @@ int main()
                             switch(delay - '0')
                             {
                                 case 1:  goto read_loop_autU;
-                                case 2:  
-                                case 3: return 0;
+                                case 2: 
+                                {
+                                    int ch, i;
+                                    cout<<endl;
+                                    string SDT, newName, newSDT; Day newBD; cin.ignore();
+                                    cout<<"Hay nhap so dien thoai cua ban:";  getline(cin,SDT);
+                                    U.fixUser(FUser, i, ch, SDT, newName, newBD, newSDT, username, 3);
+                                    goto read_loopU3;
+                                }
+                                case 3:  return 0;
                             }
                        
                     }
