@@ -29,15 +29,13 @@ public:
         cout<< "| " << setw(10) << (to_string(NgayDen.ngay) + "/" + to_string(NgayDen.thang) + "/" + to_string(NgayDen.nam))
         << "| " << setw(10) << (to_string(GioVao.gio) + ":" + to_string(GioVao.phut) + ":" + to_string(GioVao.giay))
         << "| " << setw(10) << (to_string(GioRa.gio) + ":" + to_string(GioRa.phut) + ":" + to_string(GioRa.giay))
-        << "| " << id
+        << "| " << setw(3) << id
         << " |" << endl
-        << "+-----+--------------------+---------------+---------------+---------------+---------------+" << endl;
+        << "+-----+--------------------+---------------+---------------+-----------+-----------+-----------+-----+" << endl;
     }
     void calculate(const int GiaThuong, const int GiaVang, Day start_day, Day end_day);
     
 };
-
-// void templateBill(Acti *x,string hoten_admin, Day current_Day, Time current_Time, double into_money, const int GiaThuong, const int GiaVang);
 
 class QLAC
 {

@@ -25,7 +25,6 @@ int main()
     QLUS U(FUser);
     QLAC AC(FActivity);
     int San[SL];
-
     string username, password;
     Day day;  Time time;
     day = getday();
@@ -338,6 +337,7 @@ int main()
                 case 2: 
                 {
                     read_loop_autU: system("cls");
+                      cin.ignore();
                     cout << "Ten dang nhap (viet lien, khong dau): "; cin >> username;  cin.ignore();
                     cout << "<<<<<Ban co muon an mat khau (y/n)>>>>>>>: "; char ynU1 = getchar();
                     if (ynU1 == 'y' ) { cout << "\nMat khau (viet lien, khong dau): ";  hidePassword(password);}

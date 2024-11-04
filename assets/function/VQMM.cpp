@@ -18,7 +18,7 @@ void displayBoard(const string prizes[], int prizeCount, int activeIndex)
     for (int i = 0; i < prizeCount; ++i) {
         // Neu o hien tai dang "quay", doi mau cua o do
         if (i == activeIndex) {
-            setColor(4);  // Mau vang cho o dang quay
+            setColor(3);  
         } else {
             setColor(7);   // Mau trang cho cac o con lai
         }
