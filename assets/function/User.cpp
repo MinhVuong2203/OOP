@@ -1,5 +1,5 @@
 #include <fstream>
-#include <algorithm>
+    #include <algorithm>
 #include "check.h"
 #include "Person.h"
 #include "Activity.h"
@@ -40,6 +40,7 @@ void QLUS::add(string nameFile)
     fstream file(nameFile, ios::app);
     string HoTen, SDT, MK, TDN;
     Day NgaySinh;
+    cin.ignore();
     cout << "Nhap ho ten: ";  getline(cin, HoTen);
         while (checkName(HoTen)==false){
             cout << "Ho ten khong hop le. Vui long nhap lai: ";  cin.ignore(); getline(cin, HoTen);
