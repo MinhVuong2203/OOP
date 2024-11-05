@@ -128,6 +128,7 @@ int main()
                                     goto read_loopA4;
                                 case 2: 
                                     cin.ignore();
+                                    TitleUser();
                                     AD.hienDSUS(U);
                                     int STTdel;
                                     cout << "Nhap STT nguoi dung can xoa: "; cin >> STTdel;
@@ -143,10 +144,10 @@ int main()
                                     int ch, i;
                                     cout<<endl;icon_Order();
                                     string oldSDT, newName, newSDT, username; Day newBD;
-                                    cout<<"Nhap SDT cua nguoi ban muon chinh sua:"; cin.ignore(); getline(cin, oldSDT);
+                                    cout<<"Nhap SDT cua nguoi ban muon chinh sua: "; cin.ignore(); getline(cin, oldSDT);
                                     U.fixUser(FUser, i, ch, oldSDT, newName, newBD, newSDT, username, 1);
                                     AC.update(FActivity, ch, oldSDT, newName, newBD, newSDT);
-                                    if(i!=-1){cout<<"Sau khi sua:"<<endl; U.hienThi(i);}
+                                    if(i!=-1){cout<<"Sau khi sua:"<<endl;   TitleUser(); U.hienThi(i);}
                                     delay=getch();
                                     goto read_loopA4;
                                 }
@@ -204,6 +205,7 @@ int main()
                                         icon_Order(); cout << "Nhap thoi gian bat dau: "; start_day.nhapDay();
                                         cout << endl;
                                         icon_Order(); cout << "Nhap thoi gian ket thuc: "; end_day.nhapDay();
+                                        TitleActi();
                                         AD.Calculate(AC, start_day,end_day);
                                         delay = getch();
                                     goto read_loopA5;

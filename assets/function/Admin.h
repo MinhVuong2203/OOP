@@ -32,8 +32,12 @@ public:
     void addUS(QLUS &U, string namefile);
     void hienDS() {
         for (int i = 0; i < n; i++) {
+            cout<<"|  ";
+            setColor(4);
+            cout<< setw(3)<<i+1;
+            setColor(7);
             A[i]->hienThiThongTin();
-            cout<< "+---------------------+---------------+---------------+---------------+" << endl;
+            cout<< "+-----+---------------------+---------------+---------------+---------------+" << endl;
         }
     }
     void hienDSUS(QLUS &U){
