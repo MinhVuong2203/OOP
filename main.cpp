@@ -268,6 +268,7 @@ int main()
                                 {
                                     case 1:
                                     {   cout<<endl;
+                                        TitleAdmin();
                                         AD.hienDS();
                                         AD.delAd(FAdmin);
                                         delay = getch();
@@ -286,6 +287,7 @@ int main()
                             }
                             case 5:
                             {
+                                TitleActi();
                                 AD.priBill(AC,day, AD.getName(password)); 
                                 delay = getche();
                                 goto read_loopA3;

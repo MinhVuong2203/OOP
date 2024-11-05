@@ -19,7 +19,7 @@ void Person::setSDT(string newSDT) { this->SDT = newSDT; }
 
 void Person::hienThiThongTin() 
 {
-    cout << "| " << setw(19) << Hoten 
-        << "| " << setw(14) << (to_string(NgaySinh.ngay) + "/" + to_string(NgaySinh.thang) + "/" + to_string(NgaySinh.nam))
-        << "| " << setw(14) << SDT;
+    cout << "| " << left << setw(20) << Hoten 
+         << "| " << left << setw(14) << (to_string(NgaySinh.ngay) + "/" + to_string(NgaySinh.thang) + "/" + to_string(NgaySinh.nam))
+         << "| " << left << setw(14) << SDT;
 }
