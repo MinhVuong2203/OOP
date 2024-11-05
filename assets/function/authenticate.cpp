@@ -48,16 +48,16 @@ void hidePassword(std::string &password) {
     char ch;
     int i = 0;
     while (true) {
-        ch = _getch(); // getch() function hides the user input
-        if (ch == 13 || ch == 10) { // ASCII value of Enter key
+        ch = _getch(); 
+        if (ch == 13 || ch == 10) { 
             break;
-        } else if (ch == 8 && i > 0) { // ASCII value of Backspace key
-            printf("\b \b"); // Erase previous character
-            password.pop_back(); // Xóa ký tự cuối cùng trong chuỗi
+        } else if (ch == 8 && i > 0) {
+            printf("\b \b"); 
+            password.pop_back(); 
             i--;
         } else if (isprint(ch)) {
             printf("*");
-            password.push_back(ch); // Thêm ký tự vào chuỗi
+            password.push_back(ch); 
             i++;
         }
     }

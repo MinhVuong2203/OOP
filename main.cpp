@@ -60,7 +60,7 @@ int main()
 			Achoice2=getchar();	system("cls");	
 			switch (Achoice2-'0')
 			{
-                case 1: AD.add(FAdmin); break;
+                case 1: cin.ignore(); AD.add(FAdmin); break;
                 case 2: 
                 {
                     read_loop_autA: system("cls");
