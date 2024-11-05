@@ -202,6 +202,7 @@ int main()
                                         icon_Order(); cout << "Nhap thoi gian bat dau: "; start_day.nhapDay();
                                         cout << endl;
                                         icon_Order(); cout << "Nhap thoi gian ket thuc: "; end_day.nhapDay();
+                                        TitleActi();
                                         AD.Calculate(AC, start_day,end_day);
                                         delay = getch();
                                     goto read_loopA5;

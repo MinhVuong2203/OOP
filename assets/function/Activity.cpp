@@ -187,11 +187,14 @@ void QLAC::priBill(Day ngayden, string hoten_admin)
 void QLAC::calculate(Day start_day, Day end_day)
 {
     double Tong = 0;
+    int k=0;
+    
     for (int i=0; i<n; i++)
     {
         Acti* ActiPtr = dynamic_cast<Acti*>(AC[i]);
         if (ActiPtr->getNgayDen() >= start_day && ActiPtr->getNgayDen() <= end_day)
         {
+            cout << left << "| "; setColor(12);cout << setw(4) << ++k; setColor(7);
             ActiPtr->hienThiThongTin();
             if (ActiPtr->getGioVao() > timeVang) /*Giờ vào nằm ở giờ vip*/
             Tong += (ActiPtr->getGioRa() - ActiPtr->getGioVao())*GiaVang;
