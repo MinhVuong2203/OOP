@@ -2,6 +2,8 @@
 #include <iostream>
 #include <algorithm>
 #include <conio.h>
+#include <windows.h>
+#include <conio.h>
 #include <cstdlib> 
 #include <ctime>
 #include "check.h"
@@ -42,32 +44,44 @@ QLUS::QLUS(string filename)
 void QLUS::add(string nameFile) 
 {
     fstream file(nameFile, ios::app);
+    if (!file.is_open())
+        {
+            cerr << "Unable to open file: " << nameFile << endl;
+            return;
+        }
     string HoTen, SDT, MK, TDN;
     Day NgaySinh;
     cin.ignore();
-    cout << "Nhap ho ten: ";  getline(cin, HoTen);
+    icon_Order();    cout << "Nhap ho ten: ";  getline(cin, HoTen);
         while (checkName(HoTen)==false){
             cout << "Ho ten khong hop le. Vui long nhap lai: ";  cin.ignore(); getline(cin, HoTen);
         }
-    cout << "Nhap ngay sinh: "; NgaySinh.nhapDay();
-    cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
+    icon_Order(); cout << "Nhap ngay sinh: "; NgaySinh.nhapDay();
+    icon_Order(); cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
         while (checkSDT(SDT)==false){
-            cout << "SDT khong hop le. Vui long nhap lai: "; getline(cin, SDT);
+            icon_Order(); cout << "SDT khong hop le. Vui long nhap lai: "; getline(cin, SDT);
         }
-    cout << "Ten dang nhap: ";  getline(cin, TDN);
+    icon_Order(); cout << "Ten dang nhap: ";  getline(cin, TDN);
         while (checkFile(TDN, nameFile)==false){
-            cout << "Ten dang nhap da co tai khoan. Vui long dung ten dang nhap khac: ";  cin.ignore(); getline(cin, TDN);
+           icon_Order();  cout << "Ten dang nhap da co tai khoan. Vui long dung ten dang nhap khac: ";  cin.ignore(); getline(cin, TDN);
         }
-    cout << "Mat khau: ";   getline(cin, MK);
-	Person *p = new User(HoTen, NgaySinh, SDT, TDN, MK);
-    U[n++] = p;
-    file <<HoTen <<","<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<","<< SDT <<","<< TDN <<","<< MK << endl;
-    if (!file.is_open())
-    {
-        cerr << "Unable to open file: " << nameFile << endl;
-        return;
-    }
-    cout << "Add User successful!" << endl;
+    icon_Order(); cout << "Mat khau: ";   getline(cin, MK);
+
+    Cap:
+        if (CapCha())
+        {
+            Person *p = new User(HoTen, NgaySinh, SDT, TDN, MK);
+            U[n++] = p;
+            file <<HoTen <<","<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<","<< SDT <<","<< TDN <<","<< MK << endl;
+            setColor(6); cout << "---[Add User successful]---" << endl; setColor(7);
+            setColor(7);
+        }
+        else{
+            cout << "Sai ma Capcha!\n";
+            Sleep(1000);
+            goto Cap;
+        } 
+
     file.close();
 }
 
@@ -197,40 +211,9 @@ void QLUS::fixUser(string nameFile,int &index, int &ch, string &oldSDT,string &n
         case 5: {
             string newPassword;        
             cout << "Nhap mat khau moi: ";
-            if(w!=3)cin.ignore();
-            getline(cin, newPassword);
-            if (w==3)
-            {
-                int rd; string get,getc;
-                setColor(11); cout << "Dam bao rang ban khong phai la Robot\n"; setColor(7);
-                srand(time(0)); // Khởi tạo seed cho hàm rand() dựa trên thời gian hiện tại 
-                for (int i = 1; i <= 6; ++i) 
-                { 
-                    char ch;
-                    switch (i%3)
-                    {
-                        case 0: rd = 48 + rand()%10;    break;
-                        case 1:  rd = 65 + rand()%26;   break;
-                        case 2:  rd = 97 + rand()%26;   break;
-                    }
-                    ch = static_cast<char>(rd);
-                    get += ch;
-                } 
-                cout << "Ma Capcha: ";  setColor(12);  cout << get; setColor(7);
-                cout << endl;
-                icon_Order();    cout << "Nhap ma Capcha: ";    getline(cin,getc);
-                if (get == getc)
-                {
-                    cout << "Doi mau khau thanh cong" << endl;
-
-                }
-                else
-                {
-                    cout << "Sai ma Cacha!" << endl;
-                    return;
-                }
-                uFix->setPassword(newPassword);
-            }
+            if(w!=3) cin.ignore();
+            getline(cin, newPassword); 
+            uFix->setPassword(newPassword);
             break;
         }
         case 6:
