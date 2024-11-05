@@ -1,5 +1,9 @@
 #include <fstream>
+#include <iostream>
 #include <algorithm>
+#include <conio.h>
+#include <cstdlib> 
+#include <ctime>
 #include "check.h"
 #include "Person.h"
 #include "Activity.h"
@@ -40,6 +44,7 @@ void QLUS::add(string nameFile)
     fstream file(nameFile, ios::app);
     string HoTen, SDT, MK, TDN;
     Day NgaySinh;
+    cin.ignore();
     cout << "Nhap ho ten: ";  getline(cin, HoTen);
         while (checkName(HoTen)==false){
             cout << "Ho ten khong hop le. Vui long nhap lai: ";  cin.ignore(); getline(cin, HoTen);
@@ -112,7 +117,8 @@ QLUS::~QLUS(){
 
 void QLUS::fixUser(string nameFile,int &index, int &ch, string &oldSDT,string &newName, Day &newBD, string &newSDT, string username, int w) {
     index=-1;
-    if(w==1){
+
+    if(w==1 || w==3){
     for (int i = 0; i < n; i++) {
         User *uFix = dynamic_cast<User*>(U[i]);
         if (uFix->getSDT() == oldSDT) {
@@ -130,7 +136,14 @@ void QLUS::fixUser(string nameFile,int &index, int &ch, string &oldSDT,string &n
         }
     }
     }
-    if(index==-1)   {cout<<"Khong ton tai nguoi nay!"; return;} User *uFix = dynamic_cast<User*>(U[index]); oldSDT=uFix->getSDT();
+    if(index==-1){
+        setColor(4); 
+        cout<<"Khong ton tai nguoi nay!"; 
+        setColor(7);
+        return;
+    } 
+    User *uFix = dynamic_cast<User*>(U[index]); oldSDT=uFix->getSDT();
+    if(w!=3){
         icon_choice(); cout << "1. Sua ho ten"<<endl;
         icon_choice(); cout << "2. Sua ngay sinh"<<endl;
         icon_choice(); cout << "3. Sua SDT"<<endl;
@@ -138,6 +151,8 @@ void QLUS::fixUser(string nameFile,int &index, int &ch, string &oldSDT,string &n
         icon_choice(); cout << "5. Sua mat khau"<<endl;
         icon_choice(); cout << "6. Thoat"<<endl;
         cin>>ch;
+    }
+    else ch=5;
     switch (ch) {
         case 1: {
             cout << "Nhap ho ten moi: ";
@@ -180,11 +195,42 @@ void QLUS::fixUser(string nameFile,int &index, int &ch, string &oldSDT,string &n
             break;
         }
         case 5: {
-            string newPassword;
+            string newPassword;        
             cout << "Nhap mat khau moi: ";
-            cin.ignore();
+            if(w!=3)cin.ignore();
             getline(cin, newPassword);
-            uFix->setPassword(newPassword);
+            if (w==3)
+            {
+                int rd; string get,getc;
+                setColor(11); cout << "Dam bao rang ban khong phai la Robot\n"; setColor(7);
+                srand(time(0)); // Khởi tạo seed cho hàm rand() dựa trên thời gian hiện tại 
+                for (int i = 1; i <= 6; ++i) 
+                { 
+                    char ch;
+                    switch (i%3)
+                    {
+                        case 0: rd = 48 + rand()%10;    break;
+                        case 1:  rd = 65 + rand()%26;   break;
+                        case 2:  rd = 97 + rand()%26;   break;
+                    }
+                    ch = static_cast<char>(rd);
+                    get += ch;
+                } 
+                cout << "Ma Capcha: ";  setColor(12);  cout << get; setColor(7);
+                cout << endl;
+                icon_Order();    cout << "Nhap ma Capcha: ";    getline(cin,getc);
+                if (get == getc)
+                {
+                    cout << "Doi mau khau thanh cong" << endl;
+
+                }
+                else
+                {
+                    cout << "Sai ma Cacha!" << endl;
+                    return;
+                }
+                uFix->setPassword(newPassword);
+            }
             break;
         }
         case 6:
@@ -211,7 +257,7 @@ void QLUS::fixUser(string nameFile,int &index, int &ch, string &oldSDT,string &n
                  << user->getPassword() << endl;
         }
     }
-
+    
     file.close();
 }
 
@@ -235,7 +281,6 @@ string getLastName(const string &fullName) {
     size_t pos = fullName.find_last_of(" ");
     return fullName.substr(pos + 1);
 }
-
 
 void merge(Person *U[], int left, int mid, int right) {
     int n1 = mid - left + 1;
@@ -311,5 +356,5 @@ void QLUS::sort(string nameFile) {
     }
 
     file.close();
-    cout << "Danh sach sau khi sap xep:" << endl;
+    cout << "\nDanh sach sau khi sap xep:" << endl;
 }
