@@ -27,11 +27,13 @@ void Menu()
 }
 
 void TitleAdmin()
-{
-	cout << left << setw(20) << "Ho ten" 
-        << setw(15) << "Ngay Sinh" 
-        << setw(15) << "SDT" 
-        << setw(10) << "ID" << endl;
+{       setColor(6);
+	    cout << left 
+         << "+---------------------+---------------+---------------+---------------+" << endl
+         << "|       Ho ten        |   Ngay Sinh   |     SDT       |      ID       |" << endl
+         << "+---------------------+---------------+---------------+---------------+" << endl;
+         setColor(7);
+
 }
 
 void TitleUser() 

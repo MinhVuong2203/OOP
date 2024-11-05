@@ -102,10 +102,7 @@ QLAD::~QLAD() {
 
 void QLAD::delAd(string nameFile){
     int deleteAdmin;
-
-    cout<<"Nhap Admin ban muon xoa:";
-
-    cout<<"\nNhap Admin ban muon xoa:"<<endl;
+    cout<<"\nNhap Admin ban muon xoa:";
 
     cin>>deleteAdmin;
     if(deleteAdmin<1 || deleteAdmin > n){

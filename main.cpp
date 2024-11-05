@@ -270,6 +270,7 @@ int main()
                                 {
                                     case 1:
                                     {   cout<<endl;
+                                        TitleAdmin();
                                         AD.hienDS();
                                         AD.delAd(FAdmin);
                                         delay = getch();

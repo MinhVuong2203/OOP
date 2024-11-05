@@ -15,7 +15,7 @@ public:
     string getCCCD() { return CCCD; }
     void hienThiThongTin() override {
         Person::hienThiThongTin();
-        cout << CCCD << endl;
+        cout << "| "<< left << setw(14)<<CCCD <<"|"<<endl;
     }
 };
 
@@ -33,6 +33,7 @@ public:
     void hienDS() {
         for (int i = 0; i < n; i++) {
             A[i]->hienThiThongTin();
+            cout<< "+---------------------+---------------+---------------+---------------+" << endl;
         }
     }
     void hienDSUS(QLUS &U){
