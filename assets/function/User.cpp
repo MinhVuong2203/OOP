@@ -85,7 +85,6 @@ void QLUS::add(string nameFile)
     file.close();
 }
 
-
 void QLUS::del(string nameFile, string username) {
     int index;
     for (int i = 0; i < n; i++) {
@@ -164,6 +163,7 @@ void QLUS::fixUser(string nameFile,int &index, int &ch, string &oldSDT,string &n
         icon_choice(); cout << "4. Sua ten dang nhap"<<endl;
         icon_choice(); cout << "5. Sua mat khau"<<endl;
         icon_choice(); cout << "6. Thoat"<<endl;
+        icon_Order();  cout <<"Moi nhap lua chon cua ban: ";
         cin>>ch;
     }
     else ch=5;

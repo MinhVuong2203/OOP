@@ -142,10 +142,10 @@ int main()
                                     int ch, i;
                                     cout<<endl;icon_Order();
                                     string oldSDT, newName, newSDT, username; Day newBD;
-                                    cout<<"Nhap SDT cua nguoi ban muon chinh sua:"; cin.ignore(); getline(cin, oldSDT);
+                                    cout<<"Nhap SDT cua nguoi ban muon chinh sua: "; cin.ignore(); getline(cin, oldSDT);
                                     U.fixUser(FUser, i, ch, oldSDT, newName, newBD, newSDT, username, 1);
                                     AC.update(FActivity, ch, oldSDT, newName, newBD, newSDT);
-                                    if(i!=-1){cout<<"Sau khi sua:"<<endl; U.hienThi(i);}
+                                    if(i!=-1){cout<<"Sau khi sua:"<<endl;   TitleUser(); U.hienThi(i);}
                                     delay=getch();
                                     goto read_loopA4;
                                 }
