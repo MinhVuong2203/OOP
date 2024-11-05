@@ -126,6 +126,7 @@ int main()
                                     goto read_loopA4;
                                 case 2: 
                                     cin.ignore();
+                                    TitleUser();
                                     AD.hienDSUS(U);
                                     int STTdel;
                                     cout << "Nhap STT nguoi dung can xoa: "; cin >> STTdel;
