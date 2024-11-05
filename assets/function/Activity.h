@@ -31,7 +31,7 @@ public:
         << "| " << setw(10) << (to_string(GioRa.gio) + ":" + to_string(GioRa.phut) + ":" + to_string(GioRa.giay))
         << "| " << setw(3) << id
         << " |" << endl
-        << "+-----+--------------------+---------------+---------------+-----------+-----------+-----------+-----+" << endl;
+        << "+-----+---------------------+---------------+---------------+-----------+-----------+-----------+-----+" << endl;
     }
     void calculate(const int GiaThuong, const int GiaVang, Day start_day, Day end_day);
     

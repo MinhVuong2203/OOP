@@ -79,6 +79,12 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
     cout << "Nhap ngay vao: ";NgayDen.nhapDay();
     cout << "Nhap gio vao: "; GioVao.nhapTime();
     cout << "Nhap gio ra: "; GioRa.nhapTime();
+    while (GioVao >= GioRa)
+    {
+        cout << "Ngay ra khong hop le. Vui long nhap lai:" << endl;
+        cout << "Nhap gio vao: "; GioVao.nhapTime();
+        cout << "Nhap gio ra: "; GioRa.nhapTime();
+    }
 
     for (int i = 0; i < n; i++) 
     {
@@ -139,7 +145,6 @@ void QLAC::priBill(Day ngayden, string hoten_admin)
 {
     double into_money = 0;
     int k = 0, STT;
-    cout << endl;
     vector<Acti*> actiList; // Tạo danh sách tạm để lưu các đối tượng cần in
     for (int i = n - 1; i >= 0; i--) 
     {
@@ -182,11 +187,14 @@ void QLAC::priBill(Day ngayden, string hoten_admin)
 void QLAC::calculate(Day start_day, Day end_day)
 {
     double Tong = 0;
+    int k=0;
+    
     for (int i=0; i<n; i++)
     {
         Acti* ActiPtr = dynamic_cast<Acti*>(AC[i]);
         if (ActiPtr->getNgayDen() >= start_day && ActiPtr->getNgayDen() <= end_day)
         {
+            cout << left << "| "; setColor(12);cout << setw(4) << ++k; setColor(7);
             ActiPtr->hienThiThongTin();
             if (ActiPtr->getGioVao() > timeVang) /*Giờ vào nằm ở giờ vip*/
             Tong += (ActiPtr->getGioRa() - ActiPtr->getGioVao())*GiaVang;
@@ -295,7 +303,6 @@ void QLAC::ActiDel(string namefile, string hoten, string sdt)
     file.close();
     
 }
-
 
 void QLAC::sortActivities(int choice) {
     if (n == 0) {
