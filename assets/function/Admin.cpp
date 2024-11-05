@@ -2,6 +2,8 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <conio.h>
+#include <windows.h>
 #include "check.h"
 #include "Title.h"
 #include "Person.h"
@@ -56,7 +58,6 @@ void QLAD::add(string nameFile)
         }
         string HoTen, SDT, CCCD;
         Day NgaySinh;
-        // cin.ignore();
         icon_Order();    cout << "Nhap ho ten: ";   cin.ignore(); getline(cin, HoTen);
             while (checkName(HoTen)==false){
             cout << "Ho ten khong hop le. Vui long nhap lai: ";  cin.ignore(); getline(cin, HoTen);
@@ -74,13 +75,21 @@ void QLAD::add(string nameFile)
             while (checkCCCD(CCCD) == false){
             cout << "CCCD khong hop le. Vui long nhap lai: ";  getline(cin, CCCD);
             }
-
-		Person *p = new Admin(HoTen, NgaySinh, SDT, CCCD);
-        A[n++] = p;
-        file << HoTen <<","<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<","<< SDT <<","<< CCCD << endl; 
-        setColor(6);
-        cout << "\n--------[Add Admin successful]----------\n" << endl;
-        setColor(7);
+        Cap:
+        if (CapCha())
+        {
+            Person *p = new Admin(HoTen, NgaySinh, SDT, CCCD);
+            A[n++] = p;
+            file << HoTen <<","<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<","<< SDT <<","<< CCCD << endl; 
+            setColor(6);
+            cout << "\n--------[Add Admin successful]----------\n" << endl;
+            setColor(7);
+        }
+        else{
+            cout << "Sai ma Capcha!\n";
+            Sleep(1000);
+            goto Cap;
+        } 
         file.close();
 }
 

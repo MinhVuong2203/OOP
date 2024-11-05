@@ -159,6 +159,30 @@ void icon_cancel(){
     setColor(7);
 }
 
+bool CapCha()
+{
+    int rd; 
+    string get,getc;
+        setColor(11); cout << "Dam bao rang ban khong phai la Robot\n"; setColor(7);
+        srand(time(0)); // Khởi tạo seed cho hàm rand() dựa trên thời gian hiện tại 
+        for (int i = 1; i <= 6; ++i) 
+        { 
+            char ch;
+            switch (i%3)
+            {
+                case 0: rd = 48 + rand()%10;    break;
+                case 1:  rd = 65 + rand()%26;   break;
+                case 2:  rd = 97 + rand()%26;   break;
+            }
+            ch = static_cast<char>(rd);
+            get += ch;
+        } 
+        cout << "Ma Capcha: ";  setColor(12);  cout << get; setColor(7);
+        cout << endl;
+        icon_Order();    cout << "Nhap ma Capcha: ";    getline(cin,getc);
+        if (get == getc)    return 1;
+    return 0;
+}
 
 
 

@@ -48,6 +48,8 @@ void icon_delOrder();
 void icon_History();
 
 void icon_cancel();
+
+bool CapCha();
 #endif
 
 

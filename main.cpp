@@ -60,7 +60,7 @@ int main()
 			Achoice2=getchar();	system("cls");	
 			switch (Achoice2-'0')
 			{
-                case 1: cin.ignore(); AD.add(FAdmin); break;
+                case 1: AD.add(FAdmin);     break;
                 case 2: 
                 {
                     read_loop_autA: system("cls");
@@ -109,8 +109,6 @@ int main()
                         {   
                             case 1:
                             {   read_loopA4: system("cls");  
-                                TitleUser();
-                                U.hienDS();   
                                 Menu();
                                 cout << "|                                    |" << endl;
                                 cout << "|"; icon_Res(); cout << "<1> Them user                  |" << endl;
@@ -124,7 +122,7 @@ int main()
                                 char Achoice4_1 = getchar(); 
                                 switch (Achoice4_1 - '0')
                                 {
-                                case 1: AD.hienDSUS(U); cout << endl; AD.addUS(U, FUser); TitleUser(); AD.hienDSUS(U); delay = getche(); 
+                                case 1:  AD.addUS(U, FUser); TitleUser(); AD.hienDSUS(U); delay = getche(); 
                                     goto read_loopA4;
                                 case 2: 
                                     cin.ignore();
@@ -172,7 +170,7 @@ int main()
                                 cout << "|                                    |" << endl;
                                 cout << "+====================================+" << endl;
                                 cout << "Moi nhap lua chon cua ban: ";
-                                char Achoice4 = getch(); 
+                                char Achoice4 = getchar(); 
                                 switch(Achoice4 - '0')
                                 {
                                     case 1:
@@ -473,7 +471,13 @@ int main()
                                     string get, getc;
                                     string SDT, newName, newSDT; Day newBD; cin.ignore();
                                     icon_Order(); cout<<"Hay nhap so dien thoai cua ban: ";  getline(cin,SDT);
-                                    U.fixUser(FUser, i, ch, SDT, newName, newBD, newSDT, username, 3);
+                                    if (CapCha()){
+                                        U.fixUser(FUser, i, ch, SDT, newName, newBD, newSDT, username, 3);
+                                        if (i!=-1)  cout << "Doi mau khau thanh cong";
+                                    }
+                                    else
+                                    cout << "Sai ma Capcha!";
+                                    
                                     delay = getch();
                                     goto read_loop_autU;
                                 }
