@@ -9,8 +9,9 @@ void Menu();
 
 void TitleAdmin();
 
-
 void TitleUser() ;
+
+void TitleActi(); 
 
 void icon_choice();
 

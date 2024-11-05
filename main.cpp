@@ -287,6 +287,7 @@ int main()
                             }
                             case 5:
                             {
+                                TitleActi();
                                 AD.priBill(AC,day, AD.getName(password)); 
                                 delay = getche();
                                 goto read_loopA3;
