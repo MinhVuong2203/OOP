@@ -109,6 +109,8 @@ int main()
                         {   
                             case 1:
                             {   read_loopA4: system("cls");  
+                                U.sort(FUser);
+                                U.hienDS();
                                 Menu();
                                 cout << "|                                    |" << endl;
                                 cout << "|"; icon_Res(); cout << "<1> Them user                  |" << endl;

@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <conio.h>
 #include <vector>
+#include <ctime>
 #include <fstream>
 #include <iomanip>
 #include "Person.h"
@@ -63,37 +64,64 @@ QLAC::~QLAC() {
     }
 }
 
+Day getCurrentDate() {
+    time_t t = time(0); 
+    struct tm *now = localtime(&t);
+    return Day(now->tm_mday, now->tm_mon + 1, now->tm_year + 1900);
+}
+
+Time getCurrentTime() {
+    time_t t = time(0);
+    struct tm *now = localtime(&t);
+    return Time(now->tm_hour, now->tm_min, now->tm_sec);
+}
+
 void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT) 
 {
     fstream file(nameFile, ios::app);
-    if (!file.is_open())
-    {
+    if (!file.is_open()) {
         cerr << "Unable to open file: " << nameFile << endl;
         return;
     }
+
     Day NgayDen;
     Time GioVao, GioRa;
     int id;
-    int San[SL] = {0}; // Tạo ra một mảng sân để lưu id và trạng thái sân thứ i có id là i+1, giá trị s[i] = 0 (sân trống), s[i] = 1 (sân có người)
+    int San[SL] = {0};
 
-    cout << "Nhap ngay vao: ";NgayDen.nhapDay();
-    cout << "Nhap gio vao: "; GioVao.nhapTime();
+    Day currentDate = getCurrentDate();
+    Time currentTime = getCurrentTime();
+
+    // Nhập ngày vào và kiểm tra
+    do {
+        cout << "Nhap ngay vao: "; NgayDen.nhapDay();
+        if (NgayDen < currentDate) {
+            cout << "Ngay vao khong duoc nho hon ngay hien tai. Vui long nhap lai." << endl;
+        }
+    } while (NgayDen < currentDate);
+
+    // Nhập giờ vào và kiểm tra
+    do {
+        cout << "Nhap gio vao: "; GioVao.nhapTime();
+        if (NgayDen == currentDate && GioVao < currentTime) {
+            cout << "Gio vao khong duoc nho hon gio hien tai. Vui long nhap lai." << endl;
+        }
+    } while (NgayDen == currentDate && GioVao < currentTime);
+
+    // Nhập giờ ra và đảm bảo giờ vào phải trước giờ ra
     cout << "Nhap gio ra: "; GioRa.nhapTime();
-    while (GioVao >= GioRa)
-    {
+    while (GioVao >= GioRa) {
         cout << "Ngay ra khong hop le. Vui long nhap lai:" << endl;
         cout << "Nhap gio vao: "; GioVao.nhapTime();
         cout << "Nhap gio ra: "; GioRa.nhapTime();
     }
 
-    for (int i = 0; i < n; i++) 
-    {
-        Acti *ActiPtr = dynamic_cast<Acti*>(AC[i]);  //chuyển đổi kiểu person sang acti
-        if (ActiPtr != nullptr) 
-        {
-            if (ActiPtr->getNgayDen() == NgayDen)
-            {
-                if (ActiPtr->getGioVao() <= GioRa  && ActiPtr->getGioRa() >= GioRa)  //TH1
+    // Kiểm tra trạng thái sân và đặt sân trống
+    for (int i = 0; i < n; i++) {
+        Acti *ActiPtr = dynamic_cast<Acti*>(AC[i]);
+        if (ActiPtr != nullptr) {
+            if (ActiPtr->getNgayDen() == NgayDen) {
+                if (ActiPtr->getGioVao() <= GioRa && ActiPtr->getGioRa() >= GioRa)  //TH1
                     San[ActiPtr->getID()-1] = 1;
                 if (ActiPtr->getGioVao() <= GioVao && ActiPtr->getGioRa() >= GioVao) //TH2  
                     San[ActiPtr->getID()-1] = 1;
@@ -104,26 +132,33 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
             }
         }
     }
+
+    // Hiển thị sân trống và yêu cầu người dùng chọn
     cout << "\nCac san con trong: ";
-  for ( int i=0; i<SL; i++)
-    {
-        if (i%5==0) cout << endl << endl;
-        (San[i])? setColor(12) : setColor(2); 
-        cout << left <<  "| "; cout << setw(2) << i+1; cout<< " |  ";   
-    }	
-    setColor(7);    
+    for (int i = 0; i < SL; i++) {
+        if (i % 5 == 0) cout << endl << endl;
+        (San[i]) ? setColor(12) : setColor(2);
+        cout << left << "| "; cout << setw(2) << i + 1; cout << " |  ";
+    }
+    setColor(7);
+
+    // Nhập lựa chọn sân
     cout << "\n\nBan chon san: "; cin >> id;
-    while (San[id-1])
-    {
+    while (San[id - 1]) {
         setColor(4);
         cout << "San nay da co nguoi. Vui long chon lai: ";
         setColor(7);
         cin >> id;
     }
-	Person *p = new Acti(HoTen, NgaySinh, SDT, NgayDen, GioVao, GioRa, id);
+
+    // Thêm đối tượng và lưu vào file
+    Person *p = new Acti(HoTen, NgaySinh, SDT, NgayDen, GioVao, GioRa, id);
     AC[n++] = p;
-    file <<HoTen <<","<<NgaySinh.ngay<<"/"<<NgaySinh.thang<<"/"<<NgaySinh.nam<<","<<SDT<<","<<NgayDen.ngay<<"/"<<NgayDen.thang<<"/"<<NgayDen.nam\
-    <<","<<GioVao.gio<<":"<<GioVao.phut<<":"<<GioVao.giay<<","<<GioRa.gio<<":"<<GioRa.phut<<":"<<GioRa.giay<<"," << id << endl;
+    file << HoTen << "," << NgaySinh.ngay << "/" << NgaySinh.thang << "/" << NgaySinh.nam << "," << SDT << ","
+         << NgayDen.ngay << "/" << NgayDen.thang << "/" << NgayDen.nam << ","
+         << GioVao.gio << ":" << GioVao.phut << ":" << GioVao.giay << ","
+         << GioRa.gio << ":" << GioRa.phut << ":" << GioRa.giay << "," << id << endl;
+    
     setColor(10); cout << "Da dat san thanh cong!" << endl; setColor(7);
     file.close();
 }

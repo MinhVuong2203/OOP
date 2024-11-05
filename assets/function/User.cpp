@@ -339,5 +339,4 @@ void QLUS::sort(string nameFile) {
     }
 
     file.close();
-    cout << "\nDanh sach sau khi sap xep:" << endl;
 }
