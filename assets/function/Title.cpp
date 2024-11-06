@@ -30,7 +30,7 @@ void TitleAdmin()
 {       setColor(6);
 	    cout << left 
          << "+-----+---------------------+---------------+---------------+---------------+" << endl
-         << "| STT |       Ho ten        |   Ngay Sinh   |     SDT       |      ID       |" << endl
+         << "| STT |       Ho ten        |   Ngay Sinh   |     SDT       |      CCCD     |" << endl
          << "+-----+---------------------+---------------+---------------+---------------+" << endl;
          setColor(7);
 }

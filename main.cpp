@@ -88,7 +88,6 @@ int main()
                         setColor(10);
                         cout << "\n:)) Dang nhap thanh cong :))" << endl; 
                         setColor(7);
-                      
                         Sleep(1000);  //Hàm dừng màn hình trong 0.5 giây
                         read_loopA3: system("cls"); //Xóa màn hình
                        
@@ -100,7 +99,7 @@ int main()
                         cout << "|"; icon_Res(); cout << "<4> Quan li Admin              |" << endl;
                         cout << "|"; icon_Res(); cout << "<5> In hoa don                 |" << endl;
                         cout << "|"; icon_return(); cout << "<6> Quay lai                   |" << endl;
-                        cout << "|"; icon_exit(); cout << "<7> Thoat                      |" << endl;
+                        cout << "|"; icon_exit(); cout << "<7> Dang xuat                      |" << endl;
                         cout << "|                                    |" << endl;
                         cout << "+====================================+" << endl;
                         cout << "Moi nhap lua chon cua ban: ";
@@ -117,7 +116,7 @@ int main()
                                 cout << "|"; icon_del(); cout << "<2> Xoa user                   |" << endl;
                                 cout << "|"; icon_Res(); cout << "<3> Sua user                   |" << endl;
                                 cout << "|"; icon_return(); cout << "<4> Quay lai                   |" << endl;
-                                cout << "|"; icon_exit(); cout << "<5> Thoat                      |" << endl;
+                                cout << "|"; icon_exit(); cout << "<5> Dang xuat                      |" << endl;
                                 cout << "|                                    |" << endl;
                                 cout << "+====================================+" << endl;
                                 cout << "Moi nhap lua chon cua ban: ";
@@ -151,7 +150,6 @@ int main()
                                     delay=getch();
                                     goto read_loopA4;
                                 }
-
                                 case 4: goto read_loopA3;
                                 case 5:
                                 return 0;
@@ -169,7 +167,7 @@ int main()
                                 cout << "|"; icon_search(); cout << "<2> Tim kiem                   |" << endl;
                                 cout << "|"; icon_cost(); cout << "<3> Doanh thu khoang thoi gian |" << endl;
                                 cout << "|"; icon_return(); cout << "<4> Quay lai                   |" << endl;
-                                cout << "|"; icon_exit(); cout << "<5> Thoat                      |" << endl;
+                                cout << "|"; icon_exit(); cout << "<5> Dang xuat                      |" << endl;
                                 cout << "|                                    |" << endl;
                                 cout << "+====================================+" << endl;
                                 cout << "Moi nhap lua chon cua ban: ";
@@ -227,7 +225,7 @@ int main()
                                 cout << "|"; icon_Res(); cout << setw(31) << left << "<1> Khach le" << "|" << endl;
                                 cout << "|"; icon_login(); cout << setw(31) << left << "<2> Khach da co tai khoan" << "|" << endl;
                                 cout << "|"; icon_return(); cout << setw(31) << left << "<3> Quay lai" << "|" << endl;
-                                cout << "|"; icon_exit(); cout << setw(31) << left << "<4> Thoat" << "|" << endl;
+                                cout << "|"; icon_exit(); cout << setw(31) << left << "<4> Dang xuat" << "|" << endl;
                                 cout << "|                                    |" << endl;
                                 cout << "+====================================+" << endl;
                                 char Achoice4_3 = getch();
@@ -261,9 +259,8 @@ int main()
                                 Menu();
                                 cout << "|                                    |" << endl;
                                 cout << "|"; icon_del(); cout << "<1> Xoa tai khoan admin        |" << endl;
-                                cout << "|"; icon_login(); cout << "<2> Sua tai khoan admin        |" << endl;
-                                cout << "|"; icon_return(); cout << "<3> Quay lai                   |" << endl;
-                                cout << "|"; icon_exit(); cout << "<4> Thoat                      |" << endl;
+                                cout << "|"; icon_return(); cout << "<2> Quay lai                   |" << endl;
+                                cout << "|"; icon_exit(); cout << "<3> Dang xuat                      |" << endl;
                                 cout << "|                                    |" << endl;
                                 cout << "+====================================+" << endl;
                                 cout << "Moi nhap lua chon cua ban: ";
@@ -278,14 +275,8 @@ int main()
                                         delay = getch();
                                         goto read_loopA4_4;
                                     }
-                                    case 2:
-                                    {
-                                        
-                                        delay = getch();
-                                        goto read_loopA4_4;
-                                    }
-                                    case 3: goto read_loopA3;
-                                    case 4: return 0;
+                                    case 2: goto read_loopA3;
+                                    case 3: return 0;
                                     default: goto read_loopA4_4;
                                 }
                             }
@@ -300,7 +291,6 @@ int main()
                             case 7:
                             return 0;
                             default: goto read_loopA3;
-                            
                         }
                         // Thực hiện công việc    
                         }
@@ -371,7 +361,7 @@ int main()
                         cout << "|"; icon_del(); cout << setw(31) << left << "<4> Xoa tai khoan" << "|" << endl;
                         cout << "|"; icon_Order(); cout << setw(31) << left << "<5> Sua thong tin" << "|" << endl;
                         cout << "|"; icon_return(); cout << setw(31) << left << "<6> Quay lai" << "|" << endl;
-                        cout << "|"; icon_exit(); cout << setw(31) << left << "<7> Thoat" << "|" << endl;
+                        cout << "|"; icon_exit(); cout << setw(31) << left << "<7> Dang xuat" << "|" << endl;
                         cout << "|                                    |" << endl;
                         cout << "+====================================+" << endl;
 
@@ -397,7 +387,7 @@ int main()
                                 cout << "|"; icon_choice(); cout  << setw(31) << left<< "<2> Xa nhat" << "|" << endl;
                                 cout << "|"; icon_choice(); cout  << setw(31) << left<< "<3> Theo thoi luong choi " << "|" << endl;
                                 cout << "|"; icon_return(); cout  << setw(31) << left<< "<4> Quay lai" << "|" << endl;
-                                cout << "|"; icon_exit(); cout  << setw(31) << left<< "<5> Thoat" << "|" << endl;
+                                cout << "|"; icon_exit(); cout  << setw(31) << left<< "<5> Dang xuat" << "|" << endl;
                                 cout << "|                                    |" << endl;
                                 cout << "+====================================+" << endl;
                                 icon_Order();    cout << "Nhap lua chon cua ban: "; 
@@ -497,7 +487,7 @@ int main()
                 default:
                     goto read_loopU2;
             }
-        break; //case 2:
+        break;
         case 3: break;
         default: system("cls");
             goto read_loop1;

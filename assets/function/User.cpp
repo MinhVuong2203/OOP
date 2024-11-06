@@ -127,7 +127,6 @@ QLUS::~QLUS(){
     }
 }
 
-
 void QLUS::fixUser(string nameFile,int &index, int &ch, string &oldSDT,string &newName, Day &newBD, string &newSDT, string username, int w) {
     index=-1;
 
