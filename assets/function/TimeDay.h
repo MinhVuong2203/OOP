@@ -52,7 +52,6 @@ public:
 };
 
 
-
 // Lấy ngày hien tai
 Day getday();
 

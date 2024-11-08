@@ -27,7 +27,6 @@ void TitleBill();
 
 void icon_exit();
 
-
 void icon_return();
 
 void icon_cost();
@@ -39,7 +38,6 @@ void icon_admin();
 void icon_login();
 
 void icon_Res();
-
 
 void icon_Statistical();
 

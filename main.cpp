@@ -1,8 +1,6 @@
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
-
-
 #include "./assets/function/Title.h" 
 #include "./assets/function/TimeDay.h"
 #include "./assets/function/Person.h"

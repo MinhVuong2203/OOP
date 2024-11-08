@@ -23,7 +23,6 @@ int authenticateUser(string username, string password, string FilePass)
         bool isFirst = true;
         while (getline(ss, item, ',')) 
         {
-            
             if(isFirst){
                 filePassword = item;
                 fileUsername = "";

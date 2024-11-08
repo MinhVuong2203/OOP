@@ -60,7 +60,6 @@ void TitleBill(){
         << setw(17) << "Thanh tien" << right << setw(4) << "|\n";
 }
 
-
 void icon_exit()
 {
     setColor(4); 

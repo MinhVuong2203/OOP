@@ -42,7 +42,6 @@ class QLAC
 private:
     Person *AC[100];
     int n;
-
 public:
     QLAC(string filename);
     ~QLAC();
