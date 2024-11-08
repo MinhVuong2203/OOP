@@ -93,13 +93,13 @@ int main()
                        
                         Menu();
                         cout << "|                                    |" << endl;
-                        cout << "|"; icon_Res(); cout << "<1> Quan li danh sach user     |" << endl;
-                        cout << "|"; icon_Res(); cout << "<2> Thong ke                   |" << endl;
-                        cout << "|"; icon_Res(); cout << "<3> Dat san                    |" << endl;
-                        cout << "|"; icon_Res(); cout << "<4> Quan li Admin              |" << endl;
-                        cout << "|"; icon_Res(); cout << "<5> In hoa don                 |" << endl;
+                        cout << "|"; icon_Res();    cout << "<1> Quan li danh sach user     |" << endl;
+                        cout << "|"; icon_Res();    cout << "<2> Thong ke                   |" << endl;
+                        cout << "|"; icon_Res();    cout << "<3> Dat san                    |" << endl;
+                        cout << "|"; icon_Res();    cout << "<4> Quan li Admin              |" << endl;
+                        cout << "|"; icon_Res();    cout << "<5> In hoa don                 |" << endl;
                         cout << "|"; icon_return(); cout << "<6> Quay lai                   |" << endl;
-                        cout << "|"; icon_exit(); cout << "<7> Dang xuat                      |" << endl;
+                        cout << "|"; icon_exit();   cout << "<7> Dang xuat                  |" << endl;
                         cout << "|                                    |" << endl;
                         cout << "+====================================+" << endl;
                         cout << "Moi nhap lua chon cua ban: ";
@@ -242,7 +242,7 @@ int main()
                                     icon_Order(); cout << "Nhap ten user: "; cin.ignore(); getline(cin, hoten);
                                     break;
                                 }
-                                case 3: goto read_loopA4_3;
+                                case 3: goto read_loopA3;
                                 case 4: return 0;
                                 default: goto read_loopA4_3;
                                 }

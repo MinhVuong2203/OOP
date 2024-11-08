@@ -64,18 +64,6 @@ QLAC::~QLAC() {
     }
 }
 
-Day getCurrentDate() {
-    time_t t = time(0); 
-    struct tm *now = localtime(&t);
-    return Day(now->tm_mday, now->tm_mon + 1, now->tm_year + 1900);
-}
-
-Time getCurrentTime() {
-    time_t t = time(0);
-    struct tm *now = localtime(&t);
-    return Time(now->tm_hour, now->tm_min, now->tm_sec);
-}
-
 void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT) 
 {
     fstream file(nameFile, ios::app);
@@ -84,38 +72,59 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
         return;
     }
 
-    Day NgayDen;
+     Day NgayDen;
     Time GioVao, GioRa;
     int id;
     int San[SL] = {0};
 
-    Day currentDate = getCurrentDate();
-    Time currentTime = getCurrentTime();
-
     // Nhập ngày vào và kiểm tra
-    do {
-        cout << "Nhap ngay vao: "; NgayDen.nhapDay();
-        if (NgayDen < currentDate) {
-            cout << "Ngay vao khong duoc nho hon ngay hien tai. Vui long nhap lai." << endl;
+    icon_Order();    cout << "Nhap ngay vao hoac an 'n' de lay ngay hien tai: "; 
+    readDay:
+    string day_ptr;
+    getline(cin,day_ptr);
+    if (day_ptr == "n"){
+    NgayDen.ngay = getday().ngay; NgayDen.thang = getday().thang; NgayDen.nam = getday().nam;
+    cout << left << setw(50) << " "; setColor(6); NgayDen.xuatDay(); setColor(7); cout << endl;
+    }
+    else
+    {
+        sscanf(day_ptr.c_str(), "%d/%d/%d", &NgayDen.ngay, &NgayDen.thang, &NgayDen.nam);
+        if (!NgayDen.checkDay())
+        {
+            cout << "Ngay khong hop le! Vui long nhap lai: ";
+            goto readDay;
         }
-    } while (NgayDen < currentDate);
-
-    // Nhập giờ vào và kiểm tra
-    do {
-        cout << "Nhap gio vao: "; GioVao.nhapTime();
-        if (NgayDen == currentDate && GioVao < currentTime) {
-            cout << "Gio vao khong duoc nho hon gio hien tai. Vui long nhap lai." << endl;
+         if (NgayDen < getday()) {
+            cout << "Ngay vao khong duoc nho hon ngay hien tai. Vui long nhap lai: ";
+            goto readDay;
         }
-    } while (NgayDen == currentDate && GioVao < currentTime);
-
-    // Nhập giờ ra và đảm bảo giờ vào phải trước giờ ra
-    cout << "Nhap gio ra: "; GioRa.nhapTime();
-    while (GioVao >= GioRa) {
-        cout << "Ngay ra khong hop le. Vui long nhap lai:" << endl;
-        cout << "Nhap gio vao: "; GioVao.nhapTime();
-        cout << "Nhap gio ra: "; GioRa.nhapTime();
     }
 
+    // Nhập giờ vào và kiểm tra
+    icon_Order();     cout << "Nhap gio vao hoac an 'n' de lay gio hien tai: "; 
+    string time_ptr;
+    readTime:
+    getline(cin,time_ptr);
+    if (time_ptr == "n"){
+        GioVao.gio = getTime().gio; GioVao.phut = getTime().phut; GioVao.giay = getTime().giay; 
+        cout << left << setw(50) <<" "; setColor(6); GioVao.xuatTime(); setColor(7); cout << endl;
+    }
+    else{
+        sscanf(time_ptr.c_str(), "%d/%d/%d", &GioVao.gio, &GioVao.phut, &GioVao.giay);
+        if (!GioVao.checkTime()){
+            cout << "Thoi gian khong hop le! Vui long nhap lai: ";
+            goto readTime;
+        }
+        if (NgayDen == getday() && GioVao < getTime())
+            cout << "Gio vao khong duoc nho hon gio hien tai. Vui long nhap lai: ";
+            goto readTime;
+    }
+
+    // Nhập giờ ra và đảm bảo giờ vào phải trước giờ ra
+    icon_Order(); cout << "Nhap gio ra: "; GioRa.nhapTime();
+    while (GioVao >= GioRa) {
+        cout << "Gio ra phai lon hon gio vao. Vui long nhap lai: "; GioRa.nhapTime();
+    }
     // Kiểm tra trạng thái sân và đặt sân trống
     for (int i = 0; i < n; i++) {
         Acti *ActiPtr = dynamic_cast<Acti*>(AC[i]);
@@ -132,7 +141,6 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
             }
         }
     }
-
     // Hiển thị sân trống và yêu cầu người dùng chọn
     cout << "\nCac san con trong: ";
     for (int i = 0; i < SL; i++) {
@@ -141,7 +149,6 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
         cout << left << "| "; cout << setw(2) << i + 1; cout << " |  ";
     }
     setColor(7);
-
     // Nhập lựa chọn sân
     cout << "\n\nBan chon san: "; cin >> id;
     while (San[id - 1]) {
@@ -150,7 +157,6 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
         setColor(7);
         cin >> id;
     }
-
     // Thêm đối tượng và lưu vào file
     Person *p = new Acti(HoTen, NgaySinh, SDT, NgayDen, GioVao, GioRa, id);
     AC[n++] = p;
