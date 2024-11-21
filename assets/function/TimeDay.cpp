@@ -1,5 +1,6 @@
 #include <time.h>
 #include <ctime>
+#include <fstream>
 #include <cmath>
 #include "check.h"
 #include "TimeDay.h"
@@ -48,6 +49,13 @@ void Time::xuatTime() const {
     if (gio < 10) cout << "0"; cout << gio << ":";
     if (phut < 10) cout << "0"; cout << phut << ":";
     if (giay < 10) cout << "0"; cout << giay;
+}
+void Time::xuatTimeFile(ofstream &file) const {
+    if (file.is_open()){
+        if (gio < 10) file << "0"; file << gio << ":";
+        if (phut < 10) file << "0"; file << phut << ":";
+        if (giay < 10) file << "0"; file << giay;
+    }
 }
 bool Time::operator==(const Time& b) const {
     return gio == b.gio && phut == b.phut && giay == b.giay;
@@ -105,8 +113,16 @@ void Day::nhapDay() {
 
 void Day::xuatDay() const {
     if (ngay < 10) cout << "0"; cout << ngay << "/";
-    if (thang < 10) cout << "0"; cout << thang << "/";
+    if (thang < 10) cout<< "0"; cout << thang << "/";
     cout << nam;
+}
+
+void Day::xuatDayFile(ofstream &file) const {
+    if (file.is_open()){
+        if (ngay < 10) file << "0"; file << ngay << "/";
+        if (thang < 10) file << "0"; file << thang << "/";
+        file << nam;
+    }
 }
 bool Day::operator==(const Day& b) const {
     return ngay == b.ngay && thang == b.thang && nam == b.nam;

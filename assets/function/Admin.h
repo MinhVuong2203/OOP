@@ -46,7 +46,7 @@ public:
     void fixAccountUser(string nameFile);
     void delAd(string nameFile);
     void delUS(QLUS &U, string namefile, string username);
-    void searchUS(string search, string nameFile);
+    void searchUS(string nameFile);
     void priBill(QLAC &AC, Day day, string hoten_admin);
     void Calculate(QLAC &AC, Day start_day, Day end_day);
     void order(QLAC &AC,string namefile, string hoten, Day day_order, string sdt);

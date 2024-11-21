@@ -14,10 +14,12 @@ using namespace std;
 
 int main() 
 {
+    loading(50,48,11,"...LOADING...");
     //Khai báo file
     string FAdmin = "assets//Admin.txt";
     string FUser = "assets//User.txt";
     string FActivity = "assets//Activity.txt";
+    
     QLAD AD(FAdmin);
     QLUS U(FUser);
     QLAC AC(FActivity);
@@ -44,7 +46,7 @@ int main()
     switch (choice1-'0') 
 	{
         case 1:    
-            read_loopA2:	system("cls");
+            read_loopA2:	
             Menu();
             cout << "|                                    |" << endl;
             cout << "|"; icon_Res(); cout << "<1> Ban muon dang ki tai khoan |" << endl;
@@ -80,7 +82,7 @@ int main()
                         cout << "\nLua chon khong hop le. Enter de quay lai!";
                         delay = getche(); goto read_loop_autA;
                     }
-                    
+                    loading(40,50,11, "[Dang dang nhap]");      
                     if (authenticateUser(username,password, FAdmin)) 
                     {
                         setColor(10);
@@ -114,7 +116,7 @@ int main()
                                 cout << "|"; icon_del(); cout << "<2> Xoa user                   |" << endl;
                                 cout << "|"; icon_Res(); cout << "<3> Sua user                   |" << endl;
                                 cout << "|"; icon_return(); cout << "<4> Quay lai                   |" << endl;
-                                cout << "|"; icon_exit(); cout << "<5> Dang xuat                      |" << endl;
+                                cout << "|"; icon_exit();   cout << "<5> Dang xuat                  |" << endl;
                                 cout << "|                                    |" << endl;
                                 cout << "+====================================+" << endl;
                                 cout << "Moi nhap lua chon cua ban: ";
@@ -165,7 +167,7 @@ int main()
                                 cout << "|"; icon_search(); cout << "<2> Tim kiem                   |" << endl;
                                 cout << "|"; icon_cost(); cout << "<3> Doanh thu khoang thoi gian |" << endl;
                                 cout << "|"; icon_return(); cout << "<4> Quay lai                   |" << endl;
-                                cout << "|"; icon_exit(); cout << "<5> Dang xuat                      |" << endl;
+                                cout << "|"; icon_exit();   cout << "<5> Dang xuat                  |" << endl;
                                 cout << "|                                    |" << endl;
                                 cout << "+====================================+" << endl;
                                 cout << "Moi nhap lua chon cua ban: ";
@@ -185,11 +187,7 @@ int main()
                                     {
                                         cout<<endl;
                                         cin.ignore();
-                                        string search;
-                                        icon_Order();
-                                        cout<<"Nhap du lieu cua nguoi dung ma ban muon tim kiem:";
-                                        getline(cin,search);
-                                        AD.searchUS(search,FUser);
+                                        AD.searchUS(FUser);
                                         delay=getch();
                                         goto read_loopA5;
                                     }
@@ -342,7 +340,7 @@ int main()
                         cout << "\nLua chon khong hop le. Enter de quay lai!";
                         delay = getch(); goto read_loop_autU;
                     }
-                    
+                    loading(40,50,11, "[Dang dang nhap]");
                     if (authenticateUser(username,password, FUser))
                     {
                         setColor(10);

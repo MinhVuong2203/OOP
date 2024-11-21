@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <string>
 #include <conio.h>
 #include <windows.h>
 #include "check.h"
@@ -146,21 +147,116 @@ void QLAD::delAd(string nameFile){
 }
 bool check(char c) {
     return c >= '0' && c <= '9';  // Kiểm tra xem ký tự có phải là số không
+}
+
+bool checkSearch(const string &s, const string &x)
+{
+    int n = s.length(), m = x.length(); 
+    if (n < m) return false; 
+    for (int i = 0; i <= n - m; i++) 
+    { 
+        int j = 0; 
+        while (j < m && s[i + j] == x[j]) 
+        { 
+            j++; 
+        } 
+        if (j == m) return true; 
     }
-void QLAD::searchUS(string search, string nameFile){
+    return false;
+}
+
+void PriColor(const string &s, const string &x) {
+    int n = s.length(), m = x.length();
+
+    for (int i = 0; i < n; i++) {
+        int j = 0;
+        while (j < m && s[i + j] == x[j]) {
+            j++;
+        }
+        if (j == m) {
+            setColor(228);  cout<< x; setColor(7);
+            i += m - 1; 
+        } else {
+            cout << s[i];
+        }
+    }
+}
+    
+void QLAD::searchUS(string nameFile)
+{
     ifstream file(nameFile);
     if (!file.is_open()) {
         cerr << "Unable to open file: " << endl;
         return;
     }
+   
+    string search = "", line;
+    bool found;
+    int i;
+    char c;
+    system("cls");
+    while(true)
+    {
+        file.clear(); file.seekg(0, ios::beg); 
+        icon_Order();   cout<<"Nhap du lieu cua nguoi dung ma ban muon tim kiem: ";  cout << search;
+        c = getche(); 
+        if (c=='\b') //Nếu nhập xóa
+        {
+            if (!search.empty()) { 
+            search.pop_back(); 
+            cout << "\b \b";
+            }
+        }
+        else if (c==13) {
+            cout << endl;
+            break;  //Nếu nhập enter
+        }
+        else search += c;  //Nếu nhập bình thường
+        system("cls");
+        i=0;
+        cout << endl;
+        if (search.length()>0)
+        {
+            TitleUser();
+            while (getline(file, line)) 
+            {
+                stringstream ss(line);
+                string item; 
+                string HoTen, NgaySinh_str, SDT, username, password;
+                bool isFirst = true; 
+                
+                getline(ss, HoTen, ',');
+                getline(ss, NgaySinh_str, ',');
+                getline(ss, SDT, ',');
+                getline(ss, username, ',');
+                getline(ss, password, ',');
+            
+                if (checkSearch(HoTen, search) || checkSearch(NgaySinh_str, search) || checkSearch(SDT, search) || checkSearch(username, search) || checkSearch(password, search))
+                {
+                    i++; found = true;
+                    cout << "| "; setColor(12); cout << left << setw(4) << i;
+                    setColor(7); 
+                    cout << "| "; PriColor(HoTen, search); cout << right << setw(22-HoTen.length()) << "| ";
+                    PriColor(NgaySinh_str, search); cout << right << setw(16-NgaySinh_str.length()) << "| ";
+                    PriColor(SDT, search); cout << right << setw(16-SDT.length()) << "| ";
+                    PriColor(username, search); cout << right << setw(16-username.length()) << "| ";
+                    PriColor(password, search); cout << right << setw(16-password.length()) << "| ";
+                    cout << "\n";
+                cout << "+-----+---------------------+---------------+---------------+---------------+---------------+\n";
+                }
+            }
+            cout << endl;
+        }
+        
+    }
+    
     bool isDate = false, isPhone = true, isName = false;
     // Kiểm tra nếu chuỗi tìm kiếm là ngày sinh
     if (search.length() == 10 && 
         ((search[2] == '/' && search[5] == '/') || (search[2] == '-' && search[5] == '-'))) {
         isDate = true;
     }
-
-    // Kiểm tra nếu chuỗi tìm kiếm  là số điện thoại
+    // Kiểm tra nếu chuỗi tìm kiếm là số điện thoại
 
     if (search.length() != 10) {
         isPhone = false;
@@ -180,46 +276,13 @@ void QLAD::searchUS(string search, string nameFile){
             break;
         }
     }
-    string line;
-    int i=0;
-    bool found = false; // Biến để kiểm tra nếu tìm thấy user
-    cout<<endl;
-    TitleUser();
-    while (getline(file, line)) 
+    // cin.ignore();
+    if (i==0) 
     {
-        stringstream ss(line);
-        string item; 
-        string HoTen, NgaySinh_str, SDT, username, password;
-        bool isFirst = true; 
-        
-        getline(ss, HoTen, ',');
-        getline(ss, NgaySinh_str, ',');
-        getline(ss, SDT, ',');
-        getline(ss, username, ',');
-        getline(ss, password, ',');
-       
-            if (HoTen == search || NgaySinh_str == search || SDT == search || username == search || password == search) 
-            {
-                i++;
-            cout << "| ";setColor(12);cout << setw(4) << i;
-            setColor(7); 
-            cout << "| " << setw(19) << HoTen
-                 << "| " << setw(14) << NgaySinh_str
-                 << "| " << setw(14) << SDT
-                 << "| " << setw(14) << username
-                 << "| " << setw(14) << password
-                 << "|\n";
-            cout << "+-----+--------------------+---------------+---------------+---------------+---------------+\n";
-
-            found = true;
-            }
-    }
-    cin.ignore();
-    if (!found) {
-        if(isName) cout<<"Khong tim thay nguoi dung co ho ten nay!"<<endl;
-        else if (isDate) cout<<"Khong tim thay nguoi dung co ngay sinh nay"<<endl;
-        else if (isPhone) cout<<"Khong tim thay nguoi dung co so dien thoai nay"<<endl;
-        else cout << "Khong tim thay nguoi dung su dung du lieu nay!" << endl;
+        if(isName) {cout<<"\nKhong tim thay nguoi dung co "; setColor(9); cout <<"Ho ten "; setColor(7); cout << "nay!"<<endl;}
+        else if (isDate) {cout<<"\nKhong tim thay nguoi dung co "; setColor(9); cout <<"Ngay sinh "; setColor(7); cout << "nay!"<<endl;}
+        else if (isPhone) {cout<<"\nKhong tim thay nguoi dung co "; setColor(9); cout <<"SDT "; setColor(7); cout << "nay!"<<endl;}
+        else cout << "\nKhong tim thay nguoi dung su dung du lieu nay!" << endl;
     }
     
     file.close();

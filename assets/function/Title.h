@@ -1,6 +1,8 @@
 #ifndef TITLE_H
 #define TITLE_H
-
+#include <iostream>
+#include <fstream>
+using namespace std;
 void setColor(int color); 
 
 void banner();
@@ -24,6 +26,8 @@ void icon_sort();
 void icon_search();
 
 void TitleBill();
+
+void TitleBillFile(ofstream &file);
 
 void icon_exit();
 
@@ -49,6 +53,8 @@ void icon_History();
 void icon_cancel();
 
 bool CapCha();
+
+void loading(int l, int x, int y, string text);
 #endif
 
 
