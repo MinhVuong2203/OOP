@@ -17,6 +17,7 @@ const int SL = 20;
 const Time timeVang = {16,0,0};
 using namespace std;
 
+string FBill = "assets//FBill.txt";
 QLAC::QLAC(string filename)
 {
     this->n = 0;
@@ -215,7 +216,8 @@ void QLAC::priBill(Day ngayden, string hoten_admin)
             if (k == STT) 
             {
                 templateBill(ActiPtr, hoten_admin, getday(), getTime(), into_money, GiaThuong, GiaVang);
-                if (into_money >=200000)
+                templateBillFile(ActiPtr, hoten_admin, getday(), getTime(), into_money, GiaThuong, GiaVang, FBill);
+               if (into_money >=200000)
                 {
                     VQMM();
                 }

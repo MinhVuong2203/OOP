@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <fstream>
 using namespace std;
 
 class Time {
@@ -17,7 +18,7 @@ public:
     bool checkTime() const;
     void nhapTime();
     void xuatTime() const;
-
+    void xuatTimeFile(ofstream &file) const; 
     // Operator overloads
     bool operator==(const Time& b) const;
     bool operator!=(const Time& b) const;
@@ -40,6 +41,7 @@ public:
     bool checkDay() const;
     void nhapDay();
     void xuatDay() const;
+    void xuatDayFile(ofstream &file) const; 
 
     // Operator overloads
     bool operator==(const Day& b) const;

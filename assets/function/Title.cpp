@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <windows.h>
 #include <iomanip>
 #include "Title.h"
@@ -7,6 +8,11 @@ using namespace std;
 void setColor(int color) {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, color);
+}
+void gotoxy(int x, int y){ 
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); 
+    COORD coord; coord.X = x; coord.Y = y; 
+    SetConsoleCursorPosition(hConsole, coord);
 }
 
 void banner()
@@ -55,6 +61,12 @@ void TitleActi()
 
 void TitleBill(){
     cout << left << "|\t" << setw(17) << "Khung gio" 
+        << setw(14) << "Don gia" 
+        << setw(20) << "Thoi Luong" 
+        << setw(17) << "Thanh tien" << right << setw(4) << "|\n";
+}
+void TitleBillFile(ofstream &file){
+    file << left << "|\t\t" << setw(17) << "Khung gio" 
         << setw(14) << "Don gia" 
         << setw(20) << "Thoi Luong" 
         << setw(17) << "Thanh tien" << right << setw(4) << "|\n";
@@ -191,7 +203,24 @@ bool CapCha()
     return 0;
 }
 
-
+void loading(int l, int x, int y, string text)
+{
+    char a = 177, b = 219;
+    gotoxy(x,y); cout << text;
+    gotoxy((x+6)-l/2,y+2);
+    for (int i=0; i<l; i++)
+        cout << a;
+    cout << "\r";
+    gotoxy((x+6)-l/2,y+2);
+    for (int i=0; i<l; i++)
+    {
+        cout << b;
+        Sleep(i*2);
+    }
+    Sleep(100);
+    system("cls");
+    system("color F");
+}
 
 
 
