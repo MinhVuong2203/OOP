@@ -79,7 +79,7 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
     int San[SL] = {0};
 
     // Nhập ngày vào và kiểm tra
-    icon_Order();    cout << "Nhap ngay vao hoac an 'n' de lay ngay hien tai: "; 
+    icon_Order();    cout << "Nhap ngay vao hoac an 'n' de lay ngay hien tai(dd/mm/yyyy): "; 
     readDay:
     string day_ptr;
     getline(cin,day_ptr);
@@ -111,14 +111,15 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
         cout << left << setw(50) <<" "; setColor(6); GioVao.xuatTime(); setColor(7); cout << endl;
     }
     else{
-        sscanf(time_ptr.c_str(), "%d/%d/%d", &GioVao.gio, &GioVao.phut, &GioVao.giay);
+        sscanf(time_ptr.c_str(), "%d:%d:%d", &GioVao.gio, &GioVao.phut, &GioVao.giay);
         if (!GioVao.checkTime()){
             cout << "Thoi gian khong hop le! Vui long nhap lai: ";
             goto readTime;
         }
-        if (NgayDen == getday() && GioVao < getTime())
+        if (NgayDen == getday() && GioVao < getTime()){
             cout << "Gio vao khong duoc nho hon gio hien tai. Vui long nhap lai: ";
             goto readTime;
+        }
     }
 
     // Nhập giờ ra và đảm bảo giờ vào phải trước giờ ra

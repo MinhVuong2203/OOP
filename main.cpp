@@ -250,7 +250,7 @@ int main()
                                 case 4: return 0;
                                 default: goto read_loopA4_3;
                                 }
-                                icon_Order(); cout << "Nhap ngay sinh: "; day.nhapDay();
+                                icon_Order(); cout << "Nhap ngay sinh(dd/mm/yyyy): "; day.nhapDay();
                                 icon_Order(); cout << "Nhap so dien thoai: "; cin.ignore(); getline(cin, sdt);
                                 cout << endl; 
                                 AD.order(AC, FActivity, hoten, day, sdt);
