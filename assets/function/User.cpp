@@ -6,24 +6,30 @@
 #include <conio.h>
 #include <cstdlib> 
 #include <ctime>
+#include <vector>
 #include "check.h"
 #include "Person.h"
 #include "Activity.h"
 #include "User.h"
 using namespace std;
 
-QLUS::QLUS(string filename)
-{
-    this->n = 0;
+QLUS::QLUS(string filename) {
     ifstream file(filename);
     if (!file.is_open()) {
-    cerr << "Unable to open file" << endl;
+        cerr << "Unable to open file" << endl;
         return;
     }
-    
+    n = 0;
     string line;
-    while (getline(file, line))
-    {
+    while (getline(file, line)) {
+        n++;
+    }
+    file.clear();
+    file.seekg(0, ios::beg);
+
+    U = new Person*[n];
+    int index = 0;
+    while (getline(file, line)) {
         string hoten, ngaysinh_str, sdt, tdn, mk;
         Day ngaysinh;
         istringstream ss(line);
@@ -37,10 +43,19 @@ QLUS::QLUS(string filename)
         sdt.erase(0, sdt.find_first_not_of(" "));
         tdn.erase(0, tdn.find_first_not_of(" "));
         mk.erase(0, mk.find_first_not_of(" "));
-        Person *p = new User(hoten, ngaysinh, sdt, tdn, mk);
-        U[n++] = p;
+        U[index++] = new User(hoten, ngaysinh, sdt, tdn, mk);
     }
+    file.close();
 }
+
+QLUS::~QLUS() 
+{ 
+    for (int i = 0; i < n; ++i) 
+    { 
+        delete U[i]; } 
+        delete[] U;
+}
+
 void QLUS::add(string nameFile) 
 {
     fstream file(nameFile, ios::app);
@@ -70,8 +85,15 @@ void QLUS::add(string nameFile)
     Cap:
         if (CapCha())
         {
-            Person *p = new User(HoTen, NgaySinh, SDT, TDN, MK);
-            U[n++] = p;
+           // Tạo đối tượng mới 
+           Person** newU = new Person*[n + 1]; 
+           for (int i = 0; i < n; ++i) { 
+            newU[i] = U[i]; 
+            } 
+            newU[n] = new User(HoTen, NgaySinh, SDT, TDN, MK); 
+            delete[] U; 
+            U = newU; 
+            n++;
             file <<HoTen <<","<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<","<< SDT <<","<< TDN <<","<< MK << endl;
             setColor(6); cout << "---[Add User successful]---" << endl; setColor(7);
             setColor(7);
@@ -94,10 +116,14 @@ void QLUS::del(string nameFile, string username) {
             break;
         }
     }
-    for (int i = index; i < n; i++) {
-        U[i] = U[i + 1];
-    }
-    n--;
+    delete U[index]; 
+    for (int i = index; i < n - 1; i++) 
+        U[i] = U[i + 1]; 
+    n--; 
+    Person** newU = new Person*[n]; 
+    for (int i = 0; i < n; ++i) newU[i] = U[i];  
+    delete[] U;
+    U = newU;
 cout << "Xoa thanh cong!" << endl;
 
     ofstream file(nameFile, ios::out);
@@ -121,11 +147,7 @@ cout << "Xoa thanh cong!" << endl;
 
     file.close();
 }
-QLUS::~QLUS(){
-    for (int i = 0; i < n; i++) {
-        delete U[i];
-    }
-}
+
 
 void QLUS::fixUser(string nameFile,int &index, int &ch, string &oldSDT,string &newName, Day &newBD, string &newSDT, string username, int w) {
     index=-1;

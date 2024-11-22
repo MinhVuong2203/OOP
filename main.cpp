@@ -126,18 +126,26 @@ int main()
                                 case 1:  AD.addUS(U, FUser); TitleUser(); AD.hienDSUS(U); delay = getche(); 
                                     goto read_loopA4;
                                 case 2: 
+                                {
                                     cin.ignore();
-                                    TitleUser();
-                                    AD.hienDSUS(U);
                                     int STTdel;
-                                    cout << "Nhap STT nguoi dung can xoa: "; cin >> STTdel;
-                                    while (STTdel<=0 || STTdel > U.getN())
-                                    {
-                                        cout << "STT khong hop le. Vui long nhap lai: "; cin >> STTdel;
+                                    system("cls");
+                                    icon_Order(); cout << "Xac nhan muon xoa user (y/n): "; char Achoice4_2 = getchar();
+                                    if (Achoice4_2 == 'y' || Achoice4_2 == 'Y')
+                                    { 
+                                        TitleUser();
+                                        AD.hienDSUS(U);
+                                        cout << "Nhap STT nguoi dung can xoa: "; cin >> STTdel;
+                                        while (STTdel<=0 || STTdel > U.getN())
+                                        {
+                                            cout << "STT khong hop le. Vui long nhap lai: "; cin >> STTdel;
+                                        }
+                                        AD.delUS(U, FUser, U.arrayGetUsername(STTdel));
+                                        delay = getche();
+                                        goto read_loopA4;
                                     }
-                                    AD.delUS(U, FUser, U.arrayGetUsername(STTdel));
-                                    delay = getche();
-                                    goto read_loopA4;
+                                    else  goto read_loopA4;
+                                }
                                 case 3: 
                                 {
                                     int ch, i;

@@ -10,7 +10,6 @@ private:
 
 public:
     User() {}
-    
     User(string HoTen, Day NgaySinh, string SDT, string TDN, string MK) : Person(HoTen, NgaySinh, SDT), username(TDN), password(MK) {}
 
     void hienThiThongTin() override {
@@ -28,9 +27,9 @@ public:
 
 };
 class QLUS{
-private:
-    Person *U[100];
-    int n;
+    private:
+        Person **U;
+        int n;
 
 public:
     QLUS(string filename);
