@@ -54,7 +54,7 @@ public:
     int operator-(const Day& b) const;
 };
 
-
+int getYear();
 // Lấy ngày hien tai
 Day getday();
 

@@ -17,6 +17,13 @@ Day getday()
 	return day;
 }
 
+int getYear(){
+    time_t t = std::time(nullptr);
+    tm* local_time = std::localtime(&t);
+    int current_year = 1900 + local_time->tm_year;
+    return current_year;
+}
+
 // Lấy giờ hiện tại
 Time getTime()
 {
@@ -87,7 +94,7 @@ Day::Day() : ngay(0), thang(0), nam(0) {}
 Day::Day(int d, int m, int y) : ngay(d), thang(m), nam(y) {}
 bool Day::checkDay() const {
     int maxDay = 0;
-    if (nam < 1901 || nam>2018) return false;
+    if (nam < 1901 || (getYear() - nam)<=6) return false;
     if (thang < 1 || thang > 12) return false;
     if (ngay < 1 || ngay > 31) return false;
     switch (thang) {
@@ -105,7 +112,7 @@ bool Day::checkDay() const {
 }
 bool Day::checkDayPlay() const {
     int maxDay = 0;
-    if ((nam - 2024)>=1) return false;
+    if ((getYear() - 2024)>=1) return false;
     if (thang < 1 || thang > 12) return false;
     if (ngay < 1 || ngay > 31) return false;
     switch (thang) {

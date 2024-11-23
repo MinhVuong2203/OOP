@@ -87,7 +87,7 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
 
     // Nhập ngày vào và kiểm tra
     icon_Order();    cout << "Nhap ngay vao hoac an 'n' de lay ngay hien tai(dd/mm/yyyy): "<<endl;
-    setColor(4);cout<<"(LUU Y, KHONG DUOC DAT TRUOC QUA 1 NAM!)";setColor(7); 
+    setColor(4);cout<<"(LUU Y, KHONG DUOC DAT TRUOC QUA 1 NAM!)"<<endl;setColor(7); 
     readDay:
     string day_ptr;
     getline(cin,day_ptr);
