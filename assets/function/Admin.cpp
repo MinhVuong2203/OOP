@@ -14,14 +14,21 @@ using namespace std;
 
 QLAD::QLAD(string filename)
 {
-    this->n = 0;
     ifstream file(filename);
     if (!file.is_open()) {
-    cerr << "Unable to open file" << endl;
+        cerr << "Unable to open file" << endl;
         return;
     }
-    
+    n = 0;
     string line;
+    while (getline(file, line)) {
+        n++;
+    }
+    file.clear();
+    file.seekg(0, ios::beg);
+
+    A = new Person*[n];
+    int index = 0;
     while (getline(file, line))
     {
         string hoten, ngaysinh_str, sdt, cccd;
@@ -35,8 +42,7 @@ QLAD::QLAD(string filename)
         hoten.erase(0, hoten.find_first_not_of(" "));
         sdt.erase(0, sdt.find_first_not_of(" "));
         cccd.erase(0, cccd.find_first_not_of(" "));
-        Person *p = new Admin(hoten, ngaysinh, sdt, cccd);
-        A[n++] = p;
+        A[index++]  = new Admin(hoten, ngaysinh, sdt, cccd);
     }
 }
 string QLAD::getName(string CCCD)
@@ -79,8 +85,14 @@ void QLAD::add(string nameFile)
         Cap:
         if (CapCha())
         {
-            Person *p = new Admin(HoTen, NgaySinh, SDT, CCCD);
-            A[n++] = p;
+            Person** newA = new Person*[n + 1]; 
+           for (int i = 0; i < n; ++i) { 
+            newA[i] = A[i]; 
+            } 
+            newA[n] = new Admin(HoTen, NgaySinh, SDT, CCCD); 
+            delete[] A; 
+            A = newA; 
+            n++;
             file << HoTen <<","<< NgaySinh.ngay <<"/"<< NgaySinh.thang <<"/"<< NgaySinh.nam <<","<< SDT <<","<< CCCD << endl; 
             setColor(6);
             cout << "\n--------[Add Admin successful]----------\n" << endl;
@@ -105,9 +117,10 @@ void QLAD::delUS(QLUS &U, string namefile, string username)
 }
 
 QLAD::~QLAD() {
-    for (int i = 0; i < n; i++) {
-        delete A[i]; // Giải phóng từng đối tượng
-    }
+    for (int i = 0; i < n; ++i) 
+    { 
+        delete A[i]; } 
+        delete[] A;
 }
 
 void QLAD::delAd(string nameFile){

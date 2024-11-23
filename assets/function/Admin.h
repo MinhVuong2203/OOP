@@ -21,7 +21,7 @@ public:
 
 class QLAD{
 private:
-    Person *A[20];
+    Person **A;
     int n;
 public:
     QLAD() { this->n = 0; } 

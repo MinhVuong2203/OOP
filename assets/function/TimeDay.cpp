@@ -87,7 +87,25 @@ Day::Day() : ngay(0), thang(0), nam(0) {}
 Day::Day(int d, int m, int y) : ngay(d), thang(m), nam(y) {}
 bool Day::checkDay() const {
     int maxDay = 0;
-    if (nam < 1900) return false;
+    if (nam < 1901 || nam>2018) return false;
+    if (thang < 1 || thang > 12) return false;
+    if (ngay < 1 || ngay > 31) return false;
+    switch (thang) {
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            maxDay = 31; break;
+        case 4: case 6: case 9: case 11:
+            maxDay = 30; break;
+        case 2:
+            if (nam % 4 == 0)
+                maxDay = 29;
+            else
+                maxDay = 28; break;
+    }
+    return ngay <= maxDay;
+}
+bool Day::checkDayPlay() const {
+    int maxDay = 0;
+    if ((nam - 2024)>=1) return false;
     if (thang < 1 || thang > 12) return false;
     if (ngay < 1 || ngay > 31) return false;
     switch (thang) {

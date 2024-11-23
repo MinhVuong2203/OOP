@@ -40,7 +40,7 @@ public:
 class QLAC
 {
 private:
-    Person *AC[100];
+    Person **AC;
     int n;
 public:
     QLAC(string filename);

@@ -5,6 +5,7 @@
 #include <ctime>
 #include <fstream>
 #include <iomanip>
+#include <windows.h>
 #include "Person.h"
 #include "TimeDay.h"
 #include "Title.h"
@@ -20,14 +21,21 @@ using namespace std;
 string FBill = "assets//FBill.txt";
 QLAC::QLAC(string filename)
 {
-    this->n = 0;
     ifstream file(filename);
     if (!file.is_open()) {
-    cerr << "Unable to open file" << endl;
+        cerr << "Unable to open file" << endl;
         return;
     }
-    
+    n = 0;
     string line;
+    while (getline(file, line)) {
+        n++;
+    }
+    file.clear();
+    file.seekg(0, ios::beg);
+
+    AC = new Person*[n];
+    int index = 0;
     while (getline(file, line))
     {
         string hoten, ngaysinh_str, sdt, ngayden_str, giovao_str, giora_str, id_str;
@@ -53,15 +61,14 @@ QLAC::QLAC(string filename)
         if (hoten != "")
         {
 
-        Person *p = new Acti(hoten, ngaysinh, sdt, ngayden, giovao, giora, id);
-        AC[n++] = p;
-
+        AC[index++] = new Acti(hoten, ngaysinh, sdt, ngayden, giovao, giora, id);
         }
     }
 }
 QLAC::~QLAC() {
     for (int i = 0; i < n; i++) {
-        delete AC[i]; // Giải phóng từng đối tượng
+        delete AC[i];
+        delete[] AC; // Giải phóng từng đối tượng
     }
 }
 
@@ -79,7 +86,8 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
     int San[SL] = {0};
 
     // Nhập ngày vào và kiểm tra
-    icon_Order();    cout << "Nhap ngay vao hoac an 'n' de lay ngay hien tai(dd/mm/yyyy): "; 
+    icon_Order();    cout << "Nhap ngay vao hoac an 'n' de lay ngay hien tai(dd/mm/yyyy): "<<endl;
+    setColor(4);cout<<"(LUU Y, KHONG DUOC DAT TRUOC QUA 1 NAM!)";setColor(7); 
     readDay:
     string day_ptr;
     getline(cin,day_ptr);
@@ -90,7 +98,7 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
     else
     {
         sscanf(day_ptr.c_str(), "%d/%d/%d", &NgayDen.ngay, &NgayDen.thang, &NgayDen.nam);
-        if (!NgayDen.checkDay())
+        if (!NgayDen.checkDayPlay())
         {
             cout << "Ngay khong hop le! Vui long nhap lai: ";
             goto readDay;

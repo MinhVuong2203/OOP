@@ -39,6 +39,7 @@ public:
 
     // Methods
     bool checkDay() const;
+    bool checkDayPlay() const;
     void nhapDay();
     void xuatDay() const;
     void xuatDayFile(ofstream &file) const; 
