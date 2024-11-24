@@ -117,24 +117,38 @@ bool Day::checkDay() const {
     }
     return ngay <= maxDay;
 }
+#include <ctime>
+
 bool Day::checkDayPlay() const {
-    int maxDay = 0;
-    if ((getYear() - 2024)>=1) return false;
+    time_t now = time(0);
+    tm* currentTime = localtime(&now);
+    int currentYear = currentTime->tm_year + 1900; 
+    int currentMonth = currentTime->tm_mon + 1;  
+    int currentDay = currentTime->tm_mday;       
+    int maxYear = currentYear + 1;
+    int maxMonth = currentMonth;
+    int maxDay = currentDay;
+    if (nam > maxYear || (nam == maxYear && (thang > maxMonth || (thang == maxMonth && ngay > maxDay)))) 
+        return false;
     if (thang < 1 || thang > 12) return false;
     if (ngay < 1 || ngay > 31) return false;
+    int maxDaysInMonth = 0;
     switch (thang) {
         case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-            maxDay = 31; break;
+            maxDaysInMonth = 31; break;
         case 4: case 6: case 9: case 11:
-            maxDay = 30; break;
+            maxDaysInMonth = 30; break;
         case 2:
-            if (nam % 4 == 0)
-                maxDay = 29;
+            if ((nam % 4 == 0 && nam % 100 != 0) || (nam % 400 == 0))
+                maxDaysInMonth = 29;
             else
-                maxDay = 28; break;
+                maxDaysInMonth = 28; 
+            break;
     }
-    return ngay <= maxDay;
+
+    return ngay <= maxDaysInMonth;
 }
+
 void Day::nhapDay() {
     string input;
     while (true) {
