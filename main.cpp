@@ -47,7 +47,7 @@ int main()
     switch (choice1-'0') 
 	{
         case 1:    
-            read_loopA2:	
+            read_loopA2:
             Menu();
             cout << "|                                    |" << endl;
             cout << "|"; icon_Res(); cout << "<1> Ban muon dang ki tai khoan |" << endl;
@@ -209,9 +209,9 @@ int main()
                                     {
                                         Day start_day, end_day;
                                         cout << endl;
-                                        icon_Order(); cout << "Nhap thoi gian bat dau: "; start_day.nhapDay();
+                                        icon_Order(); cout << "Nhap thoi gian bat dau: "; start_day.nhapDayCur();
                                         cout << endl;
-                                        icon_Order(); cout << "Nhap thoi gian ket thuc: "; end_day.nhapDay();
+                                        icon_Order(); cout << "Nhap thoi gian ket thuc: "; end_day.nhapDayCur();
                                         TitleActi();
                                         AD.Calculate(AC, start_day,end_day);
                                         delay = getch();
@@ -237,14 +237,14 @@ int main()
                                 cout << "|"; icon_exit(); cout << setw(31) << left << "<4> Dang xuat" << "|" << endl;
                                 cout << "|                                    |" << endl;
                                 cout << "+====================================+" << endl;
-                                char Achoice4_3 = getch();
+                                icon_Order(); cout << "Moi nhap lua chon cua ban: ";    char Achoice4_3 = getchar();
                                 switch (Achoice4_3-'0')
                                 {
                                 case 1:
                                 {
                                     icon_Order(); cout << "Nhap ten khach le: "; cin.ignore(); getline(cin, hoten);
                                     hoten = capitalizeAndTrim(hoten);
-                                    hoten = hoten + " (Khach le)";
+                                    hoten = hoten + " (KL)";
                                     break;
                                 }
                                 case 2: 
@@ -258,7 +258,7 @@ int main()
                                 default: goto read_loopA4_3;
                                 }
                                 icon_Order(); cout << "Nhap ngay sinh(dd/mm/yyyy): "; day.nhapDay();
-                                icon_Order(); cout << "Nhap so dien thoai: "; cin.ignore(); getline(cin, sdt);
+                                icon_Order(); cout << "Nhap so dien thoai: "; getline(cin, sdt);
                                 cout << endl; 
                                 AD.order(AC, FActivity, hoten, day, sdt);
                                 delay = getch();

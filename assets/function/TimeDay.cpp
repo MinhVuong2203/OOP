@@ -2,6 +2,7 @@
 #include <ctime>
 #include <fstream>
 #include <cmath>
+#include <sstream>
 #include "check.h"
 #include "TimeDay.h"
 time_t presentTime;
@@ -45,10 +46,16 @@ bool Time::checkTime() const {
     return true;
 }
 void Time::nhapTime() {
-    scanf("%d:%d:%d", &gio, &phut, &giay);
-    while (!checkTime()) {
-        cout << "Thoi gian khong hop le! Vui long nhap lai: ";
-        scanf("%d:%d:%d", &gio, &phut, &giay);
+    string input;
+    while (true) {
+        getline(cin, input);
+        stringstream ss(input);
+        char sep1, sep2;
+        if (ss >> gio >> sep1 >> phut >> sep2 >> giay && sep1 == ':' && sep2 == ':' && checkTime()) {
+            break; // Thoát vòng lặp nếu nhập đúng định dạng và thời gian hợp lệ
+        } else {
+            cout << "Thoi gian khong hop le! Vui long nhap lai." << endl;
+        }
     }
 }
 
@@ -94,7 +101,7 @@ Day::Day() : ngay(0), thang(0), nam(0) {}
 Day::Day(int d, int m, int y) : ngay(d), thang(m), nam(y) {}
 bool Day::checkDay() const {
     int maxDay = 0;
-    if (nam < 1901 || (getYear() - nam)<=6) return false;
+    if (nam < 1901) return false;
     if (thang < 1 || thang > 12) return false;
     if (ngay < 1 || ngay > 31) return false;
     switch (thang) {
@@ -129,10 +136,31 @@ bool Day::checkDayPlay() const {
     return ngay <= maxDay;
 }
 void Day::nhapDay() {
-    scanf("%d/%d/%d", &ngay, &thang, &nam);
-    while (!checkDay()) {
-        cout << "Ngay thang nam khong hop le!\nVui long nhap lai: ";
-        scanf("%d/%d/%d", &ngay, &thang, &nam);
+    string input;
+    while (true) {
+        getline(cin, input);
+        stringstream ss(input);
+        char sep1, sep2;
+        if (ss >> ngay >> sep1 >> thang >> sep2 >> nam && sep1 == '/' && sep2 == '/' && checkDay() && (getYear() - nam) > 6) {
+          break; 
+        } else {
+            cout << "Ngay thang nam khong hop le!\nVui long nhap lai: "; 
+        }
+    }
+}
+
+
+void Day::nhapDayCur() {
+    string input;
+    while (true) {
+        getline(cin, input);
+        stringstream ss(input);
+        char sep1, sep2;
+        if (ss >> ngay >> sep1 >> thang >> sep2 >> nam && sep1 == '/' && sep2 == '/' && checkDay()) {
+          break; 
+        } else {
+            cout << "Ngay thang nam khong hop le!\nVui long nhap lai: "; 
+        }
     }
 }
 

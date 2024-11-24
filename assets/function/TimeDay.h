@@ -41,6 +41,7 @@ public:
     bool checkDay() const;
     bool checkDayPlay() const;
     void nhapDay();
+    void nhapDayCur();
     void xuatDay() const;
     void xuatDayFile(ofstream &file) const; 
 

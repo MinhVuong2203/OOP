@@ -2,6 +2,7 @@
 #include <string> 
 #include <fstream>
 #include <sstream>
+#include <cctype>
 #include "check.h"
 using namespace std;
 //Hàm check số điện thoại
@@ -14,16 +15,21 @@ bool checkName(string x)
     return false;
 }
 
-bool checkSDT(string x)
-{
-    if (x.length() != 10) return false;  
-     if (x[0] != '0') return false;
-    return true;
+bool checkSDT(string x) 
+{ 
+    if (x.length() != 10) return false; 
+    if (x[0] != '0') return false; 
+    for (char ch : x) 
+    { 
+        if (!isdigit(ch)) return false; 
+        } 
+    return true; 
 }
 
 bool checkFile(string x, string namefile)
 {
     ifstream file(namefile);
+    file.clear();
     file.seekg(0, ios::beg);
     string s;
     while (getline(file, s,','))
@@ -40,7 +46,11 @@ bool checkFile(string x, string namefile)
 
 bool checkCCCD(string x)
 {
-     if (x.length() != 12 || x[0] !='0' ) return false;  
+    if (x.length() != 12 || x[0] !='0' ) return false;  
+    for (char ch : x) { 
+        if (!isdigit(ch)) 
+        return false; 
+    } 
     return true;
 }
 

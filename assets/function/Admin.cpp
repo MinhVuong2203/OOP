@@ -75,7 +75,7 @@ void QLAD::add(string nameFile)
             cout << "SDT khong hop le. Vui long nhap lai: "; getline(cin, SDT);
             }
             while (checkFile(SDT, nameFile)==false){
-                cout << "SDT da dang ki tai khoan. Vui long dung SDT khac: ";  cin.ignore(); getline(cin, SDT);
+                cout << "SDT da dang ki tai khoan. Vui long dung SDT khac: "; getline(cin, SDT);
             }
 
         icon_Order(); cout << "Nhap CCCD: ";  getline(cin, CCCD);

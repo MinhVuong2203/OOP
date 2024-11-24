@@ -108,7 +108,7 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
     }
 
     // Nhập giờ vào và kiểm tra
-    icon_Order();     cout << "Nhap gio vao hoac an 'n' de lay gio hien tai: "; 
+    icon_Order();     cout << "Nhap gio vao (hh:mm:ss) hoac an 'n' de lay gio hien tai: "; 
     string time_ptr;
     readTime:
     getline(cin,time_ptr);
@@ -129,7 +129,7 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
     }
 
     // Nhập giờ ra và đảm bảo giờ vào phải trước giờ ra
-    icon_Order(); cout << "Nhap gio ra: "; GioRa.nhapTime();
+    icon_Order(); cout << "Nhap gio ra (hh:mm:ss): "; GioRa.nhapTime();
     while (GioVao >= GioRa) {
         cout << "Gio ra phai lon hon gio vao. Vui long nhap lai: "; GioRa.nhapTime();
     }
