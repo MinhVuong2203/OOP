@@ -13,6 +13,8 @@ void TitleAdmin();
 
 void TitleUser() ;
 
+void TitleUser2() ;
+
 void TitleActi(); 
 
 void icon_choice();

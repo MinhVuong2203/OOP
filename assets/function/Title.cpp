@@ -50,6 +50,15 @@ void TitleUser()
     setColor(7);
 }
 
+void TitleUser2() 
+{   setColor(6);
+    cout << left 
+         << "+---------------------+---------------+---------------+---------------+---------------+" << endl
+         << "|       Ho ten        |   Ngay Sinh   |     SDT       | Ten dang nhap |    Mat khau   |" << endl
+         << "+---------------------+---------------+---------------+---------------+---------------+" << endl;
+    setColor(7);
+}
+
 void TitleActi() 
 {   setColor(6);
     cout << left 

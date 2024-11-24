@@ -8,6 +8,7 @@ bool checkSDT(string x);
 bool checkFile(string x, string namefile);
 bool checkCCCD(string x);
 string capitalizeAndTrim(string s);
+bool checkMK(string x);
 #endif
 
 

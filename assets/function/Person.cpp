@@ -23,3 +23,9 @@ void Person::hienThiThongTin()
          << "| " << left << setw(14) << (to_string(NgaySinh.ngay) + "/" + to_string(NgaySinh.thang) + "/" + to_string(NgaySinh.nam))
          << "| " << left << setw(14) << SDT;
 }
+void Person::hienThiThongTin2() 
+{
+    cout << "| " << left << setw(20) << Hoten 
+         << "| " << left << setw(14) << (to_string(NgaySinh.ngay) + "/" + to_string(NgaySinh.thang) + "/" + to_string(NgaySinh.nam))
+         << "| " << left << setw(14) << SDT;
+}

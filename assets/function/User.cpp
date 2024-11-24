@@ -81,7 +81,11 @@ void QLUS::add(string nameFile)
         while (checkFile(TDN, nameFile)==false){
            icon_Order();  cout << "Ten dang nhap da co tai khoan. Vui long dung ten dang nhap khac: ";  cin.ignore(); getline(cin, TDN);
         }
-    icon_Order(); cout << "Mat khau: ";   getline(cin, MK);
+    icon_Order(); cout << "Mat khau (Phai co it nhat 6 ki tu, it nhat 1 ki tu hoa, 1 ki tu thuong va 1 chu so!): ";   getline(cin, MK);
+    while(!checkMK(MK)){
+        cout<<"-> Mat khau sai dinh dang. Moi nhap lai:";
+        getline(cin,MK);
+    }
 
     Cap:
         if (CapCha())
@@ -234,7 +238,11 @@ void QLUS::fixUser(string nameFile,int &index, int &ch, string &oldSDT,string &n
             string newPassword;        
             cout << "Nhap mat khau moi: ";
             if(w!=3) cin.ignore();
-            getline(cin, newPassword); 
+            getline(cin, newPassword);
+            while(!checkMK(newPassword)){
+                cout<<"-> Mat khau phai co toi thieu 6 ki tu, it nhat 1 ki hoa, 1 ki tu thuong va 1 chu so. Moi nhap lai:";
+                getline(cin,newPassword);
+                }
             uFix->setPassword(newPassword);
             break;
         }
