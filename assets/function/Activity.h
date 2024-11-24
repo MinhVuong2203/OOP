@@ -34,7 +34,6 @@ public:
         << "+-----+---------------------+---------------+---------------+-----------+-----------+-----------+-----+" << endl;
     }
     void calculate(const int GiaThuong, const int GiaVang, Day start_day, Day end_day);
-    
 };
 
 class QLAC

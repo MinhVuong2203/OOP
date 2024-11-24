@@ -10,6 +10,7 @@
 #include "./assets/function/authenticate.h"
 #include "./assets/function/templateBill.h"
 #include "./assets/function/VQMM.h"
+#include "./assets/function/check.h"
 using namespace std;
 
 int main() 
@@ -29,11 +30,11 @@ int main()
     day = getday();
     time_cr = getTime();
     char delay;
+    read_loop1: 
     cout << "Hom nay: " << day.ngay << "/" << day.thang << "/" << day.nam << " ";
     // In ra giờ, phút, giây
     cout << time_cr.gio << ":" << time_cr.phut << ":" << time_cr.giay << "PM"<< endl;
     banner();
-    read_loop1: 
     cout << "+===============================+" << endl;
     cout << "|                               |" << endl;
     cout << "|"; icon_admin(); cout << "<1> Nguoi quan ly         |" << endl;
@@ -46,7 +47,7 @@ int main()
     switch (choice1-'0') 
 	{
         case 1:    
-            read_loopA2:	
+            read_loopA2:
             Menu();
             cout << "|                                    |" << endl;
             cout << "|"; icon_Res(); cout << "<1> Ban muon dang ki tai khoan |" << endl;
@@ -103,7 +104,9 @@ int main()
                         cout << "|                                    |" << endl;
                         cout << "+====================================+" << endl;
                         cout << "Moi nhap lua chon cua ban: ";
+                        cin.ignore();
                         char Achoice3 = getchar(); 
+                        cin.ignore();
                         switch (Achoice3 - '0')
                         {   
                             case 1:
@@ -206,9 +209,9 @@ int main()
                                     {
                                         Day start_day, end_day;
                                         cout << endl;
-                                        icon_Order(); cout << "Nhap thoi gian bat dau: "; start_day.nhapDay();
+                                        icon_Order(); cout << "Nhap thoi gian bat dau: "; start_day.nhapDayCur();
                                         cout << endl;
-                                        icon_Order(); cout << "Nhap thoi gian ket thuc: "; end_day.nhapDay();
+                                        icon_Order(); cout << "Nhap thoi gian ket thuc: "; end_day.nhapDayCur();
                                         TitleActi();
                                         AD.Calculate(AC, start_day,end_day);
                                         delay = getch();
@@ -234,18 +237,20 @@ int main()
                                 cout << "|"; icon_exit(); cout << setw(31) << left << "<4> Dang xuat" << "|" << endl;
                                 cout << "|                                    |" << endl;
                                 cout << "+====================================+" << endl;
-                                char Achoice4_3 = getch();
+                                icon_Order(); cout << "Moi nhap lua chon cua ban: ";    char Achoice4_3 = getchar();
                                 switch (Achoice4_3-'0')
                                 {
                                 case 1:
                                 {
                                     icon_Order(); cout << "Nhap ten khach le: "; cin.ignore(); getline(cin, hoten);
-                                    hoten = hoten + " (Khach le)";
+                                    hoten = capitalizeAndTrim(hoten);
+                                    hoten = hoten + " (KL)";
                                     break;
                                 }
                                 case 2: 
                                 {
                                     icon_Order(); cout << "Nhap ten user: "; cin.ignore(); getline(cin, hoten);
+                                    hoten = capitalizeAndTrim(hoten);
                                     break;
                                 }
                                 case 3: goto read_loopA3;
@@ -253,7 +258,7 @@ int main()
                                 default: goto read_loopA4_3;
                                 }
                                 icon_Order(); cout << "Nhap ngay sinh(dd/mm/yyyy): "; day.nhapDay();
-                                icon_Order(); cout << "Nhap so dien thoai: "; cin.ignore(); getline(cin, sdt);
+                                icon_Order(); cout << "Nhap so dien thoai: "; getline(cin, sdt);
                                 cout << endl; 
                                 AD.order(AC, FActivity, hoten, day, sdt);
                                 delay = getch();
@@ -261,29 +266,43 @@ int main()
                             }
                             case 4:
                             {
-                                read_loopA4_4:    system("cls");
-                                Menu();
-                                cout << "|                                    |" << endl;
-                                cout << "|"; icon_del(); cout << "<1> Xoa tai khoan admin        |" << endl;
-                                cout << "|"; icon_return(); cout << "<2> Quay lai                   |" << endl;
-                                cout << "|"; icon_exit(); cout << "<3> Dang xuat                      |" << endl;
-                                cout << "|                                    |" << endl;
-                                cout << "+====================================+" << endl;
-                                cout << "Moi nhap lua chon cua ban: ";
-                                char Achoice4_4 = getch();
-                                switch (Achoice4_4 - '0')
+                                string xn;
+                                cout << "Xac nhan CCCD: "; getline(cin, xn);
+                                if (xn == password)
                                 {
-                                    case 1:
-                                    {   cout<<endl;
-                                        TitleAdmin();
-                                        AD.hienDS();
-                                        AD.delAd(FAdmin);
-                                        delay = getch();
-                                        goto read_loopA4_4;
+                                    cout << "Xac nhan thanh cong!";
+                                    Sleep(1000);
+                                    system("cls");
+                                    read_loopA4_4:    system("cls");
+                                    Menu();
+                                    cout << "|                                    |" << endl;
+                                    cout << "|"; icon_del();    cout << "<1> Xoa tai khoan admin        |" << endl;
+                                    cout << "|"; icon_return(); cout << "<2> Quay lai                   |" << endl;
+                                    cout << "|"; icon_exit();   cout << "<3> Dang xuat                  |" << endl;
+                                    cout << "|                                    |" << endl;
+                                    cout << "+====================================+" << endl;
+                                    cout << "Moi nhap lua chon cua ban: ";
+                                    char Achoice4_4 = getchar();
+                                    switch (Achoice4_4 - '0')
+                                    {
+                                        case 1:
+                                        {   cout<<endl;
+                                            TitleAdmin();
+                                            AD.hienDS();
+                                            AD.delAd(FAdmin);
+                                            delay = getch();
+                                            goto read_loopA4_4;
+                                        }
+                                        case 2: goto read_loopA3;
+                                        case 3: return 0;
+                                        default: goto read_loopA4_4;
                                     }
-                                    case 2: goto read_loopA3;
-                                    case 3: return 0;
-                                    default: goto read_loopA4_4;
+                                } 
+                                else
+                                {
+                                    cout << "CCCD khong khop!" << endl;
+                                    Sleep(1500);
+                                    goto read_loopA3;
                                 }
                             }
                             case 5:
@@ -371,8 +390,8 @@ int main()
                         cout << "|                                    |" << endl;
                         cout << "+====================================+" << endl;
 
-                        icon_Order();    cout << "Nhap lua chon cua ban: "; 
-                        char Uchoice3 = getch(); cin.ignore();
+                        icon_Order(); cin.ignore();   cout << "Nhap lua chon cua ban: "; 
+                        char Uchoice3 = getchar(); 
                         User *x = U.getUser(username);
                         
                         switch (Uchoice3 - '0')
@@ -380,6 +399,7 @@ int main()
                             case 1: 
                             {
                                 cout << endl;
+                                cin.ignore();
                                 U.order(FActivity, AC, x->getHoten(), x->getNgaySinh(), x->getSDT());
                                 delay = getch();
                             }
@@ -422,6 +442,7 @@ int main()
                                 system("cls");
                                 icon_confirm(); cout << "Ban co that su muon xoa tai khoan(y/n)?";
                                 char Uchoice4; 
+                                cin.ignore();
                                 Uchoice4 = getchar();    
                                 system("cls");
                                 if (Uchoice4 == 'y') {

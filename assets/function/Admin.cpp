@@ -26,7 +26,6 @@ QLAD::QLAD(string filename)
     }
     file.clear();
     file.seekg(0, ios::beg);
-
     A = new Person*[n];
     int index = 0;
     while (getline(file, line))
@@ -69,13 +68,14 @@ void QLAD::add(string nameFile)
             while (checkName(HoTen)==false){
             cout << "Ho ten khong hop le. Vui long nhap lai: ";  cin.ignore(); getline(cin, HoTen);
             }
+            HoTen = capitalizeAndTrim(HoTen);
         icon_Order(); cout << "Nhap ngay sinh (dd/mm/yyyy): "; NgaySinh.nhapDay();
         icon_Order(); cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
             while (checkSDT(SDT)==false){
             cout << "SDT khong hop le. Vui long nhap lai: "; getline(cin, SDT);
             }
             while (checkFile(SDT, nameFile)==false){
-                cout << "SDT da dang ki tai khoan. Vui long dung SDT khac: ";  cin.ignore(); getline(cin, SDT);
+                cout << "SDT da dang ki tai khoan. Vui long dung SDT khac: "; getline(cin, SDT);
             }
 
         icon_Order(); cout << "Nhap CCCD: ";  getline(cin, CCCD);
@@ -125,18 +125,23 @@ QLAD::~QLAD() {
 
 void QLAD::delAd(string nameFile){
     int deleteAdmin;
-    cout<<"\nNhap Admin ban muon xoa:";
+    cout<<"\nNhap Admin ban muon xoa: ";
 
     cin>>deleteAdmin;
     if(deleteAdmin<1 || deleteAdmin > n){
         cout<<"Khong ton tai Admin o vi tri nay";
         return;
     }
+
     delete A[deleteAdmin-1];
-    for(int i=deleteAdmin-1;i<n-1;i++){
+    for(int i=deleteAdmin-1;i<n-1;i++)
         A[i]=A[i+1];
-    }
-    n--;
+    n--; 
+    Person** newA = new Person*[n]; 
+    for (int i = 0; i < n; ++i) newA[i] = A[i];  
+    delete[] A;
+    A = newA;
+
     cout<<"Xoa Admin thanh cong"<<endl;
     fstream file(nameFile, ios::out);
     if (!file.is_open())
