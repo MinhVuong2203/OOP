@@ -19,5 +19,6 @@ public:
     void setNgaySinh(Day newNgaySinh);
     void setSDT(string newSDT);
     virtual void hienThiThongTin();
+    virtual void hienThiThongTin2();
 };
 #endif
