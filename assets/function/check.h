@@ -7,7 +7,7 @@ bool checkName(string x);
 bool checkSDT(string x);
 bool checkFile(string x, string namefile);
 bool checkCCCD(string x);
-
+bool checkMK(string x);
 #endif
 
 

@@ -42,3 +42,14 @@ bool checkCCCD(string x)
      if (x.length() != 12 || x[0] !='0' ) return false;  
     return true;
 }
+bool checkMK(string x){
+    if(x.length()< 6) return false;
+    bool checkhoa=false, checkthuong=false, checkso=false;
+    for(int i=0;i<x.length();i++){
+        if (islower(x[i])) checkthuong = true;
+        if (isupper(x[i])) checkhoa = true;
+        if (isdigit(x[i])) checkso = true;
+        if (checkthuong && checkhoa && checkso) break;
+    }
+    return checkthuong && checkhoa && checkso;
+}
