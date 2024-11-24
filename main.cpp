@@ -104,7 +104,9 @@ int main()
                         cout << "|                                    |" << endl;
                         cout << "+====================================+" << endl;
                         cout << "Moi nhap lua chon cua ban: ";
+                        cin.ignore();
                         char Achoice3 = getchar(); 
+                        cin.ignore();
                         switch (Achoice3 - '0')
                         {   
                             case 1:
@@ -264,29 +266,43 @@ int main()
                             }
                             case 4:
                             {
-                                read_loopA4_4:    system("cls");
-                                Menu();
-                                cout << "|                                    |" << endl;
-                                cout << "|"; icon_del(); cout << "<1> Xoa tai khoan admin        |" << endl;
-                                cout << "|"; icon_return(); cout << "<2> Quay lai                   |" << endl;
-                                cout << "|"; icon_exit(); cout << "<3> Dang xuat                      |" << endl;
-                                cout << "|                                    |" << endl;
-                                cout << "+====================================+" << endl;
-                                cout << "Moi nhap lua chon cua ban: ";
-                                char Achoice4_4 = getch();
-                                switch (Achoice4_4 - '0')
+                                string xn;
+                                cout << "Xac nhan CCCD: "; getline(cin, xn);
+                                if (xn == password)
                                 {
-                                    case 1:
-                                    {   cout<<endl;
-                                        TitleAdmin();
-                                        AD.hienDS();
-                                        AD.delAd(FAdmin);
-                                        delay = getch();
-                                        goto read_loopA4_4;
+                                    cout << "Xac nhan thanh cong!";
+                                    Sleep(1000);
+                                    system("cls");
+                                    read_loopA4_4:    system("cls");
+                                    Menu();
+                                    cout << "|                                    |" << endl;
+                                    cout << "|"; icon_del();    cout << "<1> Xoa tai khoan admin        |" << endl;
+                                    cout << "|"; icon_return(); cout << "<2> Quay lai                   |" << endl;
+                                    cout << "|"; icon_exit();   cout << "<3> Dang xuat                  |" << endl;
+                                    cout << "|                                    |" << endl;
+                                    cout << "+====================================+" << endl;
+                                    cout << "Moi nhap lua chon cua ban: ";
+                                    char Achoice4_4 = getchar();
+                                    switch (Achoice4_4 - '0')
+                                    {
+                                        case 1:
+                                        {   cout<<endl;
+                                            TitleAdmin();
+                                            AD.hienDS();
+                                            AD.delAd(FAdmin);
+                                            delay = getch();
+                                            goto read_loopA4_4;
+                                        }
+                                        case 2: goto read_loopA3;
+                                        case 3: return 0;
+                                        default: goto read_loopA4_4;
                                     }
-                                    case 2: goto read_loopA3;
-                                    case 3: return 0;
-                                    default: goto read_loopA4_4;
+                                } 
+                                else
+                                {
+                                    cout << "CCCD khong khop!" << endl;
+                                    Sleep(1500);
+                                    goto read_loopA3;
                                 }
                             }
                             case 5:

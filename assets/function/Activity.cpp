@@ -58,18 +58,16 @@ QLAC::QLAC(string filename)
         sscanf(id_str.c_str(), "%d", &id);
         hoten.erase(0, hoten.find_first_not_of(" "));
         sdt.erase(0, sdt.find_first_not_of(" "));
-        if (hoten != "")
-        {
-
+        // Person *p = new Acti(hoten, ngaysinh, sdt, ngayden, giovao, giora, id);
+        // AC[n++] = p;
         AC[index++] = new Acti(hoten, ngaysinh, sdt, ngayden, giovao, giora, id);
-        }
     }
 }
 QLAC::~QLAC() {
     for (int i = 0; i < n; i++) {
         delete AC[i];
-        delete[] AC; // Giải phóng từng đối tượng
     }
+        delete[] AC; // Giải phóng từng đối tượng
 }
 
 void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT) 
@@ -80,7 +78,7 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
         return;
     }
 
-     Day NgayDen;
+    Day NgayDen;
     Time GioVao, GioRa;
     int id;
     int San[SL] = {0};
@@ -168,8 +166,15 @@ void QLAC::add(string nameFile, string HoTen, Day NgaySinh, string SDT)
         cin >> id;
     }
     // Thêm đối tượng và lưu vào file
-    Person *p = new Acti(HoTen, NgaySinh, SDT, NgayDen, GioVao, GioRa, id);
-    AC[n++] = p;
+        Person** newAC = new Person*[n + 1]; 
+        for (int i = 0; i < n; ++i) { 
+        newAC[i] = AC[i]; 
+        } 
+        newAC[n] = new Acti(HoTen, NgaySinh, SDT, NgayDen, GioVao, GioRa, id);
+        delete[] AC; 
+        AC = newAC; 
+        n++;
+
     file << HoTen << "," << NgaySinh.ngay << "/" << NgaySinh.thang << "/" << NgaySinh.nam << "," << SDT << ","
          << NgayDen.ngay << "/" << NgayDen.thang << "/" << NgayDen.nam << ","
          << GioVao.gio << ":" << GioVao.phut << ":" << GioVao.giay << ","
@@ -296,7 +301,6 @@ void QLAC::update(string nameFile, int ch, string oldSDT,string newName, Day new
     file.close();
 }
 
-
 void QLAC::ActiDel(string namefile, string hoten, string sdt)
 {
     int k = 0, STT;
@@ -329,6 +333,16 @@ void QLAC::ActiDel(string namefile, string hoten, string sdt)
         AC[i] = AC[i + 1];
     }
     n--; 
+
+    delete AC[index]; 
+    for (int i = index; i < n - 1; i++) 
+        AC[i] = AC[i + 1]; 
+    n--; 
+    Person** newAC = new Person*[n]; 
+    for (int i = 0; i < n; ++i) newAC[i] = AC[i];  
+    delete[] AC;
+    AC = newAC;
+
     setColor(10);
     cout << "Delete activity successful!" << endl; 
     setColor(7);
@@ -351,9 +365,7 @@ void QLAC::ActiDel(string namefile, string hoten, string sdt)
                 << ActiPtr->getID() << endl;
         }
     }
-
     file.close();
-    
 }
 
 void QLAC::sortActivities(int choice) {
