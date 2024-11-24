@@ -85,12 +85,12 @@ void templateBillFile(Acti *x,string hoten_admin, Day current_Day, Time current_
     file << "| Dien thoai dat san: 0818214849" << right << setw(48) << "|\n";
     file << "| Dien thoai phan anh: 0818214849" << right << setw(47) << "|\n";    
     file << "|" << right << setw(79) << "|\n"; 
-    file << "|"; setColor(color); file << "\t\tSan "<< x->getID(); setColor(7); file << "\t\t\t   " << "PHIEU TINH TIEN" << right << setw(30) << "|\n";
+    file << "|"; setColor(color); file << "\t\tSan "<< x->getID(); setColor(7); file << "\t\t\t   " << "PHIEU TINH TIEN" << right << setw(38) << "|\n";
     file << "|" << right << setw(79) << "|\n";
     file << "|\t\tNgay in hoa don: "; current_Day.xuatDayFile(file); file << " "; current_Time.xuatTimeFile(file); file << "PM" << right << setw(34) << "|\n";
     file << "|\t\tNhan vien in hoa don: " << left << setw(48) << hoten_admin << "|\n";
     file << "|\t\tKhach hang: " << left << setw(58) <<  x->getHoten() << "|\n";    
-    file << "|\t\tGio vao: "; x->getGioVao().xuatTimeFile(file); file << "\t\t\t\t\t\t"; file << "Gio ra: "; x->getGioRa().xuatTimeFile(file); file << right<<setw(8) <<"|\n";
+    file << "|\t\tGio vao: "; x->getGioVao().xuatTimeFile(file); file << "\t\t\t\t\t\t"; file << "Gio ra: "; x->getGioRa().xuatTimeFile(file); file << right<<setw(16) <<"|\n";
     file << "|" << right << setw(79) << "|\n";
     TitleBillFile(file);
     float SLThuong, SLVang;
