@@ -67,10 +67,11 @@ void QLUS::add(string nameFile)
     string HoTen, SDT, MK, TDN;
     Day NgaySinh;
     cin.ignore();
-    icon_Order();    cout << "Nhap ho ten: ";  getline(cin, HoTen);
+    icon_Order(); cout << "Nhap ho ten: ";  getline(cin, HoTen);
         while (checkName(HoTen)==false){
             cout << "Ho ten khong hop le. Vui long nhap lai: ";  cin.ignore(); getline(cin, HoTen);
         }
+        HoTen = capitalizeAndTrim(HoTen);
     icon_Order(); cout << "Nhap ngay sinh(dd/mm/yyyy): "; NgaySinh.nhapDay();
     icon_Order(); cout << "Nhap SDT: "; cin.ignore(); getline(cin, SDT);
         while (checkSDT(SDT)==false){

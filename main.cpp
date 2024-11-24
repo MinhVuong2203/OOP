@@ -10,6 +10,7 @@
 #include "./assets/function/authenticate.h"
 #include "./assets/function/templateBill.h"
 #include "./assets/function/VQMM.h"
+#include "./assets/function/check.h"
 using namespace std;
 
 int main() 
@@ -29,11 +30,11 @@ int main()
     day = getday();
     time_cr = getTime();
     char delay;
+    read_loop1: 
     cout << "Hom nay: " << day.ngay << "/" << day.thang << "/" << day.nam << " ";
     // In ra giờ, phút, giây
     cout << time_cr.gio << ":" << time_cr.phut << ":" << time_cr.giay << "PM"<< endl;
     banner();
-    read_loop1: 
     cout << "+===============================+" << endl;
     cout << "|                               |" << endl;
     cout << "|"; icon_admin(); cout << "<1> Nguoi quan ly         |" << endl;
@@ -238,12 +239,14 @@ int main()
                                 case 1:
                                 {
                                     icon_Order(); cout << "Nhap ten khach le: "; cin.ignore(); getline(cin, hoten);
+                                    hoten = capitalizeAndTrim(hoten);
                                     hoten = hoten + " (Khach le)";
                                     break;
                                 }
                                 case 2: 
                                 {
                                     icon_Order(); cout << "Nhap ten user: "; cin.ignore(); getline(cin, hoten);
+                                    hoten = capitalizeAndTrim(hoten);
                                     break;
                                 }
                                 case 3: goto read_loopA3;
@@ -369,8 +372,8 @@ int main()
                         cout << "|                                    |" << endl;
                         cout << "+====================================+" << endl;
 
-                        icon_Order();    cout << "Nhap lua chon cua ban: "; 
-                        char Uchoice3 = getch(); cin.ignore();
+                        icon_Order(); cin.ignore();   cout << "Nhap lua chon cua ban: "; 
+                        char Uchoice3 = getchar(); 
                         User *x = U.getUser(username);
                         
                         switch (Uchoice3 - '0')
@@ -378,6 +381,7 @@ int main()
                             case 1: 
                             {
                                 cout << endl;
+                                cin.ignore();
                                 U.order(FActivity, AC, x->getHoten(), x->getNgaySinh(), x->getSDT());
                                 delay = getch();
                             }
