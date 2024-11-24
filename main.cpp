@@ -410,7 +410,7 @@ int main()
                                         return 0;
                                 }
                             case 3:
-                                system("cls");
+                                system("cls");TitleActi() ;
                                 U.ActiDel(FActivity, AC, x->getHoten(), x->getSDT());
                                 Sleep(500);
                                 goto read_loopU3;
