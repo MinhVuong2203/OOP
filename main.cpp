@@ -109,6 +109,7 @@ int main()
                             case 1:
                             {   read_loopA4: system("cls");  
                                 U.sort(FUser);
+                                TitleUser();
                                 U.hienDS();
                                 Menu();
                                 cout << "|                                    |" << endl;
@@ -154,7 +155,8 @@ int main()
                                     cout<<"Nhap SDT cua nguoi ban muon chinh sua: "; cin.ignore(); getline(cin, oldSDT);
                                     U.fixUser(FUser, i, ch, oldSDT, newName, newBD, newSDT, username, 1);
                                     AC.update(FActivity, ch, oldSDT, newName, newBD, newSDT);
-                                    if(i!=-1){cout<<"Sau khi sua:"<<endl;   TitleUser(); U.hienThi(i);}
+                                    TitleUser();
+                                    if(i!=-1){cout<<"Sau khi sua:"<<endl;    U.hienThi(i);}
                                     delay=getch();
                                     goto read_loopA4;
                                 }
@@ -383,7 +385,7 @@ int main()
                             }
                             goto read_loopU3;
                             case 2: system("cls");
-                                read_loophis: system("cls");
+                                read_loophis: system("cls");TitleActi() ;
                                 U.History(AC, x->getHoten(), x->getSDT());
                                 int choice;
                                 cout << "|                                    |" << endl;
@@ -408,7 +410,7 @@ int main()
                                         return 0;
                                 }
                             case 3:
-                                system("cls");
+                                system("cls");TitleActi() ;
                                 U.ActiDel(FActivity, AC, x->getHoten(), x->getSDT());
                                 Sleep(500);
                                 goto read_loopU3;
@@ -442,7 +444,7 @@ int main()
                                     string oldSDT, newName, newSDT; Day newBD;
                                     U.fixUser(FUser, i, ch, oldSDT, newName, newBD, newSDT, username, 2);
                                     AC.update(FActivity, ch, oldSDT, newName, newBD, newSDT);
-                                    if(i!=-1){cout<<"Sau khi sua:"<<endl; U.hienThi(i);}
+                                    if(i!=-1){cout<<"Sau khi sua:"<<endl; TitleUser2(); U.hienThi(i);}
                                     delay=getch();
                                     goto read_loopU3;
                                 }

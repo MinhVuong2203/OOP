@@ -19,6 +19,13 @@ public:
             << "|" << endl
             << "+-----+---------------------+---------------+---------------+---------------+---------------+" << endl;
     }
+    void hienThiThongTin2() override {
+        Person::hienThiThongTin();
+        cout<< "| " << setw(14) << username
+            << "| " << setw(14) << password
+            << "|" << endl
+            << "+---------------------+---------------+---------------+---------------+---------------+" << endl;
+    }
     string getUsername() {return this->username;}
 
     string getPassword() {return this->password;}
@@ -50,8 +57,7 @@ public:
     void hienThi(int i) 
 	{
             if(i==-1) return;
-            cout << left << "| "; setColor(12); cout << setw(4) << i+1; setColor(7);
-            U[i]->hienThiThongTin(); 
+            U[i]->hienThiThongTin2(); 
     }
     User *getUser(string username)    //Hàm lấy thông tin một user
     {
