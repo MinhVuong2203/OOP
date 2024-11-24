@@ -7,15 +7,15 @@
 |                                                                             |
 |		San 3			   PHIEU TINH TIEN                                    |
 |                                                                             |
-|		Ngay in hoa don: 24/11/2024 17:47:21PM                                |
+|		Ngay in hoa don: 24/11/2024 21:09:43PM                                |
 |		Nhan vien in hoa don: Nguyen Van Hung                                 |
-|		Khach hang: Pham Duc Tung                                             |
-|		Gio vao: 17:44:08						Gio ra: 22:00:00              |
+|		Khach hang: Minh Trong (KL)                                           |
+|		Gio vao: 08:33:51						Gio ra: 14:00:00              |
 |                                                                             |
 |		Khung gio        Don gia       Thoi Luong          Thanh tien         |
-|		Thuong             50000             0                      0         |
-|		Vang              110000         4.264                 469040         |
-|                                                TONG:         938080         |
+|		Thuong             50000         5.436                 271800         |
+|		Vang              110000             0                      0         |
+|                                                TONG:         543600         |
 |                                                                             |
 +-----------------------------------------------------------------------------+
 

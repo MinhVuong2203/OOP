@@ -307,8 +307,21 @@ int main()
                             }
                             case 5:
                             {
+                                Day NgayIn;
+                                icon_Order();    cout << "Nhap ngay can in bill hoac an 'n' de lay ngay hien tai(dd/mm/yyyy): ";
+                                readDay:
+                                string day_ptr;
+                                getline(cin,day_ptr);
+                                if (day_ptr == "n"){
+                                    NgayIn.ngay = getday().ngay; NgayIn.thang = getday().thang; NgayIn.nam = getday().nam;
+                                    cout << left << setw(50) << " "; setColor(6); NgayIn.xuatDay(); setColor(7); cout << endl;
+                                }
+                                else
+                                {
+                                    sscanf(day_ptr.c_str(), "%d/%d/%d", &NgayIn.ngay, &NgayIn.thang, &NgayIn.nam);
+                                }
                                 TitleActi();
-                                AD.priBill(AC,day, AD.getName(password)); 
+                                AD.priBill(AC,NgayIn, AD.getName(password)); 
                                 delay = getche();
                                 goto read_loopA3;
                             }
