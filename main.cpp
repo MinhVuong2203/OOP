@@ -442,6 +442,7 @@ int main()
                                 system("cls");
                                 icon_confirm(); cout << "Ban co that su muon xoa tai khoan(y/n)?";
                                 char Uchoice4; 
+                                cin.ignore();
                                 Uchoice4 = getchar();    
                                 system("cls");
                                 if (Uchoice4 == 'y') {
