@@ -5,17 +5,17 @@
 | Dien thoai dat san: 0818214849                                              |
 | Dien thoai phan anh: 0818214849                                             |
 |                                                                             |
-|		San 3			   PHIEU TINH TIEN                                    |
+|		San 1			   PHIEU TINH TIEN                                    |
 |                                                                             |
-|		Ngay in hoa don: 24/11/2024 21:09:43PM                                |
-|		Nhan vien in hoa don: Nguyen Van Hung                                 |
-|		Khach hang: Minh Trong (KL)                                           |
-|		Gio vao: 08:33:51						Gio ra: 14:00:00              |
+|		Ngay in hoa don: 25/11/2024 07:42:32PM                                |
+|		Nhan vien in hoa don: Nguyen Minh Vuong                               |
+|		Khach hang: Pham Duc Tung                                             |
+|		Gio vao: 16:00:00						Gio ra: 18:00:00              |
 |                                                                             |
 |		Khung gio        Don gia       Thoi Luong          Thanh tien         |
-|		Thuong             50000         5.436                 271800         |
-|		Vang              110000             0                      0         |
-|                                                TONG:         543600         |
+|		Thuong             50000             0                      0         |
+|		Vang              110000             2                 220000         |
+|                                                TONG:         220000         |
 |                                                                             |
 +-----------------------------------------------------------------------------+
 

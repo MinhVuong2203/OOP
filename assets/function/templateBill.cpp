@@ -128,6 +128,7 @@ void templateBillFile(Acti *x,string hoten_admin, Day current_Day, Time current_
             money_item = GiaVang * SLVang;
         file << setw(23) << money_item << right << setw(11) << "|\n";
         into_money += money_item;
+        into_money /= 2;
         file << "|" << right << setw(53) << "TONG:"; setColor(2); file <<right << setw(15) << into_money;  setColor(7); file << right << setw(11) << "|\n";
         file << "|" << right << setw(79) << "|\n"; 
         file << "+-----------------------------------------------------------------------------+\n\n";

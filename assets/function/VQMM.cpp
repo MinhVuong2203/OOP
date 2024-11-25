@@ -66,7 +66,7 @@ void VQMM()
             spinWheel(prizes, prizeCount);
         } 
         else 
-            cout << "Cam on vi da tham gia!" << endl;
+            cout << "\nCam on vi da tham gia!" << endl;
         
 }
 

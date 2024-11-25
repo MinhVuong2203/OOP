@@ -47,7 +47,7 @@ int main()
     switch (choice1-'0') 
 	{
         case 1:    
-            read_loopA2:
+            read_loopA2: system("cls");
             Menu();
             cout << "|                                    |" << endl;
             cout << "|"; icon_Res(); cout << "<1> Ban muon dang ki tai khoan |" << endl;

@@ -212,6 +212,7 @@ void QLAC::priBill(Day ngayden, string hoten_admin)
             actiList.push_back(ActiPtr); // Thêm đối tượng vào danh sách tạm
         }
     }
+    if (actiList.empty()) return;
     cout << endl;
     icon_Order();    cout << "Nhap STT can in hoa don: ";    
     cin >> STT; cout << endl;

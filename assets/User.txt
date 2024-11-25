@@ -9,4 +9,4 @@ Nguyen Thien Nhat,8/4/1997,0897654768,DN123,0897654769
 Bui Minh Trong,30/4/2005,0654345687,GronT,300405
 Pham Duc Tung,3/2/2005,0985674653,TungDP,Tungpham123
 Nguyen Van hung,6/11/2005,0786547862,hungvn,Vanhung123
-pham thi thao,4/4/2005,0818214847,thithao,Thithao123
+Pham Thi Thao,4/4/2005,0818214847,thithao,Thithao123
